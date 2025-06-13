@@ -419,6 +419,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    }
 
 2. If implement CRUD operations/Authenticate successfully
+
    - For Authenticate
      ``` 
      {
