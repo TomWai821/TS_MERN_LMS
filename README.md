@@ -43,10 +43,10 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    - This JSON file contains the complete data schema required for the application
 
 4. **Set up environment variable:**
-   Create a process.env file in the root directory with Configuration variables
+   Create a .env file in the root directory with Configuration variables
    ```
    - `REACT_APP_GOOGLE_BOOKS_API_KEY` - The API key of Google Books
-   - `REACT_APP_GOOGLE_BOOKS_BASE_URL` - The base URL for google books API (like https://www.googleapis.com/books/v1/volumes?)
+   - `REACT_APP_GOOGLE_BOOKS_BASE_URL` - The base URL for google books API (like https://www.googleapis.com/books/v1/volumes)
    - `REACT_APP_LOCAL_HOST` - The local host for backend (like http://localhost:${port}/api) 
    - `REACT_APP_MAIN_PAGE` - The local host for the main page (like http://localhost:${port})
 
