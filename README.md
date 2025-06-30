@@ -13,7 +13,6 @@ A full-stack application that streamlines library operations built as a Informat
 - [Installation](#installation)
 - [API endpoints](#api-endpoints)
 - [Technology Stack](#technology-stack)
-- [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -43,10 +42,19 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
    - This JSON file contains the complete data schema required for the application
 
-5. **Set up environment variable:**
-   Create a .env file in client directories based on the configuration part
+4. **Set up environment variable:**
+   Create a process.env file in the root directory with Configuration variables
+   ```
+   - `REACT_APP_GOOGLE_BOOKS_API_KEY` - The API key of Google Books
+   - `REACT_APP_GOOGLE_BOOKS_BASE_URL` - The base URL for google books API (like https://www.googleapis.com/books/v1/volumes?)
+   - `REACT_APP_LOCAL_HOST` - The local host for backend (like http://localhost:${port}/api) 
+   - `REACT_APP_MAIN_PAGE` - The local host for the main page (like http://localhost:${port})
 
-6. **Run the application:**
+   Remarks:
+   - Express backend runs by default on port 5000
+   - React frontend runs on port 3000
+  
+5. **Run the application:**
    ```bash
    # For the server side
    nodemon backend/index.ts  
@@ -524,11 +532,6 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 - **TF-IDF Algorithms:** natural
 - **Other**: RESTful APIs with modular design
 
-## Configuration (Environment Variable)
-- `REACT_APP_GOOGLE_BOOKS_API_KEY` - The API key of Google Books
-- `REACT_APP_GOOGLE_BOOKS_BASE_URL` - The base URL for google books API 
-- `REACT_APP_LOCAL_HOST` - The local host for backend (like http://localhost:${port}/api)
-- `REACT_APP_MAIN_PAGE` - The local host for the main page (like http://localhost:${port})
 
 ## Contributing
 1. Fork the repository.
