@@ -11,6 +11,8 @@ A full-stack application that streamlines library operations built as a Informat
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+- [Architecture] (#architecture)
+- [UI Layout] (#ui-layout)
 - [API endpoints](#api-endpoints)
 - [Technology Stack](#technology-stack)
 - [Contributing](#contributing)
@@ -64,9 +66,20 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    
    # For the user who download concurrency
    npm run both
+
+## Architecture
+**Frontend**
+Sequence Diagram
+
+**Backend**
+Architecture Diagram
+
+**Database**
+Entity-Relational Diagram(ERD)
+
+## UI Layout
    
 ## API Endpoints
-
 **For Authenication (click to expanded)**
 1. For login
    ```
