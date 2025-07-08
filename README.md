@@ -66,7 +66,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    npm run both
    
 ## API Endpoints
-**For Authenication:**
+**For Authenication (click to expanded)**
 1. For login
    ```
    Endpoint: `POST /api/user/Login`
@@ -198,7 +198,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       1. id = the MongoDB ObjectID in user collection, it use to ensure the account was exist
       2. banListID = the MongoDB ObjectID in suspendList
       ```
-**For Book Data (Require auth token in header):**
+<details>
+**For Book Data (Require auth token in header)**
    1. Get book data
       ```
       - Endpoint:`GET /api/book/BookData` (For all books)
@@ -267,6 +268,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
       1. id = MongoDB ObjectID in book collection
       ```
+</details>
       
 **For Loan Books Data (Require auth token in header):**
 1. Get Loan book record
