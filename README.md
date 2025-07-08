@@ -66,7 +66,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    npm run both
    
 ## API Endpoints
-<details>
+
 **For Authenication (click to expanded)**
 1. For login
    ```
@@ -102,8 +102,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    2. Password will hashing with bcrypt
    3. birthDay will transfer to Date type in backend side
    ```
-</details>
-<details>
+
+
 **For User Data (Require auth token in header):**
 1. Get User data (For user management/suspend list)
    ```
@@ -184,7 +184,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    Remarks:
    1. id = MongoDB ObjectID in user collection
    ```
-</details>
+
    
 **For Suspend List (Require auth token in header):**
    1. Modify Suspend List data
@@ -203,7 +203,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
       2. banListID = the MongoDB ObjectID in suspendList
       ```
 
-<details>
+
 **For Book Data (Require auth token in header)**
    1. Get book data
       ```
@@ -273,9 +273,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
       1. id = MongoDB ObjectID in book collection
       ```
-</details>
 
-<details>
 **For Loan Books Data (Require auth token in header):**
 1. Get Loan book record
    ```
@@ -318,7 +316,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
    2. finesPaid could be "Not paid needed"/"Not paid"/"paid"
    3. id = MongoDB ObjectID in bookloaned collection
    ```
-</details>
+
    
 **For Favourite Book (Require auth token in header):**
 1. Get favourite book record
