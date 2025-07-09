@@ -218,13 +218,13 @@ Remarks:
 
 ## UI Layout
 ### 1. Navigation
-<img src="Image/UILayout/Navigation-Guest.png" style="width:70%;"/><br>
+<img src="Image/UILayout/Navigation-Guest.png" style="width:75%;"/><br>
 Image 1.1 - Navigation For Guest User<br>
 
-<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:70%;"/><br>
+<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:75%;"/><br>
 Image 1.2 - Navigation For Authenticated User<br>
 
-<img src="Image/UILayout/Navigation-Admin.png" style="width:70%;"/><br>
+<img src="Image/UILayout/Navigation-Admin.png" style="width:75%;"/><br>
 Image 1.3 - Navigation For Admin(Librarian)<br>
 
 ### 2. Main page (Book recommendation)
@@ -255,10 +255,10 @@ Image 4.3 - Edit Profile Data Modal (Username)<br>
 Image 4.4 - Edit Profile Data Modal (Password)<br>
 
 ### 5. Content Page
-<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:70%;"/><br>
-Image 5.1 -Top of Table Content With Filter (For User)<br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:75%;"/><br>
+Image 5.1 - Top of Table Content With Filter (For User)<br>
 
-<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:70%;"/><br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:75%;"/><br>
 Image 5.2 - Top of Table Content With Filter (For Librarian)<br>
 
 ### Modal for view data
