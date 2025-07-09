@@ -140,6 +140,7 @@ This ERD explain the database schema for the Library Management System
 | status	      | String   | Defines the book’s availability, such as OnShelf and Loaned              |
 | description	  | String   | Provides a brief overview or synopsis of the book                        |
 | publishDate	  | Date     | The official publication date of the book, indexed for search efficiency |
+
 **Genre**
 | Key Attribute | Type   | Description                                                                   |
 | ------------- | ------ | ------------------------------------------------------------------------------|
