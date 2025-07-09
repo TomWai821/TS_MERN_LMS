@@ -93,19 +93,19 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
 #### Sequence Diagram (CRUD operations)
 1. **Get data from backend side**<br>
-  <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%; height:500px;"/><br>
+  <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client.
 
 2. **Data Creation**<br>
-  <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%; height:500px;"/><br>
+  <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram illustrates the user confirmation flow, beginning with a frontend POST request and progressing through middleware parsing, backend validation, and MongoDB record creation. It demonstrates secure data handling with token verification, modular backend orchestration, and structured client response, ensuring reliability and clarity in the user confirmation process.
 
 3. **Data Modification**<br>
-  <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%; height:500px;"/><br>
+  <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend. With middleware safeguards, token verification, and modular backend orchestration, the system ensures accurate record updates and clear client feedback.
 
 4. **Data Deletion**<br>
-  <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%; height:500px;"/><br>
+  <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
 
 ### Backend
