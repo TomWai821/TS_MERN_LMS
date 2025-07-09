@@ -86,17 +86,17 @@ This sequence diagram illustrates the QR Code generation flow initiated by a use
 <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:75%;"/><br>
 This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging.
 
-#### Sequence Diagram (CRUD operations
-<img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%; height: 500px;"/><br>
+#### Sequence Diagram (CRUD operations)
+<img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client.
 
-<img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%; height: 500px;"/><br>
+<img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram illustrates the user confirmation flow, beginning with a frontend POST request and progressing through middleware parsing, backend validation, and MongoDB record creation. It demonstrates secure data handling with token verification, modular backend orchestration, and structured client response, ensuring reliability and clarity in the user confirmation process.
 
-<img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%; height: 500px;"/><br>
+<img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend. With middleware safeguards, token verification, and modular backend orchestration, the system ensures accurate record updates and clear client feedback.
 
-<img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%; height: 500px;"/><br>
+<img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
 
 ### Backend
@@ -201,10 +201,10 @@ BookLoaned
 Remarks:
 1. Every collection includes an _id field of type ObjectId, which serves as the unique identifier
 
-# UI Layout
+## UI Layout
    
 ## API Endpoints
-**For Authenication (click to expanded)**
+### For Authenication 
 1. For login
    ```
    Endpoint: `POST /api/user/Login`
@@ -241,7 +241,7 @@ Remarks:
    ```
 
 
-**For User Data (Require auth token in header):**
+### For User Data (Require auth token in header)
 1. Get User data (For user management/suspend list)
    ```
    - Endpoint: `GET /api/user/UserData/tableName=:tableName` (For all record)
@@ -323,7 +323,7 @@ Remarks:
    ```
 
    
-**For Suspend List (Require auth token in header):**
+###For Suspend List (Require auth token in header)
    1. Modify Suspend List data
       ```
       Endpoint: `PUT /SuspendListData/id=:id`
@@ -341,7 +341,7 @@ Remarks:
       ```
 
 
-**For Book Data (Require auth token in header)**
+###For Book Data (Require auth token in header)
    1. Get book data
       ```
       - Endpoint:`GET /api/book/BookData` (For all books)
@@ -411,7 +411,7 @@ Remarks:
       1. id = MongoDB ObjectID in book collection
       ```
 
-**For Loan Books Data (Require auth token in header):**
+###For Loan Books Data (Require auth token in header)
 1. Get Loan book record
    ```
    - Endpoint: `GET /api/book/LoanBook` (For all loan book record)
@@ -455,7 +455,7 @@ Remarks:
    ```
 
    
-**For Favourite Book (Require auth token in header):**
+###For Favourite Book (Require auth token in header)
 1. Get favourite book record
    ```
    Endpoint:`GET /api/book/FavouriteBook`
@@ -483,7 +483,7 @@ Remarks:
    1. id = MongoDB ObjectID in favourite book collection
    ```
    
-**For Book data definition (Require auth token in header):**
+### For Book data definition (Require auth token in header)
 1. Create a new definition data:
    ```
    - Endpoint: `GET /api/book/definition/type=:type`
@@ -545,7 +545,7 @@ Remarks:
    2. id = MongoDB ObjectID in langauge/genre collection
    ```
    
-**For contact data (Require auth token in header):**
+### For contact data (Require auth token in header)
 1. Creating a new contact:
    ```
    Endpoint: `GET /api/book/contact/type=:type`
@@ -609,7 +609,7 @@ Remarks:
    1. id = MongoDB ObjectID
    ```
 
-**Response**
+### Response
 - If failed to implement CRUD operations:
    ```
    {
@@ -675,7 +675,6 @@ Remarks:
 - **Data security:** JWT(JSON web token) for Authentication, Bcrypt for password hashing
 - **TF-IDF Algorithms:** natural
 - **Other**: RESTful APIs with modular design
-
 
 ## Contributing
 1. Fork the repository.
