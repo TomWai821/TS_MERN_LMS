@@ -113,8 +113,8 @@ Backend side using modular API design, therefore using backend process flow diag
 <img src="Image/Diagrams/EntityRelationDiagram-LibraryManagementSystem.png" style="width:75%;"/><br>
 This ERD explain the database schema for the Library Management System
 
-Collections related to book data:<br>
-**Book**
+**Collections related to book data**
+Book
 | Key Attribute |	Type     | Description                                                              |
 | ------------- | -------- | ------------------------------------------------------------------------ |
 | image         |	Object   | Stores book cover image details, including URL and filename              |
@@ -127,34 +127,34 @@ Collections related to book data:<br>
 | description	  | String   | Provides a brief overview or synopsis of the book                        |
 | publishDate	  | Date     | The official publication date of the book, indexed for search efficiency |
 
-**Genre**
+Genre
 | Key Attribute | Type   | Description                                                                   |
 | ------------- | ------ | -----------------------------------------------------------------------------|
 | genre         | String | The full name is used to represent the genre, ensuring correct classification |
 | shortName     |	String | An abbreviated version of the genre name is used for display purposes         |
 
-**Language**
+Language
 | Key Attribute | Type   | Description                                                                   |
 | ------------- | ------ | ----------------------------------------------------------------------------- |
 | language      | String | The full name used to represent the language, ensures correct classification  |
 | shortName     |	String | An abbreviated version of the language name is used for display purposes      |
 
-**Author**
+Author
 | Key Attribute |	Type   | Description                                                                                 |
 | ------------- | ------ | ------------------------------------------------------------------------------------------- |
 | publisher	    | String | The full name of the publisher, stored for identification purposes                          |
 | phoneNumber	  | String | The contact number provided for communication with the publisher                            |
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
-**Publisher**
+Publisher
 | Key Attribute |	Type   | Description                                                                                 |
 | ------------- | ------ | ------------------------------------------------------------------------------------------- |
 | author	      | String | The full name of the author, stored for identification purposes                             |
 | phoneNumber	  | String | The contact number provided for communication with the publisher                            |
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
-Collections related to user data:<br>
-**User**
+**Collections related to user data**
+User
 | Key Attribute | Type   | Description                                   |
 | ------------- | ------ | --------------------------------------------- |
 | Username      | String | The unique display name chosen by the user    |
@@ -165,7 +165,7 @@ Collections related to user data:<br>
 | birthDay      | Date   | Stores the user’s date of birth               |
 | avatarurl     | String | The URL for the avatar image                  |
 
-**SuspendList**
+SuspendList
 | Key Attribute |	Type	    | Description                                                                                                |
 | ------------- | --------- |----------------------------------------------------------------------------------------------------------- |
 | userID        |	ObjectID  |	Links to the user collection, ensuring proper tracking of suspended individuals                            |
@@ -174,8 +174,8 @@ Collections related to user data:<br>
 | dueDate	      | Date	    | The scheduled date when the suspension will end, allowing access restoration                               |
 
 
-Collections related to interaction between book and user:<br>
-**BookFavourite**
+**Collections related to interaction between book and user**
+BookFavourite
 | Key Attribute |	Type     | Description                                                                                          |
 | ------------- | -------- | ---------------------------------------------------------------------------------------------------- |
 | userID        |	ObjectID | References to the user collection to identify the user who has loaned books                          |
@@ -187,7 +187,7 @@ Collections related to interaction between book and user:<br>
 | finesAmount   |	Number	 | The monetary fine for overdue book returns                                                           |
 | finesPaid	    | String   | Indicate whether the fine was paid, with predefined statuses, like Paid, Not Paid, or No Fine Needed |
 
-**BookLoaned**
+BookLoaned
 | Key Attribute | Type     | Description                                                                  |
 | ------------- | -------- | ---------------------------------------------------------------------------- |
 | userID        | ObjectID | References the user collection to identify the user who favourited the books |
