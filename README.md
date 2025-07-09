@@ -70,13 +70,13 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 ## Architecture
 **Frontend**<br>
 
-**Sequence Diagram (Authentication)**<br>
+**Sequence Diagram (Authentication)**
 <img src="Image/Diagrams/RegisterSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram explain the flow of account registeration,
 <img src="Image/Diagrams/LoginSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram explain the flow of account login,
 
-**Sequence Diagram (Project Features)**<br>
+**Sequence Diagram (Project Features)**
 <img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:75%;"/><br>
 This sequence diagram explain the flow of get data from Google Book,
 <img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:75%;"/><br>
@@ -84,7 +84,7 @@ This sequence diagram explain the flow of get Generate QR Code,
 <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:75%;"/><br>
 This sequence diagram explain the flow of book recommendation,
 
-**Sequence Diagram (CRUD operations)**<br>
+**Sequence Diagram (CRUD operations)**
 <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%;"/><br>
 This sequence diagram explain the flow of GET data,
 <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%;"/><br>
@@ -95,17 +95,17 @@ This sequence diagram explain the flow of PUT method to update data,
 This sequence diagram explain the flow of DELETE data,
 
 **Backend**
-Architecture Diagram<br>
+Architecture Diagram
 <img src="Image/Diagrams/Systemarchitecture.png" style="width:75%;"/><br>
 
 
 **Database**
-Entity-Relational Diagram(ERD)<br>
+Entity-Relational Diagram(ERD)
 <img src="Image/Diagrams/EntityRelationDiagram-LibraryManagementSystem.png" style="width:75%;"/><br>
 This ERD explain the database schema for the Library Management System
 
 Collections related to book data:
-- Book<br>
+**Book**
 | Key Attribute |	Type     | Description                                                              |
 | ------------- | -------- | ------------------------------------------------------------------------ |
 | image         |	Object   | Stores book cover image details, including URL and filename              |
@@ -118,34 +118,34 @@ Collections related to book data:
 | description	  | String   | Provides a brief overview or synopsis of the book                        |
 | publishDate	  | Date     | The official publication date of the book, indexed for search efficiency |
 
-- Genre<br>
+**Genre**
 | Key Attribute | Type   | Description                                                                   |
-| ------------- | ------ | ------------------------------------------------------------------------------|
+| ------------- | ------ | -----------------------------------------------------------------------------|
 | genre         | String | The full name is used to represent the genre, ensuring correct classification |
 | shortName     |	String | An abbreviated version of the genre name is used for display purposes         |
 
-- Language<br>
+**Language**
 | Key Attribute | Type   | Description                                                                   |
-| ------------- | ------ | ------------------------------------------------------------------------------|
+| ------------- | ------ | ----------------------------------------------------------------------------- |
 | language      | String | The full name used to represent the language, ensures correct classification  |
 | shortName     |	String | An abbreviated version of the language name is used for display purposes      |
 
-- Author<br>
+**Author**
 | Key Attribute |	Type   | Description                                                                                 |
-| ------------- | ------ | --------------------------------------------------------------------------------------------|
+| ------------- | ------ | ------------------------------------------------------------------------------------------- |
 | publisher	    | String | The full name of the publisher, stored for identification purposes                          |
 | phoneNumber	  | String | The contact number provided for communication with the publisher                            |
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
-- Publisher<br>
+**Publisher**
 | Key Attribute |	Type   | Description                                                                                 |
-| ------------- | ------ | --------------------------------------------------------------------------------------------|
+| ------------- | ------ | ------------------------------------------------------------------------------------------- |
 | author	      | String | The full name of the author, stored for identification purposes                             |
 | phoneNumber	  | String | The contact number provided for communication with the publisher                            |
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
 Collections related to user data:
-- User<br>
+**User**
 | Key Attribute | Type   | Description                                   |
 | ------------- | ------ | --------------------------------------------- |
 | Username      | String | The unique display name chosen by the user    |
@@ -156,7 +156,7 @@ Collections related to user data:
 | birthDay      | Date   | Stores the user’s date of birth               |
 | avatarurl     | String | The URL for the avatar image                  |
 
-- SuspendList<br>
+**SuspendList**
 | Key Attribute |	Type	    | Description                                                                                                |
 | ------------- | --------- |----------------------------------------------------------------------------------------------------------- |
 | userID        |	ObjectID  |	Links to the user collection, ensuring proper tracking of suspended individuals                            |
@@ -166,7 +166,7 @@ Collections related to user data:
 
 
 Collections related to interaction between book and user:
-- BookFavourite<br>
+**BookFavourite**
 | Key Attribute |	Type     | Description                                                                                          |
 | ------------- | -------- | ---------------------------------------------------------------------------------------------------- |
 | userID        |	ObjectID | References to the user collection to identify the user who has loaned books                          |
@@ -178,7 +178,7 @@ Collections related to interaction between book and user:
 | finesAmount   |	Number	 | The monetary fine for overdue book returns                                                           |
 | finesPaid	    | String   | Indicate whether the fine was paid, with predefined statuses, like Paid, Not Paid, or No Fine Needed |
 
-- BookLoaned<br>
+**BookLoaned**
 | Key Attribute | Type     | Description                                                                  |
 | ------------- | -------- | ---------------------------------------------------------------------------- |
 | userID        | ObjectID | References the user collection to identify the user who favourited the books |
