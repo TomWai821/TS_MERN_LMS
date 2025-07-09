@@ -152,7 +152,7 @@ Genre
 | genre         | String | The full name is used to represent the genre, ensuring correct classification |
 | shortName     |	String | An abbreviated version of the genre name is used for display purposes         |
 
-**Language**
+Language
 | Key Attribute | Type   | Description                                                                   |
 | ------------- | ------ | ----------------------------------------------------------------------------- |
 | language      | String | The full name used to represent the language, ensures correct classification  |
@@ -217,61 +217,61 @@ Remarks:
 1. Every collection includes an _id field of type ObjectId, which serves as the unique identifier
 
 ## UI Layout
-### Navigation
-<img src="Image/UILayout/Navigation-Guest.png" style="width:60%;"/><br>
-Navigation For Guest User<br>
+### 1. Navigation
+<img src="Image/UILayout/Navigation-Guest.png" style="width:70%;"/><br>
+Image 1.1 - Navigation For Guest User<br>
 
-<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:60%;"/><br>
-Navigation For Authenticated User<br>
+<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:70%;"/><br>
+Image 1.2 - Navigation For Authenticated User<br>
 
-<img src="Image/UILayout/Navigation-Admin.png" style="width:60%;"/><br>
-Navigation For Admin(Librarian)<br>
+<img src="Image/UILayout/Navigation-Admin.png" style="width:70%;"/><br>
+Image 1.3 - Navigation For Admin(Librarian)<br>
 
-### Main page (Book recommendation)
+### 2. Main page (Book recommendation)
 <img src="Image/UILayout/MainPage-Guest.png" style="width:60%;"/><br>
-Navigation For User / Authenticated User (who does not have a loan book record)<br>
+Image 2.1 - Navigation For User / Authenticated User (who does not have a loan book record)<br>
 
 <img src="Image/UILayout/MainPage-AuthenticateUser.png" style="width:60%;"/><br>
-Navigation For Authenticated User (Include Librarian)<br>
+Image 2.2 - Navigation For Authenticated User (Include Librarian)<br>
 
-### Authenticate Pages
+### 3. Authenticate Pages
 <img src="Image/UILayout/RegisterCard.png" style="width:40%;"/><br>
-Registration Page<br>
+Image 3.1 - Registration Page<br>
 
 <img src="Image/UILayout/LoginCard.png" style="width:40%;"/><br>
-Login Page<br>
+Image 3.2 - Login Page<br>
 
-### Profile Page
+### 4. Profile Page
 <img src="Image/UILayout/ProfileCard.png" style="width:40%;"/><br>
-Profile Page<br>
+Image 4.1 - Profile Page<br>
 
 <img src="Image/UILayout/DisplayQRCodeModal.png" style="width:40%;"/><br>
-QR Code Modal<br>
+Image 4.2 - QR Code Modal<br>
 
 <img src="Image/UILayout/EditProfileDataModal-username.png" style="width:40%;"/><br>
-Edit Profile Data Modal (Username)<br>
+Image 4.3 - Edit Profile Data Modal (Username)<br>
 
 <img src="Image/UILayout/EditProfileDataModal-password.png" style="width:40%;"/><br>
-Edit Profile Data Modal (Password)<br>
+Image 4.4 - Edit Profile Data Modal (Password)<br>
 
-### Content Page
+### 5. Content Page
 <img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:70%;"/><br>
-Top of Table Content With Filter (For User)<br>
+Image 5.1 -Top of Table Content With Filter (For User)<br>
 
 <img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:70%;"/><br>
-Top of Table Content With Filter (For Librarian)<br>
+Image 5.2 - Top of Table Content With Filter (For Librarian)<br>
 
 ### Modal for view data
 <img src="Image/UILayout/BookInfoModal-Guest.png" style="width:40%;"/><br>
-Book data modal (For user)<br>
+Image 5.3 - Book data modal (For user)<br>
 
 <img src="Image/UILayout/BookInfo-AuthenticateUser.png" style="width:40%;"/><br>
-Book data modal (For Authenticated User)<br>
+Image 5.4 - Book data modal (For Authenticated User)<br>
 
 <img src="Image/UILayout/BookInfo_GoogleBook-AuthenicateUser.png" style="width:40%;"/><br>
-Book data modal - Google Book (For Authenticated User)<br>
+Image 5.5 - Book data modal - Google Book (For Authenticated User)<br>
 
-### Modal for CRUD operations
+### 6. Modal for CRUD operations
 
 
 ## API Endpoints
