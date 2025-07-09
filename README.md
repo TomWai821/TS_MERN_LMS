@@ -113,15 +113,16 @@ Collections related to book data:
 
 Collections related to user data:
 - User<br>
-| Key Attribute | Type | Description |
-| --- | --- | --- |
-| Username | String | The unique display name chosen by the user |
-| Email | String | Primary identifier for authentication |
-| Password | String | Encrypted storage for login credentials |
-| Gender | String | Captures gender identity for the user profile |
-| Role | String | Defines permissions for admin and user |
-| birthDay | Date | Stores the user's date of birth |
-| avatarurl | String | The URL for the avatar image |
+
+| Key Attribute | Type   | Description                                   |
+| ------------- | ------ | --------------------------------------------- |
+| Username      | String | The unique display name chosen by the user    |
+| Email         | String | Primary identifier for authentication         |
+| Password      | String | Encrypted storage for login credentials       |
+| Gender        | String | Captures gender identity for the user profile |
+| Role          | String | Defines permissions for admin and user        |
+| birthDay      | Date   | Stores the user’s date of birth               |
+| avatarurl     | String | The URL for the avatar image                  |
 
 - SuspendList
 
