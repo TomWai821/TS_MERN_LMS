@@ -69,30 +69,35 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
 ## Architecture
 **Frontend**<br>
-
 **Sequence Diagram (Authentication)**
 <img src="Image/Diagrams/RegisterSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of account registeration,
+This sequence diagram illustrates the modular backend registration flow — from frontend validation and request dispatch, to database interaction and token generation. It ensures secure account creation with robust error handling and clean separation of concerns across services.
+
 <img src="Image/Diagrams/LoginSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of account login,
+This sequence diagram illustrates the login flow across frontend and backend layers — from validation and request dispatch to database verification and token generation. It ensures secure authentication with proper error handling and modular separation across components such as middleware, endpoint logic, and MongoDB integration.
 
 **Sequence Diagram (Project Features)**
 <img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of get data from Google Book,
+This sequence diagram illustrates the book data retrieval flow initiated by a frontend GET request to the Google Books API. When the user presses the book image, an event handler constructs and sends a request containing the book name and author name. Upon receiving the response, the event handler processes the returned data and renders the book results to the user interface.
+
 <img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of get Generate QR Code,
+This sequence diagram illustrates the QR Code generation flow initiated by a user interaction. When the user clicks the "Display QR Code" button, the event handler retrieves the authentication token and username from local or cookie storage. It then parses the data and sends a request to the QR Code Generator service. Upon receiving the response, the event handler opens a modal and displays the generated QR code to the user.
+
 <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of book recommendation,
+This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging.
 
 **Sequence Diagram (CRUD operations)**
 <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of GET data,
+This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client.
+
 <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of POST method to create data,
+This sequence diagram illustrates the user confirmation flow, beginning with a frontend POST request and progressing through middleware parsing, backend validation, and MongoDB record creation. It demonstrates secure data handling with token verification, modular backend orchestration, and structured client response, ensuring reliability and clarity in the user confirmation process.
+
 <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of PUT method to update data,
+This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend. With middleware safeguards, token verification, and modular backend orchestration, the system ensures accurate record updates and clear client feedback.
+
 <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%;"/><br>
-This sequence diagram explain the flow of DELETE data,
+This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
 
 **Backend**
 **Backend Process Flow Diagram**
@@ -113,7 +118,7 @@ Backend side using modular API design, therefore using backend process flow diag
 <img src="Image/Diagrams/EntityRelationDiagram-LibraryManagementSystem.png" style="width:75%;"/><br>
 This ERD explain the database schema for the Library Management System
 
-**Collections related to book data**
+**Collections related to book data**<br>
 Book
 | Key Attribute |	Type     | Description                                                              |
 | ------------- | -------- | ------------------------------------------------------------------------ |
@@ -153,7 +158,7 @@ Publisher
 | phoneNumber	  | String | The contact number provided for communication with the publisher                            |
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
-**Collections related to user data**
+**Collections related to user data**<br>
 User
 | Key Attribute | Type   | Description                                   |
 | ------------- | ------ | --------------------------------------------- |
@@ -174,7 +179,7 @@ SuspendList
 | dueDate	      | Date	    | The scheduled date when the suspension will end, allowing access restoration                               |
 
 
-**Collections related to interaction between book and user**
+**Collections related to interaction between book and user**<br>
 BookFavourite
 | Key Attribute |	Type     | Description                                                                                          |
 | ------------- | -------- | ---------------------------------------------------------------------------------------------------- |
