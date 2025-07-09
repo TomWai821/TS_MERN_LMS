@@ -69,6 +69,8 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
 ## Architecture
 ### Frontend
+
+
 #### Sequence Diagram (Authentication)
 1. **Registration**<br>
   <img src="Image/Diagrams/RegisterSequenceDiagram.png" style="width:75%;"/><br>
@@ -77,6 +79,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 2. **Login**<br>
   <img src="Image/Diagrams/LoginSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram illustrates the login flow across frontend and backend layers — from validation and request dispatch to database verification and token generation. It ensures secure authentication with proper error handling and modular separation across components such as middleware, endpoint logic, and MongoDB integration.
+
 
 #### Sequence Diagram (Project Features)
 1. **External Data from Google Book API**<br>
@@ -90,6 +93,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 3. **Book Recommendation**<br>
   <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:75%;"/><br>
   This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging.
+
 
 #### Sequence Diagram (CRUD operations)
 1. **Get data from backend side**<br>
@@ -107,6 +111,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 4. **Data Deletion**<br>
   <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%;"/><br>
   This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
+
 
 ### Backend
 #### Backend Process Flow Diagram
@@ -212,7 +217,63 @@ Remarks:
 1. Every collection includes an _id field of type ObjectId, which serves as the unique identifier
 
 ## UI Layout
-   
+### Navigation
+<img src="Image/UILayout/Navigation-Guest.png" style="width:75%;"/><br>
+Navigation For Guest User<br>
+
+<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:75%;"/><br>
+Navigation For Authenticated User<br>
+
+<img src="Image/UILayout/Navigation-Admin.png" style="width:75%;"/><br>
+Navigation For Admin(Librarian)<br>
+
+### Main page (Book recommendation)
+<img src="Image/UILayout/MainPage-Guest.png" style="width:75%;"/><br>
+Navigation For User / Authenticated User (who does not have a loan book record)<br>
+
+<img src="Image/UILayout/MainPage-AuthenticateUser.png" style="width:75%;"/><br>
+Navigation For Authenticated User (Include Librarian)<br>
+
+### Authenticate Pages
+<img src="Image/UILayout/RegisterCard.png" style="width:75%;"/><br>
+Registration Page<br>
+
+<img src="Image/UILayout/LoginCard.png" style="width:75%;"/><br>
+Login Page<br>
+
+### Profile Page
+<img src="Image/UILayout/ProfileCard.png" style="width:75%;"/><br>
+Profile Page<br>
+
+<img src="Image/UILayout/DisplayQRCodeModal.png" style="width:75%;"/><br>
+QR Code Modal<br>
+
+<img src="Image/UILayout/EditProfileDataModal-username.png" style="width:75%;"/><br>
+Edit Profile Data Modal (Username)<br>
+
+<img src="Image/UILayout/EditProfileDataModal-password.png" style="width:75%;"/><br>
+Edit Profile Data Modal (Password)<br>
+
+### Content Page
+<img src="Image/UILayout/TopOfTableContentWithFilter-Guest.png" style="width:75%;"/><br>
+Top of Table Content With Filter (For User)<br>
+
+<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:75%;"/><br>
+Top of Table Content With Filter (For Librarian)<br>
+
+### Modal for view data
+<img src="Image/UILayout/BookInfoModal-Guest.png" style="width:75%;"/><br>
+Book data modal (For user)<br>
+
+<img src="Image/UILayout/BookInfo-AuthenticateUser.png" style="width:75%;"/><br>
+Book data modal (For Authenticated User)<br>
+
+<img src="Image/UILayout/BookInfo_GoogleBook-AuthenicateUser.png" style="width:75%;"/><br>
+Book data modal - Google Book (For Authenticated User)<br>
+
+### Modal for CRUD operations
+
+
 ## API Endpoints
 ### For Authenication 
 1. For login
