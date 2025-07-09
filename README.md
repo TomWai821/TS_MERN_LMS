@@ -72,24 +72,24 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 Sequence Diagram<br>
 
 **Sequence Diagram (Authentication)**<br>
-<img src="Image/Diagrams/RegisterSequenceDiagram.png />
+<img src="Image/Diagrams/RegisterSequenceDiagram.png" style="width:75%;"/>
 
-<img src="Image/Diagrams/LoginSequenceDiagram.png />
+<img src="Image/Diagrams/LoginSequenceDiagram.png" style="1000"/>
 
 **Sequence Diagram (Project Features)**<br>
-<img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" width="400"/>
-<img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" width="400"/>
-<img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" width="400"/>
+<img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="400"/>
+<img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="400"/>
+<img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="400"/>
 
 **Sequence Diagram (CRUD operations)**<br>
-<img src="Image/Diagrams/GetDataSequenceDiagram.png" width="400"/>
-<img src="Image/Diagrams/CreateDataSequenceDiagram.png" width="400"/>
-<img src="Image/Diagrams/UpdateDataSequenceDiagram.png" width="400"/>
-<img src="Image/Diagrams/DeleteDataSequenceDiagram.png" width="400"/>
+<img src="Image/Diagrams/GetDataSequenceDiagram.png" style="400"/>
+<img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="400"/>
+<img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="400"/>
+<img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="400"/>
 
 **Backend**
 Architecture Diagram<br>
-<img src="Image/Diagrams/Systemarchitecture.png" width="400"/>
+<img src="Image/Diagrams/Systemarchitecture.png" style="400"/>
 
 **Database**
 Entity-Relational Diagram(ERD)<br>
