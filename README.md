@@ -224,7 +224,7 @@ Navigation For Guest User<br>
 <img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:75%;"/><br>
 Navigation For Authenticated User<br>
 
-<img src="Image/UILayout/Navigation-Admin.png" style="width:60%;"/><br>
+<img src="Image/UILayout/Navigation-Admin.png" style="width:75%;"/><br>
 Navigation For Admin(Librarian)<br>
 
 ### Main page (Book recommendation)
@@ -255,10 +255,10 @@ Edit Profile Data Modal (Username)<br>
 Edit Profile Data Modal (Password)<br>
 
 ### Content Page
-<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:60%;"/><br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:75%;"/><br>
 Top of Table Content With Filter (For User)<br>
 
-<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:60%;"/><br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:75%;"/><br>
 Top of Table Content With Filter (For Librarian)<br>
 
 ### Modal for view data
