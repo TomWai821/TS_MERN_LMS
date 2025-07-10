@@ -83,33 +83,33 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 
 #### Sequence Diagram (Project Features)
 1. **External Data from Google Book API**<br>
-  <img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:90%;"/><br>
   This sequence diagram illustrates the book data retrieval flow initiated by a frontend GET request to the Google Books API. When the user presses the book image, an event handler constructs and sends a request containing the book name and author name. Upon receiving the response, the event handler processes the returned data and renders the book results to the user interface.
 
 2. **QR Code Generation**<br>
-  <img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:90%;"/><br>
   This sequence diagram illustrates the QR Code generation flow initiated by a user interaction. When the user clicks the "Display QR Code" button, the event handler retrieves the authentication token and username from local or cookie storage. It then parses the data and sends a request to the QR Code Generator service. Upon receiving the response, the event handler opens a modal and displays the generated QR code to the user.
 
 3. **Book Recommendation**<br>
-  <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:90%;"/><br>
   This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging.
 
 
 #### Sequence Diagram (CRUD operations)
 1. **Get data from backend side**<br>
-  <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:90%;"/><br>
   This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client.
 
 2. **Data Creation**<br>
-  <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:90%;"/><br>
   This sequence diagram illustrates the user confirmation flow, beginning with a frontend POST request and progressing through middleware parsing, backend validation, and MongoDB record creation. It demonstrates secure data handling with token verification, modular backend orchestration, and structured client response, ensuring reliability and clarity in the user confirmation process.
 
 3. **Data Modification**<br>
-  <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:90%;"/><br>
   This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend. With middleware safeguards, token verification, and modular backend orchestration, the system ensures accurate record updates and clear client feedback.
 
 4. **Data Deletion**<br>
-  <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:75%;"/><br>
+  <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:90%;"/><br>
   This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
 
 
@@ -227,12 +227,21 @@ Image 1.2 - Navigation For Authenticated User<br>
 <img src="Image/UILayout/Navigation-Admin.png" style="width:90%;"/><br>
 Image 1.3 - Navigation For Admin(Librarian)<br>
 
+#### Description:<br>
+- Guest users require an account to edit profile data or view records, and they just have permission to view book data<br>
+- Authenticated Users have permission to view book data from the internal database and external data from Google Books. Also, it could view suspended users in the suspend list, view profile, modify profile data, view records(loan book and favourite book) and use QR Code to loan book (on the right-hand side)<br>
+- Administrator (Librarian) can manage book, user, contact and book definition data. And the right-hand side function is the same as Authenticated User<br>
+ 
 ### 2. Main page (Book recommendation)
 <img src="Image/UILayout/MainPage-Guest.png" style="width:90%;"/><br>
-Image 2.1 - Navigation For User / Authenticated User (who does not have a loan book record)<br>
+Image 2.1 - Main Page For User / Authenticated User (who does not have a loan book record)<br>
 
 <img src="Image/UILayout/MainPage-AuthenticateUser.png" style="width:90%;"/><br>
-Image 2.2 - Navigation For Authenticated User (Include Librarian)<br>
+Image 2.2 - Main Page For Authenticated User (Include Librarian)<br>
+
+#### Description:<br>
+- Guest users and Authenticated Users who do not have a loan book record could see the most popular book and the newest published book on the main page<br>
+- Authenticated Users who have a loan book record could view recommended books from the backend system, just as with Guest users and Authenticated Users who do not have a loan book record<br>
 
 ### 3. Authenticate Pages
 <img src="Image/UILayout/RegisterCard.png" style="width:40%;"/><br>
@@ -240,6 +249,10 @@ Image 3.1 - Registration Page<br>
 
 <img src="Image/UILayout/LoginCard.png" style="width:40%;"/><br>
 Image 3.2 - Login Page<br>
+
+#### Description:<br>
+- Registration Page requires input of all the data to register an account, also has a validator to verify data in the input field<br>
+- The Login Page requires input of all the data to log in, and it also has a validator to verify the data in the input field. Furthermore, it has a checkbox to decide whether to store data in session storage or cookie storage<br>
 
 ### 4. Profile Page
 <img src="Image/UILayout/ProfileCard.png" style="width:40%;"/><br>
@@ -254,6 +267,12 @@ Image 4.3 - Edit Profile Data Modal (Username)<br>
 <img src="Image/UILayout/EditProfileDataModal-password.png" style="width:40%;"/><br>
 Image 4.4 - Edit Profile Data Modal (Password)<br>
 
+#### Description:<br>
+- Profile card could view all the data<br>
+- QR Code modal has a QR Code used to loan book, and here has a hint to ask user how to use the QR Code<br>
+- The edit modal for username, it just require to input new username<br>
+- The edit modal for password, it requires input new password and confirm password<br>
+
 ### 5. Content Page
 <img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:90%;"/><br>
 Image 5.1 - Top of Table Content With Filter (For User)<br>
@@ -261,15 +280,24 @@ Image 5.1 - Top of Table Content With Filter (For User)<br>
 <img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:90%;"/><br>
 Image 5.2 - Top of Table Content With Filter (For Librarian)<br>
 
+#### Description:<br>
+- The top of the table content for the user, which includes a filter with an expandable panel, a title with the total number of records and a dropdown for the pagination <br>
+- The top of the table content for the librarian, which has a tab to change the table and has an action button between the search button, another function is the same as that of the user<br>
+
 ### 6. Modal for view data
 <img src="Image/UILayout/BookInfoModal-Guest.png" style="width:40%;"/><br>
-Image 6.1 - Book data modal (For user)<br>
+Image 6.1 - Book data modal (For Guest user)<br>
 
 <img src="Image/UILayout/BookInfo-AuthenticateUser.png" style="width:40%;"/><br>
 Image 6.2 - Book data modal (For Authenticated User)<br>
 
 <img src="Image/UILayout/BookInfo_GoogleBook-AuthenicateUser.png" style="width:40%;"/><br>
 Image 6.3 - Book data modal (Google Book - For Authenticated User)<br>
+
+#### Description:<br>
+- The book data modal for guest users only includes basic book data<br>
+- The book data modal for authenticated users (including librarians) allows them to view book status, and it is the same as that of guest users<br>
+- The book data modal for authenticated users (including librarians) allows them to view Google Book data, and ISBM display as a BarCode Image<br>
 
 ### 7. Modal for CRUD operations
 <img src="Image/UILayout/CreateBookModal.png" style="width:50%;"/><br>
@@ -287,14 +315,23 @@ Image 7.4 - Book data Modify Confirmation Modal <br>
 <img src="Image/UILayout/DeleteBookConfrimationModal.png" style="width:40%;"/><br>
 Image 7.5 - Book record Delete Confirmation Modal <br>
 
-### 8. Way to display data
+#### Description:<br>
+- The modal for book record creation requires input of most of the data and has a validator to validate data<br>
+- The modal for book record create confirmation allows the librarian to view the input data again<br>
+- The modal for book record modification requires input of most of the data and has a validator to validate data<br>
+- The modal for book record modify confirmation, it allows the librarian to view which data was modified<br>
+- The modal for book record delete confirmation, it allows the librarian to view which data will be deleted and let the librarian confirm the process<br>
 
+### 8. Way to display data
 <img src="Image/UILayout/TableCell_BookManagementPage.png" style="width:90%;"/><br>
 Image 8.1 - Table Cell with buttons
 
 <img src="Image/UILayout/DefinitionPage.png" style="width:90%;"/><br>
 Image 8.2 - Chip set
 
+#### Description:<br>
+- The table cell which stores book data and the actions allow the user/librarian to implement<br>
+- The data is stored with chips, which could reduce the space to display data<br>
 
 ## API Endpoints
 ### For Authenication 
