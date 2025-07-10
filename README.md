@@ -42,37 +42,37 @@ These automated backend functions run silently in the background and are difficu
 
 <img src="Image/Functions/DetectRecordDaily.png" style="width:40%;"/><br>
 Performs scheduled scans for:
-    - Expired Loan Records
-    - Suspension Records
-    - Fine Calculations
+- Expired Loan Records
+- Suspension Records
+- Fine Calculations
 This function acts as the entry point for daily automation checks (located in "backend/detectRecord.ts").
 
 <img src="Image/Functions/DetectExpiredLoanRecord.png" style="width:90%;"/><br>
 This source code (located in backend/schema/book/bookloaned.ts, Line 159–196) automatically performs detection and handling of expired loan records:
-    - Fetch: All loan records with "Loaned" status
-    - Compare: Each dueDate vs today
-    - Update Logic:
-        - Set finesPaidStatus to "Not Paid"
-        - Apply flat fineAmount of $1.5
-    - Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
+- Fetch: All loan records with "Loaned" status
+- Compare: Each dueDate vs today
+- Update Logic:
+    - Set finesPaidStatus to "Not Paid"
+    - Apply flat fineAmount of $1.5
+- Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
 
 <img src="Image/Functions/FinesAmountCalculation.png" style="width:90%;"/><br>
 This source code (located in backend/schema/book/bookloaned.ts, Line 198–232) automatically performs detection and handling of fines amount calculation:
-    - Days Overdue: Calculated from due date
-    - Fine Formula: $1.5 × days overdue, capped at $130
-    - Updates:
-        - fineAmount set dynamically
-        - finesPaidStatus set to "Not Paid"
-    - Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
+- Days Overdue: Calculated from due date
+- Fine Formula: $1.5 × days overdue, capped at $130
+- Updates:
+    - fineAmount set dynamically
+    - finesPaidStatus set to "Not Paid"
+- Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
 
 <img src="Image/Functions/SuspendRecordDetection.png" style="width:90%;"/><br>
 This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) automatically performs the process of unsuspending users whose suspension period has expired:
-    - Compare Dates: Compares each dueDate with today’s date
-    - User Status Update: "Suspended" → "Normal"
-    - Record Update:
-        - Suspension status → "Unsuspend"
-        - unSuspendDate → today
-    - Feedback Message: “Unsuspend user [ID] successfully!”
+- Compare Dates: Compares each dueDate with today’s date
+- User Status Update: "Suspended" → "Normal"
+- Record Update:
+    - Suspension status → "Unsuspend"
+    - unSuspendDate → today
+- Feedback Message: “Unsuspend user [ID] successfully!”
 
 ## Installation
 1. **Clone the repository:**
