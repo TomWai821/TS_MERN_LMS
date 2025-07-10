@@ -218,20 +218,20 @@ Remarks:
 
 ## UI Layout
 ### 1. Navigation
-<img src="Image/UILayout/Navigation-Guest.png" style="width:75%;"/><br>
+<img src="Image/UILayout/Navigation-Guest.png" style="width:90%;"/><br>
 Image 1.1 - Navigation For Guest User<br>
 
-<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:75%;"/><br>
+<img src="Image/UILayout/Navigation-AuthenticateUser.png" style="width:90%;"/><br>
 Image 1.2 - Navigation For Authenticated User<br>
 
-<img src="Image/UILayout/Navigation-Admin.png" style="width:75%;"/><br>
+<img src="Image/UILayout/Navigation-Admin.png" style="width:90%;"/><br>
 Image 1.3 - Navigation For Admin(Librarian)<br>
 
 ### 2. Main page (Book recommendation)
-<img src="Image/UILayout/MainPage-Guest.png" style="width:75%;"/><br>
+<img src="Image/UILayout/MainPage-Guest.png" style="width:90%;"/><br>
 Image 2.1 - Navigation For User / Authenticated User (who does not have a loan book record)<br>
 
-<img src="Image/UILayout/MainPage-AuthenticateUser.png" style="width:75%;"/><br>
+<img src="Image/UILayout/MainPage-AuthenticateUser.png" style="width:90%;"/><br>
 Image 2.2 - Navigation For Authenticated User (Include Librarian)<br>
 
 ### 3. Authenticate Pages
@@ -255,10 +255,10 @@ Image 4.3 - Edit Profile Data Modal (Username)<br>
 Image 4.4 - Edit Profile Data Modal (Password)<br>
 
 ### 5. Content Page
-<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:75%;"/><br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-User.png" style="width:90%;"/><br>
 Image 5.1 - Top of Table Content With Filter (For User)<br>
 
-<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:75%;"/><br>
+<img src="Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:90%;"/><br>
 Image 5.2 - Top of Table Content With Filter (For Librarian)<br>
 
 ### 6. Modal for view data
@@ -289,10 +289,10 @@ Image 7.5 - Book record Delete Confirmation Modal <br>
 
 ### 8. Way to display data
 
-<img src="Image/UILayout/TableCell_BookManagementPage.png" style="width:75%;"/><br>
+<img src="Image/UILayout/TableCell_BookManagementPage.png" style="width:90%;"/><br>
 Image 8.1 - Table Cell with buttons
 
-<img src="Image/UILayout/DefinitionPage.png" style="width:75%;"/><br>
+<img src="Image/UILayout/DefinitionPage.png" style="width:90%;"/><br>
 Image 8.2 - Chip set
 
 
