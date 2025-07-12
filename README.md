@@ -85,6 +85,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     - unSuspendDate → today
 - Feedback Message: “Unsuspend user [ID] successfully!”
 </details>
+</details>
 
 ## Installation
 1. **Clone the repository:**
