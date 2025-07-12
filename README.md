@@ -188,7 +188,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 <img src="Image/Diagrams/Systemarchitecture.png" style="width:75%;"/><br>
 Backend side using modular API design, therefore using backend process flow diagram is better than using a class diagram to explain the backend architecture
 | Component            | Usage                                                               |
-| -------------------- | ------------------------------------------------------------------  |
+| -------------------- | ------------------------------------------------------------------- |
 | Request              | User initiates an API call from the frontend                        |
 | Router               | Directs the request to appropriate route modules (e.g. Book, User)  |
 | Route                | Defines endpoint logic and links to relevant controller functions   |
@@ -247,7 +247,7 @@ Publisher
 </details>
 
 <details>
-<summary>Collections related to user data<summary>
+<summary>Collections related to user data</summary>
 User
 | Key Attribute | Type   | Description                                   |
 | ------------- | ------ | --------------------------------------------- |
@@ -258,7 +258,6 @@ User
 | Role          | String | Defines permissions for admin and user        |
 | birthDay      | Date   | Stores the user’s date of birth               |
 | avatarurl     | String | The URL for the avatar image                  |
-
 SuspendList
 | Key Attribute |	Type    | Description                                                                                                |
 | ------------- | --------- |------------------------------------------------------------------------------------------------------------|
