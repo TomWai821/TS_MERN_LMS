@@ -48,7 +48,7 @@ Performs scheduled scans for:
 - Suspension Records
 - Fine Calculations
 This function acts as the entry point for daily automation checks (located in "backend/detectRecord.ts")
-</details>details>
+</details>
 
 <details>
 <summary>Detect Expired Loan Book Records</summary>
@@ -127,57 +127,73 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 ### Frontend
 <details>
     <summary>Sequence Diagram (Authentication)</summary>
-    1. Registration<br>
+    <details>
+    <summary>Registration</summary>
     <img src="Image/Diagrams/RegisterSequenceDiagram.png" style="width:90%;"/><br>
     This sequence diagram illustrates the modular backend registration flow — from frontend validation and request dispatch, to database interaction and token generation. It ensures secure account creation with robust error handling and clean separation of concerns across services
-    2. Login<br>
+    </details>
+    <details>
+    <summary>Login</summary>
     <img src="Image/Diagrams/LoginSequenceDiagram.png" style="width:90%;"/><br>
     This sequence diagram illustrates the login flow across frontend and backend layers — from validation and request dispatch to database verification and token generation. It ensures secure authentication with proper error handling and modular separation across components such as middleware, endpoint logic, and MongoDB integration.
+    </details>
 </details>
 
 <details>
 <summary>Sequence Diagram (Project Features)</summary>
-    1. External Data from Google Book API<br>
+    <details>
+    <summary>External Data from Google Book API</summary>
     <img src="Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:90%;"/><br>
-    This sequence diagram illustrates the book data retrieval flow initiated by a frontend GET request to the Google Books API. When the user presses the book image, an event handler constructs and sends a request containing the book name and author name. Upon receiving the response, the event handler processes the returned data and renders the book results to the user interface.
-    2. QR Code Generation<br>
+    This sequence diagram illustrates the book data retrieval flow initiated by a frontend GET request to the Google Books API. When the user presses the book image, an event handler constructs and sends a request containing the book name and author name. Upon receiving the response, the event handler processes the returned data and renders the book results to the user interface
+    </details>
+    <details>
+    <summary>QR Code Generation<summary>
     <img src="Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:90%;"/><br>
-    This sequence diagram illustrates the QR Code generation flow initiated by a user interaction. When the user clicks the "Display QR Code" button, the event handler retrieves the authentication token and username from local or cookie storage. It then parses the data and sends a request to the QR Code Generator service. Upon receiving the response, the event handler opens a modal and displays the generated QR code to the user.
-    3. Book Recommendation<br>
+    This sequence diagram illustrates the QR Code generation flow initiated by a user interaction. When the user clicks the "Display QR Code" button, the event handler retrieves the authentication token and username from local or cookie storage. It then parses the data and sends a request to the QR Code Generator service. Upon receiving the response, the event handler opens a modal and displays the generated QR code to the user
+    </details>
+    <details>
+    <summary>Book Recommendation<summary>
     <img src="Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:90%;"/><br>
-    This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging.
+    This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records. The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF. A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging
+    </summary>
 </details>
 
 <details>
     <summary>Sequence Diagram (CRUD operations)</summary>
-    1. Get data from backend side<br>
+    <details>
+    <summary>Get data from backend side<summary>
     <img src="Image/Diagrams/GetDataSequenceDiagram.png" style="width:90%;"/><br>
-    This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client.
-    2. Data Creation<br>
+    This sequence diagram illustrates the data retrieval flow initiated via a frontend GET request. The process involves middleware-level parsing, backend token validation, and data querying from MongoDB. With modular orchestration across services and structured response handling, it ensures secure and reliable delivery of data to the client
+    </details>
+    <details>
+    <summary>Data Creation</summary>
     <img src="Image/Diagrams/CreateDataSequenceDiagram.png" style="width:90%;"/><br>
     This sequence diagram illustrates the user confirmation flow, beginning with a frontend POST request and progressing through middleware parsing, backend validation, and MongoDB record creation. It demonstrates secure data handling with token verification, modular backend orchestration, and structured client response, ensuring reliability and clarity in the user confirmation process.
-    3. Data Modification<br>
+    <summary>Data Modification</summary>
     <img src="Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:90%;"/><br>
     This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend. With middleware safeguards, token verification, and modular backend orchestration, the system ensures accurate record updates and clear client feedback.
-    4. Data Deletion<br>
+    </details>
+    <details>
+    <summary>Data Deletion</summary>
     <img src="Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:90%;"/><br>
     This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations.
+    </details>
 </details>
 
 ### Backend
 <details>
-    <summary>Backend Process Flow Diagram</summary>
-    <img src="Image/Diagrams/Systemarchitecture.png" style="width:75%;"/><br>
-    Backend side using modular API design, therefore using backend process flow diagram is better than using a class diagram to explain the backend architecture
-    | Component            | Usage                                                               |
-    | -------------------- | ------------------------------------------------------------------  |
-    | Request              | User initiates an API call from the frontend                        |
-    | Router               | Directs the request to appropriate route modules (e.g. Book, User)  |
-    | Route                | Defines endpoint logic and links to relevant controller functions   |
-    | Middleware           | Validates headers, URL parameters, and request body for consistency |
-    | Service              | Processes business logic and prepares database queries              |
-    | Database Interaction | Executes query using processed data and returns results             |
-    | API Response         | Structures and sends the response back to the client                |
+<summary>Backend Process Flow Diagram</summary>
+<img src="Image/Diagrams/Systemarchitecture.png" style="width:75%;"/><br>
+Backend side using modular API design, therefore using backend process flow diagram is better than using a class diagram to explain the backend architecture
+| Component            | Usage                                                               |
+| -------------------- | ------------------------------------------------------------------  |
+| Request              | User initiates an API call from the frontend                        |
+| Router               | Directs the request to appropriate route modules (e.g. Book, User)  |
+| Route                | Defines endpoint logic and links to relevant controller functions   |
+| Middleware           | Validates headers, URL parameters, and request body for consistency |
+| Service              | Processes business logic and prepares database queries              |
+| Database Interaction | Executes query using processed data and returns results             |
+| API Response         | Structures and sends the response back to the client                |
 </details>
 
 ### Database
