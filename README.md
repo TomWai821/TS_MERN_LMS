@@ -187,7 +187,7 @@ Backend side using modular API design, therefore using backend process flow diag
 This ERD explain the database schema for the Library Management System
 
 
-Collections related to book data<br>
+****Collections related to book data****<br>
 Book
 | Key Attribute | Type     | Description                                                              |
 | ------------- | -------- | ------------------------------------------------------------------------ |
@@ -228,7 +228,7 @@ Publisher
 | email         | String | The email address used for professional or system-related correspondence with the publisher |
 
 
-Collections related to user data
+****Collections related to user data****<br>
 User
 | Key Attribute | Type   | Description                                   |
 | ------------- | ------ | --------------------------------------------- |
@@ -249,7 +249,7 @@ SuspendList
 | dueDate	    | Date	    | The scheduled date when the suspension will end, allowing access restoration                               |
 
 
-Collections related to interaction between book and user
+****Collections related to interaction between book and user****<br>
 BookFavourite
 | Key Attribute | Type     | Description                                                                                          |
 | ------------- | -------- | ---------------------------------------------------------------------------------------------------- |
