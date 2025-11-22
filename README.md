@@ -28,6 +28,16 @@ A full-stack application that streamlines library operations built as a Informat
 The MERN Library Management System is designed to modernize library operations by tackling key inefficiencies such as dependency on physical library cards and the absence of a recommendation system. Developed as part of the Information Technology Project (ITP), this system leverages the MERN stack with a TypeScript template to deliver an intuitive and efficient solution for librarians, library users, and guests.<br>
 With features like QR code-based book loans, automated return tracking, TF-IDF-powered recommendations, and third-party API integration, this project showcases cutting-edge web technologies aimed at enhancing user experience and optimizing data management.
 
+## Technology Stack
+- **Frontend:** React, Material-UI for styling
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB, Mongoose (With Nodemon for development)
+- **Image Data Handling:** Multer
+- **Data security:** JWT(JSON web token) for Authentication, Bcrypt for password hashing
+- **Environment Configuration:** dotenv for managing environment variables
+- **Algorithms:** TF-IDF (natural)
+- **Other**: RESTful APIs with modular design
+
 ## Features
 - **User Authentication:** Secure login system for librarians and users, leveraging JWT.
 - **Library Data Management:** CRUD functionality for users, books, contacts, and book metadata.
@@ -875,15 +885,27 @@ Image 8.2 - Chip set
       "success": true,
       "foundFavouriteBook": [ {/* user favourite book data */}]
     }
-## Technology Stack
-- **Front-end:** React, Material-UI for styling
-- **Back-end:** Node.js, Express.js
-- **Database:** MongoDB, Mongoose (With Nodemon for development)
-- **Image Data Handling:** Multer
-- **Data security:** JWT(JSON web token) for Authentication, Bcrypt for password hashing
-- **TF-IDF Algorithms:** natural
-- **Other**: RESTful APIs with modular design
 
+## Improvements
+
+### Completed
+- Introduced dotenv for environment variable management  
+  → Sensitive configuration (API keys, DB URI, JWT secret) now stored securely in `.env` instead of hardcoding (backend side)
+
+- Redirected packages into separate frontend and backend directories  
+  → Independent `package.json` and `node_modules`, ensuring clean separation and avoiding mixed dependencies
+
+- Modularised backend routes for cleaner structure  
+  → Reduced redundant code in authentication and data verification, improving maintainability
+
+### Planned Improvements
+- Apply custom hooks to centralise commonly used state  
+  → Reduce redundant state creation in view components (located in `./frontend/src/customhook`)
+
+- Refactor Context API into two smaller custom hooks  
+  → One dedicated to managing data state, another for CRUD operations, improving maintainability and reducing complexity in view components
+
+    
 ## Contributing
 1. Fork the repository.
 2. Create a new branch (`git checkout -b ${branchname}`).
