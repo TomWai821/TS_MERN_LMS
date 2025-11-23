@@ -14,13 +14,14 @@ A full-stack application that streamlines library operations built as a Informat
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Technology Stack](#technology-stack)
 - [Features](#features)
 - [Automated Logic Overview](#automated-logic-overview)
 - [Installation](#installation)
 - [Architecture](#architecture)
 - [UI Layout](#ui-layout)
 - [API endpoints](#api-endpoints)
-- [Technology Stack](#technology-stack)
+- [Improvments](#improvments)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -890,7 +891,7 @@ Image 8.2 - Chip set
 
 ### Completed
 1. **Introduced dotenv for environment variable management (backend side)**<br>
-    - Sensitive configuration (API keys, DB URI, JWT secret) now stored securely in `.env` instead of hardcoding (backend side)
+    - Sensitive configuration (API keys, DB URI, JWT secret) now stored securely in `.env` instead of hardcoding
 
 2. **Redirected packages into separate frontend and backend directories**<br>
     - Independent `package.json` and `node_modules`, ensuring clean separation and avoiding mixed dependencies
