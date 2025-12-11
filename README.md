@@ -16,6 +16,7 @@ A full-stack application that streamlines library operations built as a Informat
 - [Introduction](#introduction)
 - [Technology Stack](#technology-stack)
 - [Features](#features)
+- [QR Code Handling (Frontend Only)](#qr-code-handling-frontend-only)
 - [Automated Logic Overview](#automated-logic-overview)
 - [Installation](#installation)
 - [Architecture](#architecture)
@@ -40,13 +41,23 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 - **Other**: RESTful APIs with modular design
 
 ## Features
-- **User Authentication:** Secure login system for librarians and users, leveraging JWT.
-- **Library Data Management:** CRUD functionality for users, books, contacts, and book metadata.
-- **QR Code Book Loans:** Scan QR codes to borrow books seamlessly.
-- **Loan & Return Tracking:** Log borrowing transactions, returns, and fine management.
-- **Book Recommendation System:** Uses TF-IDF and loan data analysis for personalized suggestions.
+- **User Authentication:** Secure login system for librarians and users, leveraging JWT
+- **Library Data Management:** CRUD functionality for users, books, contacts, and book metadata
+- **QR Code Book Loans:** Scan QR codes to borrow books seamlessly
+- **Loan & Return Tracking:** Log borrowing transactions, returns, and fine management
+- **Book Recommendation System:** Uses TF-IDF and loan data analysis for personalized suggestions
 - **Third-Party API Integration:** Fetch book details (ratings, ISBN, etc.) via the Google Books API
 - **Auto Detect Data Duration:** Automatically identifies overdue borrowings with fine calculation and reinstates suspended users on their scheduled unsuspend date.
+
+## QR Code Handling (Frontend Only)
+- The QR code is generated entirely on the frontend
+- Encoded format: JSON object
+  {
+    "username": "<string>",
+    "userID": "<string>"
+  }
+- No backend API endpoint is required for QR code generation
+- The QR code is used within the frontend modal for loan verification
 
 ## Automated Logic Overview
 These automated backend functions run silently in the background and are difficult to showcase in a live demo. Instead, we present annotated source code images and accompanying logic descriptions to clearly explain their purpose and behavior<br>
