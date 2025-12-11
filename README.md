@@ -52,6 +52,7 @@ With features like QR code-based book loans, automated return tracking, TF-IDF-p
 ## QR Code Handling (Frontend Only)
 - The QR code is generated entirely on the frontend
 - Encoded format: JSON object
+  ```json
   {
     "username": "<string>",
     "userID": "<string>"
