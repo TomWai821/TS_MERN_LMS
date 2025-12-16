@@ -4,7 +4,7 @@ import { CreateModalInterface } from "../../../Model/ModelForModal"
 import { useModal } from "../../../Context/ModalContext";
 import CreateContactConfirmModal from "../Confirmation/Contact/CreateContactConfirmModal";
 import { Box, TextField } from "@mui/material";
-import { ModalBodySyntax } from "../../../ArraysAndObjects/Style";
+import { ModalBodySyntax } from "../../../Data/Style";
 import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
 
 const CreateContextModal:FC<CreateModalInterface> = (createModalData) => 

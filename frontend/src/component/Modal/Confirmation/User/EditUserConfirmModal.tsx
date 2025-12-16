@@ -24,7 +24,7 @@ import { TransferDateToISOString } from "../../../../Controller/OtherController"
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 
 // Data (CSS syntax)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 import { AlertContext } from "../../../../Context/AlertContext";
 

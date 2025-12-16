@@ -16,9 +16,9 @@ import { UserDataInterface } from '../../../Model/UserTableModel';
 // UI Fragment
 import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 
-// Arrays And Object(For Dropdown Data and css syntax)
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
-import { CreateUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+// Data And Object(For Dropdown Data and css syntax)
+import { ModalBodySyntax } from '../../../Data/Style';
+import { CreateUserInputField } from '../../../Data/TextFieldsData';
 import { DataValidateField } from '../../../Controller/ValidateController';
 
 const CreateUserModal = () => 

@@ -2,7 +2,7 @@ import { Box,  Menu, Typography } from "@mui/material"
 
 import { FC } from "react";
 import { NavMenuInterface } from "../../Model/NavModel";
-import { externalUserPage, adminPage, userPage } from "../../ArraysAndObjects/MenuArrays";
+import { externalUserPage, adminPage, userPage } from "../../Data/MenuData";
 import CustomMenuItem from "../UIFragment/CustomMenuItem";
 import { useAuthContext } from "../../Context/User/AuthContext";
 

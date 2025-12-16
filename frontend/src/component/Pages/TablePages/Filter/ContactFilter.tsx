@@ -2,7 +2,7 @@ import { FC, useState } from "react"
 import { Box, TextField, Button, Menu, Typography, MenuItem } from "@mui/material";
 import { ContactFilterInterface } from "../../../../Model/TablePagesAndModalModel"
 
-import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
+import { ItemToCenter } from "../../../../Data/Style";
 
 import CreateContextModal from "../../../Modal/Contact/CreateContactModal";
 import { useModal } from "../../../../Context/ModalContext";

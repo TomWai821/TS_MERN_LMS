@@ -14,7 +14,7 @@ import { useModal } from '../../../Context/ModalContext';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 
 // Data (CSS Syntax)
-import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../ArraysAndObjects/Style';
+import { BookImageFormat, DeleteButton, displayAsColumn, displayAsRow, ModalBodySyntax } from '../../../Data/Style';
 import { useDefinitionContext } from '../../../Context/Book/DefinitionContext';
 import { BookDataInterfaceForEdit, ContactInterface, DefinitionInterface } from '../../../Model/ResultModel';
 import { BookTableDataInterface } from '../../../Model/BookTableModel';

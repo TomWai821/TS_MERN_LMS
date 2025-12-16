@@ -20,8 +20,8 @@ import { EditModalInterface } from '../../../Model/ModelForModal';
 // Data (Dropdown option and CSS Syntax)
 
 import { TransferDateToISOString } from '../../../Controller/OtherController';
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
-import { EditSuspendUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+import { ModalBodySyntax } from '../../../Data/Style';
+import { EditSuspendUserInputField } from '../../../Data/TextFieldsData';
 import { DataValidateField } from '../../../Controller/ValidateController';
 
 const EditSuspendUserModal:FC<EditModalInterface> = (editModalData) => 

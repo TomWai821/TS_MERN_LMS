@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { Avatar, Box, Button, MenuItem, TextField, Typography } from "@mui/material";
 
-import { BookImageFormat, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { BookImageFormat, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 

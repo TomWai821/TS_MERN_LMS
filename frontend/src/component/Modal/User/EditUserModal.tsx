@@ -17,8 +17,8 @@ import { useModal } from '../../../Context/ModalContext';
 import { UserResultDataInterface } from '../../../Model/ResultModel';
 import { UserDataInterface } from '../../../Model/UserTableModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
-import { EditUserInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
+import { ModalBodySyntax } from '../../../Data/Style';
+import { EditUserInputField } from '../../../Data/TextFieldsData';
 import { DataValidateField } from '../../../Controller/ValidateController';
 
 const EditUserModal:FC<EditModalInterface> = (editModalData) => 

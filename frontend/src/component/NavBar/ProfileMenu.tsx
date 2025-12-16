@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Avatar, Box, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material"
 import { ProfileMenuInterface } from '../../Model/NavModel';
-import { settings } from '../../ArraysAndObjects/MenuArrays';
+import { settings } from '../../Data/MenuData';
 import { useAuthContext } from '../../Context/User/AuthContext';
 
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';

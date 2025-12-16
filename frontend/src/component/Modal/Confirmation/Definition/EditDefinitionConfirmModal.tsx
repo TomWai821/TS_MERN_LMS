@@ -17,7 +17,7 @@ import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext
 import EditDefinitionModal from "../../Definition/EditDefinitionModal";
 
 // useful Array/Objects(Data)
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>

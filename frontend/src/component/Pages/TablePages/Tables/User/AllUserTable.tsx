@@ -9,8 +9,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
-import { AllUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { ItemToCenter } from "../../../../../Data/Style";
+import { AllUserTableHeader } from "../../../../../Data/TableData";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";
 import { setDataTextColor } from "../../../../../Controller/SetTextController";
 

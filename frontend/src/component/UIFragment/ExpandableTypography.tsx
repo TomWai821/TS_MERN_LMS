@@ -1,5 +1,5 @@
 import { FC, useLayoutEffect, useRef, useState } from "react";
-import { BookDescriptionDisplayFormat, displayAsRow } from "../../ArraysAndObjects/Style";
+import { BookDescriptionDisplayFormat, displayAsRow } from "../../Data/Style";
 import { Box, IconButton, Typography } from "@mui/material";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';

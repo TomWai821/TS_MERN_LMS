@@ -7,8 +7,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 
 // Models
 import { ContactTableInterface } from "../../../../../Model/BookTableModel";
-import { PublisherTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
+import { PublisherTableHeader } from "../../../../../Data/TableData";
+import { ItemToCenter } from "../../../../../Data/Style";
 import { ContactInterface } from "../../../../../Model/ResultModel";
 
 const PublisherTable:FC<ContactTableInterface> = (DataForAllUserTable) => 

@@ -5,7 +5,7 @@ import ModalTemplate from "../../Templates/ModalTemplate";
 
 import { DisplayDataModalInterface } from "../../../Model/ModelForModal";
 
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
+import { ModalBodySyntax } from '../../../Data/Style';
 import AllBookDataBody from "./DisplayBookDataBody/AllBookDataBody";
 import LoanBookDataBody from "./DisplayBookDataBody/LoanBookDataBody";
 import { BookDataInterface, LoanBookInterface } from "../../../Model/ResultModel";

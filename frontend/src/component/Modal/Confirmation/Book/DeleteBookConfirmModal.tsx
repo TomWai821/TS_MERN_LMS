@@ -11,7 +11,7 @@ import { BookDataInterfaceForDelete } from '../../../../Model/BookTableModel';
 // Data (CSS Syntax)
 import { useBookContext } from '../../../../Context/Book/BookContext';
 import { useModal } from '../../../../Context/ModalContext';
-import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../ArraysAndObjects/Style';
+import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Data/Style';
 import { AlertContext } from '../../../../Context/AlertContext';
 
 const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) => 

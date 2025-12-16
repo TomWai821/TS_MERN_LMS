@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
 

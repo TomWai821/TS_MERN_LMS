@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from "react"
 import ModalTemplate from "../../Templates/ModalTemplate"
 import { EditModalInterface } from "../../../Model/ModelForModal"
 import { Box, TextField } from "@mui/material";
-import { ModalBodySyntax } from "../../../ArraysAndObjects/Style";
+import { ModalBodySyntax } from "../../../Data/Style";
 import ModalConfirmButton from "../../UIFragment/ModalConfirmButton";
 import { useModal } from "../../../Context/ModalContext";
 import EditContactConfirmModal from "../Confirmation/Contact/EditContactConfirmModal";

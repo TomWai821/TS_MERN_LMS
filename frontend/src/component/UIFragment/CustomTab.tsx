@@ -3,7 +3,7 @@ import { ChangeEvent, FC, Fragment } from "react";
 
 import { TabInterface } from "../../Model/TablePagesAndModalModel";
 
-import { displayAsRow } from "../../ArraysAndObjects/Style";
+import { displayAsRow } from "../../Data/Style";
 import { TabProps } from "../../Controller/OtherUsefulController";
 import { useAuthContext } from "../../Context/User/AuthContext";
 

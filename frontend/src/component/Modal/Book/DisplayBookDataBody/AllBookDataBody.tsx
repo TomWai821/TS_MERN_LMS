@@ -3,11 +3,11 @@ import { Avatar, Box, Tab, Tabs } from "@mui/material";
 
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 
-import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/Style";
+import { BookImageFormat, displayAsRow} from "../../../../Data/Style";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../../../Model/ResultModel";
 import { TransferDateToISOString } from "../../../../Controller/OtherController";
 
-import { BookDataTabLabel } from "../../../../ArraysAndObjects/TableArrays";
+import { BookDataTabLabel } from "../../../../Data/TableData";
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
 import BookDataBody from "./ModalBody/BookDataBody";
 import GoogleBookDataBody from "./ModalBody/GoogleBookDataBody";

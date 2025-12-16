@@ -18,9 +18,9 @@ import { DefinitionInterface } from '../../../Model/ResultModel';
 import { EditModalInterface } from '../../../Model/ModelForModal';
 
 // Data (Dropdown option and CSS Syntax)
-import { EditGenreInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
-import { EditLanguageInputField } from '../../../ArraysAndObjects/TextFieldsArrays';
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
+import { EditGenreInputField } from '../../../Data/TextFieldsData';
+import { EditLanguageInputField } from '../../../Data/TextFieldsData';
+import { ModalBodySyntax } from '../../../Data/Style';
 
 const EditDefinitionModal:FC<EditModalInterface> = (editModalData) => 
 {

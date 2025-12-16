@@ -15,8 +15,8 @@ import TableTitle from "../../UIFragment/TableTitle";
 import { BookSearchInterface } from "../../../Model/BookTableModel";
 
 // Data (CSS SYntax and dropdown)
-import { PageItemToCenter } from "../../../ArraysAndObjects/Style";
-import { BookTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
+import { PageItemToCenter } from "../../../Data/Style";
+import { BookTabLabel, PaginationOption } from "../../../Data/TableData";
 import { useContactContext } from "../../../Context/Book/ContactContext";
 import { useAuthContext } from "../../../Context/User/AuthContext";
 

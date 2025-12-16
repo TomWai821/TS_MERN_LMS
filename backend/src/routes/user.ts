@@ -5,7 +5,7 @@ import { FetchUserFromHeader } from '../controller/middleware/User/authMiddlewar
 import { SuspendListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../controller/middleware/User/userValidationMiddleware';
 import { BuildUserQueryAndGetData } from '../controller/middleware/User/userGetDataMiddleware';
 import { BuildUpdateData } from '../controller/middleware/User/userUpdateDataMiddleware';
-import { LoginAndFindUser, ValidationForModifyStatus } from '../Arrays/routesMap';
+import { LoginAndFindUser, ValidationForModifyStatus } from '../data/middlewareGroup';
 
 const router = express.Router();
 

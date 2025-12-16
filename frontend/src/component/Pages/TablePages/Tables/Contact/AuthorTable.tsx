@@ -7,8 +7,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 
 // Models
 import { ContactTableInterface } from "../../../../../Model/BookTableModel";
-import { AuthorTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
+import { AuthorTableHeader } from "../../../../../Data/TableData";
+import { ItemToCenter } from "../../../../../Data/Style";
 import { ContactInterface } from "../../../../../Model/ResultModel";
 
 const AuthorTable:FC<ContactTableInterface> = (DataForAllUserTable) => 

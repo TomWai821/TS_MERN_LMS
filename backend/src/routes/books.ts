@@ -1,7 +1,7 @@
 import express from 'express';
 import { upload } from '../storage';
 import { GetDefinition, CreateDefinitionData, EditDefinitionData, DeleteDefinitionData } from '../controller/definitionController';
-import { LoginAndFindUser } from '../Arrays/routesMap';
+import { LoginAndFindUser } from '../data/middlewareGroup';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord } from '../controller/bookController';
 
 import { BookCreateRules } from '../model/expressBodyRules';

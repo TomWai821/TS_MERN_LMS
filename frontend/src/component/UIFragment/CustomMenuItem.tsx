@@ -2,7 +2,7 @@ import { FC, Fragment } from "react"
 import { ListItemIcon, MenuItem, Typography } from "@mui/material"
 
 import { MenuItemInterface } from "../../Model/NavModel";
-import { MenuItemSyntax, NavSyntax } from "../../ArraysAndObjects/Style";
+import { MenuItemSyntax, NavSyntax } from "../../Data/Style";
 
 const CustomMenuItem:FC<MenuItemInterface> = ({pages}) => 
 {

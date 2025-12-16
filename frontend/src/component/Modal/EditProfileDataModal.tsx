@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { Box, Button, FormControl, MenuItem, TextField } from "@mui/material";
 
 import ModalTemplate from "../Templates/ModalTemplate";
-import { displayAsColumn } from "../../ArraysAndObjects/Style";
+import { displayAsColumn } from "../../Data/Style";
 import { DataValidateField } from "../../Controller/ValidateController";
 import { useAuthContext } from "../../Context/User/AuthContext";
 import { AlertContext } from "../../Context/AlertContext";

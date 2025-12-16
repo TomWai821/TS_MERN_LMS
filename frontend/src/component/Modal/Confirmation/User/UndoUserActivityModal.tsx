@@ -16,7 +16,7 @@ import { useUserContext } from "../../../../Context/User/UserContext";
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 
 // Data (CSS Syntax)
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { AlertContext } from "../../../../Context/AlertContext";
 

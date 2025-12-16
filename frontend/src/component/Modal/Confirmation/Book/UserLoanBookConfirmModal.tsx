@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
-import { BookDescriptionDisplayFormat, BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";

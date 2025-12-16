@@ -12,7 +12,7 @@ import BannedUserDataBody from "./DisplayUserDataBody/BannedUserDataBody";
 // Models
 import { UserResultDataInterface } from "../../../Model/ResultModel";
 
-import { ModalBodySyntax } from "../../../ArraysAndObjects/Style";
+import { ModalBodySyntax } from "../../../Data/Style";
 
 
 const DisplayUserDataModal:FC<DisplayDataModalInterface> = (displayUserData) => 

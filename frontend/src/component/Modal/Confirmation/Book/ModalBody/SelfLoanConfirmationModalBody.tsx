@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from "@mui/material"
-import { BookImageFormat, displayAsColumn, displayAsRow } from "../../../../../ArraysAndObjects/Style"
+import { BookImageFormat, displayAsColumn, displayAsRow } from "../../../../../Data/Style"
 import { FC } from "react"
 import { LoanBookModalInterface } from "../../../../../Model/ModelForModal"
 import ExpandableTypography from "../../../../UIFragment/ExpandableTypography"

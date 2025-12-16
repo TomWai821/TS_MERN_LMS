@@ -13,7 +13,7 @@ import { CreateModalInterface } from "../../../../Model/ModelForModal"
 
 // Data(CSS Syntax)
 import { useBookContext } from "../../../../Context/Book/BookContext"
-import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style"
+import { BookImageFormat, displayAsColumn, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style"
 import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext"
 import { useContactContext } from "../../../../Context/Book/ContactContext"
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography"

@@ -3,7 +3,7 @@ import { DisplayDataModalBody } from "../../../../Model/ModelForModal";
 import { Avatar, Box, Typography } from "@mui/material";
 import { CalculateDuration, CountDuration, TransferDateToString } from "../../../../Controller/OtherController";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
-import { displayAsColumn } from "../../../../ArraysAndObjects/Style";
+import { displayAsColumn } from "../../../../Data/Style";
 import { useAuthContext } from "../../../../Context/User/AuthContext";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 import { setDataTextColor } from "../../../../Controller/SetTextController";

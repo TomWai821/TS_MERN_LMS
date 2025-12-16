@@ -1,7 +1,7 @@
 import { Avatar, Pagination, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
+import { ItemToCenter } from "../../../../../Data/Style";
 import { FC, Fragment, useState } from "react";
-import { SelfLoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { SelfLoanBookTableHeader } from "../../../../../Data/TableData";
 import ContentTableCell from "../../../../UIFragment/ContentTableCell";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";

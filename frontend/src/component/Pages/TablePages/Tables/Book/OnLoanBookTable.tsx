@@ -9,8 +9,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { BookRecordTableInterface } from "../../../../../Model/BookTableModel";
 
 // Data (CSS Syntax and table header)
-import { LoanBookTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
+import { LoanBookTableHeader } from "../../../../../Data/TableData";
+import { ItemToCenter } from "../../../../../Data/Style";
 import { LoanBookInterface } from "../../../../../Model/ResultModel";
 import { TransferDateToISOString } from "../../../../../Controller/OtherController";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";

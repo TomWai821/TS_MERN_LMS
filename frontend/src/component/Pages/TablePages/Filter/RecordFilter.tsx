@@ -1,9 +1,9 @@
 import { FC, Fragment, useState } from "react"
 import { FilterInterface } from "../../../../Model/TablePagesAndModalModel"
 import { Box, TextField, Button, MenuItem, IconButton } from "@mui/material";
-import { ItemToCenter } from "../../../../ArraysAndObjects/Style";
+import { ItemToCenter } from "../../../../Data/Style";
 import { SelfLoanBookSearchInterface } from "../../../../Model/BookTableModel";
-import { AllBookStatusOption, LoanBookStatusOption } from "../../../../ArraysAndObjects/TableArrays";
+import { AllBookStatusOption, LoanBookStatusOption } from "../../../../Data/TableData";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';

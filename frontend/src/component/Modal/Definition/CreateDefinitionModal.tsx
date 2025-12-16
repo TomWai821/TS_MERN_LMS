@@ -16,7 +16,7 @@ import ModalTemplate from '../../Templates/ModalTemplate';
 import ModalConfirmButton from '../../UIFragment/ModalConfirmButton';
 
 // Useful Array/Object (data)
-import { ModalBodySyntax } from '../../../ArraysAndObjects/Style';
+import { ModalBodySyntax } from '../../../Data/Style';
 
 const CreateDefinitionModal:FC<CreateModalInterface> = (createModalData) => 
 {

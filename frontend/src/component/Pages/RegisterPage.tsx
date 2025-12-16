@@ -14,8 +14,8 @@ import { AlertContext } from '../../Context/AlertContext';
 import { RegisterModel } from '../../Model/InputFieldModel';
 
 // Data(CSS Syntax and dropdown option)
-import { PageItemToCenter, PageTitleSyntax } from '../../ArraysAndObjects/Style';
-import { RegisterField } from '../../ArraysAndObjects/TextFieldsArrays';
+import { PageItemToCenter, PageTitleSyntax } from '../../Data/Style';
+import { RegisterField } from '../../Data/TextFieldsData';
 
 const RegisterPage = () => 
 {

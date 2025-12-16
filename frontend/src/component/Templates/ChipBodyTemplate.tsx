@@ -1,5 +1,5 @@
 import { Box, Chip, IconButton, Tooltip } from "@mui/material"
-import { BookDescriptionDisplayFormat } from "../../ArraysAndObjects/Style"
+import { BookDescriptionDisplayFormat } from "../../Data/Style"
 import AddIcon from '@mui/icons-material/Add';
 import { FC } from "react";
 import { ChipBodyInterface } from "../../Model/UserTableModel";

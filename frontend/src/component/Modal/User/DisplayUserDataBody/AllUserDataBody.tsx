@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Avatar, Box, Typography } from "@mui/material";
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
-import { displayAsColumn } from "../../../../ArraysAndObjects/Style";
+import { displayAsColumn } from "../../../../Data/Style";
 import { UserResultDataInterface } from "../../../../Model/ResultModel";
 import { setDataTextColor } from "../../../../Controller/SetTextController";
 

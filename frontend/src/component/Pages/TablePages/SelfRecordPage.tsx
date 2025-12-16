@@ -11,8 +11,8 @@ import SelfRecordTabPanel from "./Tabs/SelfRecordTabPanel";
 import { ChangePage } from "../../../Controller/OtherController";
 
 // Useful data
-import { BookRecordTabLabel, PaginationOption } from "../../../ArraysAndObjects/TableArrays";
-import { PageItemToCenter } from "../../../ArraysAndObjects/Style"
+import { BookRecordTabLabel, PaginationOption } from "../../../Data/TableData";
+import { PageItemToCenter } from "../../../Data/Style"
 
 // Context
 import { useContactContext } from "../../../Context/Book/ContactContext";

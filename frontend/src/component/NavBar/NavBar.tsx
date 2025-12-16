@@ -6,7 +6,7 @@ import { AppBar, Box, Button, Toolbar } from '@mui/material';
 
 import ProfileMenu from './ProfileMenu';
 import NavMenu from './NavMenu';
-import { NavColor, AvatarSize, NavSyntax, MenuItemSyntax } from '../../ArraysAndObjects/Style';
+import { NavColor, AvatarSize, NavSyntax, MenuItemSyntax } from '../../Data/Style';
 
 const NavBar = () => 
 {

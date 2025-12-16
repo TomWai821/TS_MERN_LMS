@@ -3,7 +3,7 @@ import SearchOptionField from "../UIFragment/SearchOptionField";
 import { OptionFieldsInterface } from "../../Model/TablePagesAndModalModel";
 
 import SearchOptionFieldForBook from "../UIFragment/SearchOptionFieldForBook";
-import { AllUserSearchField, OtherUserSearchField, SearchLoanBookInputField } from "../../ArraysAndObjects/TextFieldsArrays";
+import { AllUserSearchField, OtherUserSearchField, SearchLoanBookInputField } from "../../Data/TextFieldsData";
 
 
 const OptionFieldsManager:FC<OptionFieldsInterface> = (searchOptionFieldData) => 

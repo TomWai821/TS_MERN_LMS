@@ -6,7 +6,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import CreateContextModal from "../../Contact/CreateContactModal";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
-import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { Box, Typography } from "@mui/material";
 import { AlertContext } from "../../../../Context/AlertContext";
 

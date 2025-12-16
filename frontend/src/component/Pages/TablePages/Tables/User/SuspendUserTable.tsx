@@ -10,8 +10,8 @@ import ActionTableCell from "../../../../Manager/ActionTableCellManager";
 import { UserDataTableInterface } from "../../../../../Model/UserTableModel";
 
 // Data (CSS Syntax and table header)
-import { ItemToCenter } from "../../../../../ArraysAndObjects/Style";
-import { SuspendUserTableHeader } from "../../../../../ArraysAndObjects/TableArrays";
+import { ItemToCenter } from "../../../../../Data/Style";
+import { SuspendUserTableHeader } from "../../../../../Data/TableData";
 
 import { CalculateDuration, TransferDateToString } from "../../../../../Controller/OtherController";
 import { useAuthContext } from "../../../../../Context/User/AuthContext";

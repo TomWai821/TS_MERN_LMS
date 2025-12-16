@@ -13,8 +13,8 @@ import { UserDataInterface } from '../../Model/UserTableModel'
 import { FetchUserData } from '../../Controller/UserController/UserGetController'
 
 // Data(CSS Syntax)
-import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../ArraysAndObjects/Style';
-import { ViewProfileField } from '../../ArraysAndObjects/TextFieldsArrays';
+import { displayAsColumn, PageItemToCenter, PageTitleSyntax, ViewProfileButton } from '../../Data/Style';
+import { ViewProfileField } from '../../Data/TextFieldsData';
 import DisplayQRCodeModal from '../Modal/DisplayQRCodeModal'
 import EditProfileDataModal from '../Modal/EditProfileDataModal'
 import { useAuthContext } from '../../Context/User/AuthContext'

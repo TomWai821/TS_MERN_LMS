@@ -1,4 +1,4 @@
-import { FinesPaidStatusOption, GenderFilterOption, GenderOption, LoanBookStatusOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableArrays";
+import { FinesPaidStatusOption, GenderFilterOption, GenderOption, LoanBookStatusOption, RoleFilterOption, RoleOption, StatusFilterOption } from "./TableData";
 
 const RegisterField = 
 [

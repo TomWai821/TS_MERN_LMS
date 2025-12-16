@@ -17,8 +17,8 @@ import { useModal } from "../../../Context/ModalContext";
 import { SuspendModalInterface } from "../../../Model/ModelForModal";
 
 // Data (CSS Syntax and dropdown option)
-import { ModalBodySyntax } from "../../../ArraysAndObjects/Style";
-import { dateOption } from "../../../ArraysAndObjects/TextFieldsArrays";
+import { ModalBodySyntax } from "../../../Data/Style";
+import { dateOption } from "../../../Data/TextFieldsData";
 
 const SuspendUserModal:FC<SuspendModalInterface> = ({...userData}) => 
 {

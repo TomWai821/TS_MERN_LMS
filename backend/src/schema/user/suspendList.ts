@@ -2,7 +2,7 @@ import mongoose, { ObjectId } from "mongoose";
 import { SuspendListInterface } from "../../model/userSchemaInterface";
 import { printError } from "../../controller/Utils";
 import { FindUserByIDAndUpdate } from "./user";
-import { suspendListStatus } from "../../Arrays/Types";
+import { suspendListStatus } from "../../data/enums";
 
 const SuspendListSchema = new mongoose.Schema<SuspendListInterface>
 (

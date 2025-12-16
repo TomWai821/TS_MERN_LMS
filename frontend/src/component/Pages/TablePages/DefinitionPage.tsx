@@ -8,12 +8,12 @@ import { useDefinitionContext } from "../../../Context/Book/DefinitionContext";
 import { ChangePage } from "../../../Controller/OtherController";
 
 // data (CSS Syntax)
-import { PageItemToCenter } from "../../../ArraysAndObjects/Style";
+import { PageItemToCenter } from "../../../Data/Style";
 
 import { useAuthContext } from "../../../Context/User/AuthContext";
 
 import { TabProps } from "../../../Controller/OtherUsefulController";
-import { DefinitionTabLabel } from "../../../ArraysAndObjects/TableArrays";
+import { DefinitionTabLabel } from "../../../Data/TableData";
 import TableTitle from "../../UIFragment/TableTitle";
 import DefinitionFilter from "./Filter/DefinitionFilter";
 import ChipBody from "../../Templates/ChipBodyTemplate";

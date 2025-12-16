@@ -5,7 +5,7 @@ import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 import { Box, Typography } from "@mui/material";
 import DeleteTypography from "../../../UIFragment/DeleteTypography";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { AlertContext } from "../../../../Context/AlertContext";
 

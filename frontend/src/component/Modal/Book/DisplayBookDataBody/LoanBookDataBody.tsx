@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
 import { Avatar, Box, Typography } from "@mui/material";
-import { BookImageFormat, displayAsRow} from "../../../../ArraysAndObjects/Style";
+import { BookImageFormat, displayAsRow} from "../../../../Data/Style";
 import { LoanBookInterface } from "../../../../Model/ResultModel";
 import { TransferDateToISOString } from "../../../../Controller/OtherController";
 import { setLoanBookDataTextColor } from "../../../../Controller/SetTextController";

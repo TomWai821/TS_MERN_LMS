@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useContext, useState } from "react";
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import ModalTemplate from "../../../Templates/ModalTemplate";
 
-import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../ArraysAndObjects/Style";
+import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";
@@ -10,7 +10,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { LoanBookModalInterface } from "../../../../Model/ModelForModal";
 
 import { TabProps } from "../../../../Controller/OtherUsefulController";
-import { LoanBookModalTabLabel } from "../../../../ArraysAndObjects/TableArrays";
+import { LoanBookModalTabLabel } from "../../../../Data/TableData";
 
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel";
 import SelfLoanConfirmationModalBody from "./ModalBody/SelfLoanConfirmationModalBody";
