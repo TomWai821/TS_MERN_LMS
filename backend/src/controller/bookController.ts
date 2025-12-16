@@ -2,11 +2,11 @@ import { Request, Response } from 'express'
 import { CreateBook, FindBookByID, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest } from '../model/requestInterface';
 import { deleteImage } from '../storage';
-import fs from 'fs'
 import { BookInterface } from '../model/bookSchemaInterface';
 import { FindBookLoanedAndDelete } from '../schema/book/bookLoaned';
 import { FindBookFavouriteAndDeleteMany } from '../schema/book/bookFavourite';
 
+import fs from "fs";
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
     try 
@@ -126,6 +126,15 @@ export const DeleteBookRecord = async(req:Request, res:Response) =>
 
     try
     {
+        const bookRecord = await FindBookByID(bookID) as BookInterface;
+
+        if (!bookRecord) 
+        {
+            return res.status(404).json({ success, error: "Book not found" });
+        }
+
+        deleteImage(bookRecord.image.filename);
+
         const deleteLoanBookRecord = await FindBookLoanedAndDelete({bookID: bookID});
 
         if(!deleteLoanBookRecord)

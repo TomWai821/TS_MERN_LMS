@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
+
 import { AuthRequest } from '../model/requestInterface';
 
 dotenv.config({ debug: false });

@@ -6,6 +6,7 @@ import { BookLoanedInterface } from '../model/bookSchemaInterface';
 import { ObjectId } from 'mongodb';
 import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
 import { jwtVerify } from './hashing';
+
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
     const suggestType = req.params.type;
@@ -65,9 +66,18 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
     
     try
     {
-        const data = await jwtVerify(userID);
-        const userId = data.user?._id;
-        const UserID = userID ? userId : id;
+        let UserID;
+        
+        if (userID) 
+        {
+            const data = await jwtVerify(userID); 
+            UserID = data.user?._id;
+        }
+        else 
+        {
+            UserID = id;
+        }
+
         const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
 
         if(!createLoanRecord)

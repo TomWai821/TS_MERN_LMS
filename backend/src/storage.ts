@@ -9,7 +9,7 @@ const storage = multer.diskStorage(
     {
         destination: (req:Request, file:MulterFile, callback:(error: Error | null, destination: string) => void) => 
         {
-            callback(null, './backend/upload');
+            callback(null, '../backend/src/upload');
         },
         filename: (req:Request, file:MulterFile, callback:(error: Error | null, filename: string) => void) => 
         {
