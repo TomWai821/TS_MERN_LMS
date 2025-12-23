@@ -1,4 +1,4 @@
-import {  ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Box, TableContainer, Paper } from "@mui/material";
 
 // Another Component
@@ -14,7 +14,7 @@ import ContactTabPanel from "./Tabs/ContactTabPanel";
 import { ChangePage } from "../../../Controller/OtherController";
 import { useAuthContext } from "../../../Context/User/AuthContext";
 
-const ContactPage= () =>
+const ContactPage = () =>
 {
     const { contact, fetchContactDataWithFilterData } = useContactContext();
     const {IsAdmin} = useAuthContext();

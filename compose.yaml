@@ -15,6 +15,9 @@ services:
     environment:
       NODE_ENV: production
       MONGO_URI: "mongodb://mongo:27017"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     depends_on:
       mongo:
         condition: service_healthy
@@ -26,9 +29,11 @@ services:
     command: npm start
     environment:
       NODE_ENV: production
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
       - 3000:3000
-
   mongo:
     image: mongo:6.0
     restart: unless-stopped

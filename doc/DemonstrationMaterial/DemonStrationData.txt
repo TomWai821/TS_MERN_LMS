@@ -1,28 +1,62 @@
-QR Code Data:{"username":"WhateverAdmin","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YzdjZjE0NWZkY2IwZTBlNTc1YWJlYSJ9LCJpYXQiOjE3NDkyOTgzMTh9.vblD1Syq5eciy-lVe9HmWiMQ4TQjiNN8mMeRkA494Zs"}
+- Disclaimer: All contact information provided in this file is fictitious and used solely for demonstration purposes.
+ 
 
-QR Code Data:{"username":"IamTester","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4MTFiZjFmODEzZDQ4NTY1MWI1YmY3MCJ9LCJpYXQiOjE3NDkzMDIxNDN9.DEGNa_E4jPHsFj-p1aSNkF1Dgjk_gn977MH8cHJSnBw"}
+---Login
+# for admin role
+email: test@gmail.com
+password: test123
 
-Genre: Science Ficition
-ShortName: SF
+# for user role
+email: IamTester@gmail.com
+password: IamTester
 
-Language: Indian
-ShortName: IN
 
-username: TestAccount
-password: TestAccount
-email: TestAccount@gmail.com 
-
-Author: The Author
-Email: TheAuthor@gmail.com
-PhoneNumber: 88677210
-
-Publisher: The Publisher
-Email: ThePublisher@gmail.com
-PhoneNumber: 67208831
-
+---For book page
+# book creation data
 BookName: Beast Senpai Travelling Diary
 Genre: Magazine
 Language: Japanese
 Author: BeastSenpai
 Publisher: Beast Senpai Company
 Description: It record the beast senpai travelling experience, and it require $114514 to bought it
+
+## For loan books
+# QR Code Data
+{"username":"WhateverAdmin","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YzdjZjE0NWZkY2IwZTBlNTc1YWJlYSJ9LCJpYXQiOjE3NDkyOTgzMTh9.vblD1Syq5eciy-lVe9HmWiMQ4TQjiNN8mMeRkA494Zs"}
+
+# QR Code Data
+{"username":"IamTester","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4MTFiZjFmODEzZDQ4NTY1MWI1YmY3MCJ9LCJpYXQiOjE3NDkzMDIxNDN9.DEGNa_E4jPHsFj-p1aSNkF1Dgjk_gn977MH8cHJSnBw"}
+
+
+
+---For user page
+# user creation data
+username: TestAccount
+password: TestAccount
+email: TestAccount@gmail.com
+gender: male
+role: user
+birthday: 23/12/2005
+
+
+---For contact pages
+# author creation data
+Author: The Author
+PhoneNumber: 88677210
+Email: TheAuthor@gmail.com
+
+# publisher creation data
+Publisher: The Publisher
+PhoneNumber: 67208831
+Email: ThePublisher@gmail.com
+
+
+
+---For definition pages
+# genre creation data
+Genre: Science Ficition
+ShortName: SF
+
+# language creation data
+Language: Indian
+ShortName: IN
