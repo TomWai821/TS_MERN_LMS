@@ -44,8 +44,8 @@ This project allowed me to develop skills in designing and implementing scalable
 - **Data security:** JWT(JSON web token) for Authentication, Bcrypt for password hashing
 - **Environment Configuration:** dotenv for managing environment variables
 - **Algorithms:** TF‑IDF for recommendation engine (Implemented with the natural library in Node.js)
-- **Other**: RESTful APIs with modular design
-
+- **Other**: RESTful APIs with modular design, Docker for containerization and environment consistency
+  
 ## Features
 - **User Authentication:** Secure login system for librarians and users, leveraging JWT
 - **Library Data Management:** CRUD functionality for users, books, contacts, and book metadata
@@ -111,52 +111,77 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 
 ## Installation
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/TomWai821/MERN_LibraryManagementSystem.git
-   cd MERN_LibraryManagementSystem
+    ```bash
+    git clone https://github.com/TomWai821/TS_MERN_LMS
+    cd TS_MERN_LMS
 
-2. **Download dependencies:**
-   ```bash
-   npm install
-
-3. **Import data into MongoDB**
-   - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
-   - This JSON file contains the complete data schema required for the application
-
-4. **Set up environment variable:**
-   Create a .env file in the root directory with Configuration variables
-   ```
-   frontend/.env:
-   - REACT_APP_GOOGLE_BOOKS_API_KEY  -> Google Books API key
-   - REACT_APP_GOOGLE_BOOKS_BASE_URL -> Base URL for google books API (e.g. https://www.googleapis.com/books/v1/volumes)
-   - REACT_APP_LOCAL_HOST            -> Backend API endpoint (e.g. http://localhost:5000/api) 
-   - REACT_APP_MAIN_PAGE             -> Frontend main page URL (e.g. http://localhost:3000)
-   ```
+2. **Set up environment variable:**
+    Create a .env file in the root directory with Configuration variables
+    ```
+    frontend/.env:
+    - REACT_APP_GOOGLE_BOOKS_API_KEY  -> Google Books API key
+    - REACT_APP_GOOGLE_BOOKS_BASE_URL -> Base URL for google books API (e.g. https://www.googleapis.com/books/v1/volumes)
+    - REACT_APP_LOCAL_HOST            -> Backend API endpoint (e.g. http://localhost:5000/api) 
+    - REACT_APP_MAIN_PAGE             -> Frontend main page URL (e.g. http://localhost:3000)
+    ```
    
-   ```
-   backend/.env:
-   - PORT       -> The backend port
-   - MONGO_URI  -> MongoDB Connection String (e.g. mongodb://localhost:${portNumber})
-   - JWT_SECRET -> Secret key for JWT authentication
-   - ORIGIN_URI -> Frontend URL (e.g. http://localhost:${port})
-   ```
+    ```
+    backend/.env:
+    - PORT       -> The backend port
+    - MONGO_URI  -> MongoDB Connection String
+        - Docker: `mongodb://mongo:27017`  
+        - Local:  `mongodb://localhost:27017` 
+    - JWT_SECRET -> Secret key for JWT authentication
+    - ORIGIN_URI -> Frontend URL (e.g. http://localhost:${port})
+    ```
 
-   ```
-   Remarks:
-   - Express backend runs by default on port 5000
-   - React frontend runs on port 3000
-   ```
+    ```
+    Remarks:
+    - Express backend runs by default on port 5000
+    - React frontend runs on port 3000
+    - MongoDB stores default data in the `test` database
+      If you encounter connection issues, try appending `/test` to your `MONGO_URI`
+    ```
+
+3. **Import data into MongoDB (Local only):**
+    - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
+    - This JSON file contains the complete data schema required for the application
   
-6. **Run the application:**
-   ```bash
-   # For the server side
-   nodemon backend/index.ts  
+4. **Run the application:**
+    ### Using Docker
+    ```bash
+    # Start the project
+    docker compose up --build
+    
+    # Clean the persisted MongoDB data (optional)
+    docker compose down -v
+    ```
+
+    Remarks:
+    - The ./backend/MongoDBSchema folder is mounted to /docker-entrypoint-initdb.d in the MongoDB container
+    - These initialisation scripts run only when the db-data volume is created for the first time
+    - If the db-data volume already contains data, the scripts will be skipped
+    - To re-run the initialisation and restore the demo data, remove the volume and restart
+    - The backend requires this demo data to be present for proper functionality
+
+    ### Using local environment
+    ```bash
+    # For the server side (in ./backend)
+    nodemon backend/index.ts  
    
-   # For the client side
-   npm start
-   
-   # For the user who download concurrency
-   npm run both
+    # For the client side (in ./frontend)
+    npm start
+    ```
+
+    Remarks: Running locally requires installing all dependencies beforehand:
+    ```bash
+    npm install   # in ./backend
+    npm install   # in ./frontend
+    ```
+
+5. **Expected URLs:**
+    - Backend API → http://localhost:5000/api
+    - Frontend UI → http://localhost:3000
 
 ## Architecture
 ### Frontend
