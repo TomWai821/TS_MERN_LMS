@@ -37,7 +37,7 @@ Key features include QR code-based book loans, automated return tracking, a TF-I
 This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimization practices essential for scalable frontend development
 
 ## Technology Stack
-- **Frontend:** React, Material-UI for styling(Leveraging CSS3 Standard), React Router for SPA(Single Page Application) naviation
+- **Frontend:** React, Material-UI for styling(Leveraging CSS3 Standard), integrated react-router-dom for SPA(Single Page Application) navigation
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB with Mongoose (With Nodemon for development)
 - **Image Data Handling:** Multer for file uploads
