@@ -1,4 +1,4 @@
-const localhost = process.env.REACT_APP_LOCAL_HOST;
+const localhost = process.env.REACT_APP_API_URL;
 const contentType:string = "application/json";
 
 export const updateBookRecord = async (authToken:string, bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description: string) => 

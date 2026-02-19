@@ -1,6 +1,6 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
-const localhost = process.env.REACT_APP_LOCAL_HOST;
+const localhost = process.env.REACT_APP_API_URL;
 
 const contentType:string = 'application/json';
 const url:string = `${localhost}/user`;

@@ -1,5 +1,5 @@
 const contentType = "application/json";
-const localhost = process.env.REACT_APP_LOCAL_HOST;
+const localhost = process.env.REACT_APP_API_URL;
 const url:string = `${localhost}/book`;
 
 export const createBookRecord = async (authToken:string, image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 

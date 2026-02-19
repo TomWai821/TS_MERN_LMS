@@ -121,7 +121,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     1. Copy template:
        ```bash
        cp frontend/.env.example frontend/.env
-       ```
+      REACT_APP_API_URL
       
     2. Required variables (fill with real values):
        - REACT_APP_GOOGLE_BOOKS_API_KEY  —> Google Books API key

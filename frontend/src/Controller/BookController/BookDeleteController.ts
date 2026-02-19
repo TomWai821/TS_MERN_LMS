@@ -1,4 +1,4 @@
-const localhost = process.env.REACT_APP_LOCAL_HOST;
+const localhost = process.env.REACT_APP_API_URL;
 const contentType:string = "application/json";
 
 export const deleteBookRecord = async (type:string ,authToken:string, ID:string) => 
