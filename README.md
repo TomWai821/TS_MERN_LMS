@@ -189,10 +189,12 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     - Backend API → http://localhost:5000/api
     - Frontend UI → http://localhost:3000
   
-###Notes
+### Notes
 - Express backend default port: 5000. React frontend default port: 3000.
-- MongoDB default DB: test. If DB init scripts are used in Docker, they run only when the volume is created for the first time. To re-run init scripts, remove the volume and restart.
-- Demo data location (if seeded): 'doc\DemonstrationMaterial\DemonStrationData.txt'
+- MongoDB default DB: test
+    - If DB init scripts are used in Docker, they run only when the volume is created for the first time
+    - To re-run init scripts, remove the volume and restart
+- Demo data location (if needed): 'doc\DemonstrationMaterial\DemonStrationData.txt'
 
 ## Architecture
 ### Frontend
