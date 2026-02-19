@@ -116,33 +116,35 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     cd TS_MERN_LMS
 
 2. **Set up environment variable:**
-    Create a .env file in the root directory with Configuration variables
-    ```
-    frontend/.env:
-    - REACT_APP_GOOGLE_BOOKS_API_KEY  -> Google Books API key
-    - REACT_APP_GOOGLE_BOOKS_BASE_URL -> Base URL for google books API (e.g. https://www.googleapis.com/books/v1/volumes)
-    - REACT_APP_LOCAL_HOST            -> Backend API endpoint (e.g. http://localhost:5000/api) 
-    - REACT_APP_MAIN_PAGE             -> Frontend main page URL (e.g. http://localhost:3000)
-    ```
-   
-    ```
-    backend/.env:
-    - PORT       -> The backend port
-    - MONGO_URI  -> MongoDB Connection String
-        - Docker: `mongodb://mongo:27017`  
-        - Local:  `mongodb://localhost:27017` 
-    - JWT_SECRET -> Secret key for JWT authentication
-    - ORIGIN_URI -> Frontend URL (e.g. http://localhost:${port})
-    ```
+    `.env.example` templates are included at `./frontend/.env.example` and `./backend/.env.example`. Copy the appropriate file, fill required values, then remove the `.example` suffix to run.
+    ### Frontend
+    1. Copy template:
+       ```bash
+       cp frontend/.env.example frontend/.env
+       ```
+      
+    2. Required variables (fill with real values):
+       - REACT_APP_GOOGLE_BOOKS_API_KEY  —> Google Books API key
+       - REACT_APP_GOOGLE_BOOKS_BASE_URL —> e.g. https://www.googleapis.com/books/v1/volumes
+       - REACT_APP_API_URL               —> Backend API endpoint, e.g. http://localhost:5000/api
+       - REACT_APP_MAIN_PAGE             —> Frontend URL, e.g. http://localhost:3000
+      
+    ### Backend
+    1. Copy template:
+       ```bash
+       cp backend/.env.example backend/.env
+       ```
+      
+    2. Required variables (fill with real values):
+       - PORT       —> backend port (default 5000)
+       - MONGO_URI  —> MongoDB connection string
+           - Docker: mongodb://mongo:27017
+           - Local:  mongodb://localhost:27017
+           - If connection issues, append /test (e.g. mongodb://localhost:27017/test)
+       - JWT_SECRET —> secret for JWT authentication
+       - ORIGIN_URI —> frontend URL, e.g. http://localhost:3000
 
-    ```
-    Remarks:
-    - Express backend runs by default on port 5000
-    - React frontend runs on port 3000
-    - MongoDB stores default data in the `test` database
-      If you encounter connection issues, try appending `/test` to your `MONGO_URI`
-    ```
-
+    
 3. **Import data into MongoDB (Local only):**
     - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
     - This JSON file contains the complete data schema required for the application
@@ -150,38 +152,47 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 4. **Run the application:**
     ### Using Docker
     ```bash
-    # Start the project
-    docker compose up --build
-    
-    # Clean the persisted MongoDB data (optional)
+    # Start the project (use --detach to run in background)
+    docker compose up --build --detach
+
+    # If you need to reset the demo database and re-run initialisation scripts, stop containers and remove volumes
+    # WARNING: this will permanently delete all persisted DB data
     docker compose down -v
+    docker compose up --build --detach
     ```
 
-    Remarks:
-    - The ./backend/MongoDBSchema folder is mounted to /docker-entrypoint-initdb.d in the MongoDB container
-    - These initialisation scripts run only when the db-data volume is created for the first time
-    - If the db-data volume already contains data, the scripts will be skipped
-    - To re-run the initialisation and restore the demo data, remove the volume and restart
-    - The backend requires this demo data to be present for proper functionality
+    **Remarks**
+    - The `./backend/MongoDBSchema` folder is mounted to `/docker-entrypoint-initdb.d` in the MongoDB container
+    - These initialization scripts run **only when the `db-data` volume is created for the first time**; if the `db-data` volume already contains data, the scripts will be skipped
+    - To re-run initialization and restore the demo data, remove the volume and restart the stack:
+      1. `docker compose down -v`  # WARNING: permanently deletes all persisted DB data
+      2. `docker compose up --build`
+    - The backend requires this demo data for proper functionality; if you run MongoDB locally instead of via Docker, import the JSON files in `./backend/MongoDBSchema` (e.g., via MongoDB Compass)
+    - Changing `JWT_SECRET` will invalidate existing JWTs and require users to re-login
+
 
     ### Using local environment
+    #### Backend
     ```bash
-    # For the server side (in ./backend)
+    cd backend
+    npm install
     nodemon backend/index.ts  
-   
-    # For the client side (in ./frontend)
+    ```
+    #### Frontend
+    ```bash
+    cd frontend
+    npm install
     npm start
     ```
 
-    Remarks: Running locally requires installing all dependencies beforehand:
-    ```bash
-    npm install   # in ./backend
-    npm install   # in ./frontend
-    ```
-
-5. **Expected URLs:**
+6. **Expected URLs:**
     - Backend API → http://localhost:5000/api
     - Frontend UI → http://localhost:3000
+  
+###Notes
+- Express backend default port: 5000. React frontend default port: 3000.
+- MongoDB default DB: test. If DB init scripts are used in Docker, they run only when the volume is created for the first time. To re-run init scripts, remove the volume and restart.
+- Demo data location (if seeded): 'doc\DemonstrationMaterial\DemonStrationData.txt'
 
 ## Architecture
 ### Frontend
