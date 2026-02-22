@@ -5,7 +5,7 @@ import { printError } from '../../controller/Utils';
 const authorSchema = new mongoose.Schema<AuthorInterface>
 (
     {
-        author: { type: String, required: true },
+        author: { type: String, required: true, unique: true },
         phoneNumber: { type: String, default: "N/A" },
         email: { type:String, default: "N/A" }
     }

@@ -8,12 +8,12 @@ const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
         bookID: { type: mongoose.Types.ObjectId, ref: 'Book', required: true },
-        loanDate: { type:Date, required: true },
-        dueDate: { type:Date, required: true },
-        returnDate: { type:Date, default: null },
-        status: { type:String, enum: bookReturnStatus, default: 'Loaned'},
-        fineAmount: { type:Number, default: 0 },
-        finesPaid: { type:String, enum: finesPaidStatus, default: "Not Fine Needed" }
+        loanDate: { type: Date, required: true },
+        dueDate: { type: Date, required: true },
+        returnDate: { type: Date, default: null },
+        status: { type: String, enum: bookReturnStatus, default: 'Loaned'},
+        fineAmount: { type: Number, default: 0 },
+        finesPaid: { type: String, enum: finesPaidStatus, default: "Not Fine Needed" }
     }
 )
 
