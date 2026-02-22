@@ -9,7 +9,7 @@ const SuspendListSchema = new mongoose.Schema<SuspendListInterface>
     {
         userID: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
         description: { type: String, default: "N/A" },
-        status: {type: String, default: 'Suspend', enum: suspendListStatus},
+        status: { type: String, default: 'Suspend', enum: suspendListStatus},
         startDate: { type: Date, required: true, immutable: true },
         dueDate: { type: Date },
         unSuspendDate: { type: Date, default: null }
