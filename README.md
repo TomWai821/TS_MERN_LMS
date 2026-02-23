@@ -189,7 +189,7 @@ if (!pm.environment.get("token")) {
     - Get 4 Records (Only have 4 loaned records in bookloaneds collection)
 
 Notes:
-- The API may return [] or null when no matching data exists， or seed data is not present
+- The API may return [] or null when no matching data exists, or seed data is not present
 
 
 ## Technology Stack
