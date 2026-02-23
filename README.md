@@ -119,74 +119,74 @@ if (!pm.environment.get("token")) {
 
 #### Request to run
 1. Login
-``` 
-POST {{base_url}}/api/user/login
-```
-Body JSON:
-```json
-{
-    "email": "{{email}}",
-    "password": "{{password}}"
-}
-```
-
-Expected Result
-- Response Code: 200
-- success: true
-- data: Include username, role, authToken, status and avatarUrl
-- The token in the environment was set
+    ``` 
+    POST {{base_url}}/api/user/login
+    ```
+    Body JSON:
+    ```json
+    {
+        "email": "{{email}}",
+        "password": "{{password}}"
+    }
+    ```
+    
+    Expected Result
+    - Response Code: 200
+    - success: true
+    - data: Include username, role, authToken, status and avatarUrl
+    - The token in the environment was set
 
 2. Get books (All books) 
-``` 
-GET {{base_url}}/api/book/bookData
-```
-
-Expected Result:
-- Response Code: 200
-- Get the whole book data (Totally 11 Records)
+    ``` 
+    GET {{base_url}}/api/book/bookData
+    ```
+    
+    Expected Result:
+    - Response Code: 200
+    - Get the whole book data (Totally 11 Records)
 
 3. Get Books (With Filter)
-```
-GET {{base_url}}/api/book/bookData?paginationAmount=10&pageAmount=1&genreID=67e7a3bf0ccdaa9c1766e958
-```
-
-Expected Result
-- Response Code: 200
-- Get 2 Records
+    ```
+    GET {{base_url}}/api/book/bookData?paginationAmount=10&pageAmount=1&genreID=67e7a3bf0ccdaa9c1766e958
+    ```
+    
+    Expected Result
+    - Response Code: 200
+    - Get 2 Records
 
 4. Get Loaned Record (Protected) - Require Login
-```
-GET {{base_url}}/api/book/LoanBook
-```
-Header: 
-authToken: {{token}}
-
-Expected Result
-- Response Code: 200
-- Get 1 Record (It is called Absolute Batman, this data at foundBook.bookDetails.bookname)
-
-Remarks and Test Cases (For Get Books with filter and Loaned Record)
-- GenreID examples
-   - 67e7a3bf0ccdaa9c1766e958 → Japanese Comic
-   - 67e26e59715e8a63743b7951 → Academic Textbooks
-- Other supported filters
-   - publisherID (Example: 67e217b0b135608ea8ba432c → Bloomsbury)
-   - languageID (Example: 67d101b76682366b8515c636 → English)
-   - authorID (Example: 67e215c1ad7b49fc068fa048 → J.K. Rowling)
-   - languageID with authorID (Example: authorID=67e215c1ad7b49fc068fa048&languageID=67d101cf6682366b8515c638) => It will return [] with Response Code 200 (67d101cf6682366b8515c638 → Simplified Chinese)
-- Pagination
-    - Pagination = Items per page (Allow value: 10, 20, 50, 100)
-    - pageAmount = Page number
+    ```
+    GET {{base_url}}/api/book/LoanBook
+    ```
+    Header: 
+    authToken: {{token}}
+    
+    Expected Result
+    - Response Code: 200
+    - Get 1 Record (It is called Absolute Batman, this data at foundBook.bookDetails.bookname)
+    
+    Remarks and Test Cases (For Get Books with filter and Loaned Record)
+    - GenreID examples
+       - 67e7a3bf0ccdaa9c1766e958 → Japanese Comic
+       - 67e26e59715e8a63743b7951 → Academic Textbooks
+    - Other supported filters
+       - publisherID (Example: 67e217b0b135608ea8ba432c → Bloomsbury)
+       - languageID (Example: 67d101b76682366b8515c636 → English)
+       - authorID (Example: 67e215c1ad7b49fc068fa048 → J.K. Rowling)
+       - languageID with authorID (Example: authorID=67e215c1ad7b49fc068fa048&languageID=67d101cf6682366b8515c638) => It will return [] with Response Code 200 (67d101cf6682366b8515c638 → Simplified Chinese)
+    - Pagination
+        - Pagination = Items per page (Allow value: 10, 20, 50, 100)
+        - pageAmount = Page number
        
 
 5. Book Recommendation (Most Popular)
-```
-GET {{base_url}}/api/book/LoanBook/type=mostPopular
-```
-
-Expected Result
-- Response Code: 200
-- Get 4 Records (Only have 4 loaned records in bookloaneds collection)
+    ```
+    GET {{base_url}}/api/book/LoanBook/type=mostPopular
+    ```
+    
+    Expected Result
+    - Response Code: 200
+    - Get 4 Records (Only have 4 loaned records in bookloaneds collection)
 
 Notes:
 - The API may return [] or null when no matching data exists， or seed data is not present
