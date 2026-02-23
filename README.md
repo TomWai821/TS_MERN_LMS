@@ -35,7 +35,10 @@ The Library Management System was developed to modernise library operations by a
 Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). The system also incorporates role-based access control (RBAC) to ensure secure authentication and permission management. Together, these features highlight the ability to combine modern web technologies with practical library needs, delivering both secure access and an intuitive user experience
 
 ### Technical Learns 
-This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimization practices essential for scalable frontend development
+This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimisation practices essential for scalable frontend development
+
+Disclaimer
+- All contact information provided in this file is fictitious and used solely for demonstration purposes
 
 ## Quick Start
 ### 1. Copy example environment variables and edit
@@ -62,6 +65,9 @@ docker-compose up --build -d
 - email = IamTester@gmail.com
 - password = IamTester
 - token = (null if not logged in or absent)
+
+Disclaimer
+- All contact information provided in this file is fictitious and used solely for demonstration purposes
 
 #### Pre-request Script (Collection -> Pre-request Script)
 ``` javascript
