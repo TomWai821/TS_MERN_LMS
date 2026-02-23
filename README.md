@@ -29,17 +29,17 @@ A full-stack application that streamlines library operations built as a Informat
 
 ## Introduction
 ### Project Purpose 
-The Library Management System was developed to modernise library operations by addressing inefficiencies such as reliance on physical library cards and the lack of a recommendation system. Built with the MERN stack and TypeScript, the goal was to create a secure, scalable, and user-friendly platform that improves both librarian workflows and user experience
+    The Library Management System was developed to modernise library operations by addressing inefficiencies such as reliance on physical library cards and the lack of a recommendation system. Built with the MERN stack and TypeScript, the goal was to create a secure, scalable, and user-friendly platform that improves both librarian workflows and user experience
 
 ### Features 
-Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). The system also incorporates role-based access control (RBAC) to ensure secure authentication and permission management. Together, these features highlight the ability to combine modern web technologies with practical library needs, delivering both secure access and an intuitive user experience
+    Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). The system also incorporates role-based access control (RBAC) to ensure secure authentication and permission management. Together, these features highlight the ability to combine modern web technologies with practical library needs, delivering both secure access and an intuitive user experience
 
 ### Technical Learns 
-This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimization practices essential for scalable frontend development
+    This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimization practices essential for scalable frontend development
 
 ## Quick Start
 
-### 1 Copy example environment variables and edit
+### 1. Copy example environment variables and edit
 ```bash
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
@@ -50,7 +50,7 @@ cp frontend/.env.example frontend/.env
 **Notes about ports and hostnames** 
 - If you run the project with **Docker Compose**, use the Docker examples in `.env.example` (e.g. `MONGO_URI=mongodb://mongo:27017/...`). Docker Compose maps container ports to the host automatically
 - If you run services locally (not via Docker), replace container hostnames with `localhost` and ensure `PORT` matches the port you start the backend on (e.g. `3000`)
-- Always include protocol and port for URLs: `ORIGIN_URI=http://localhost:3000`, `REACT_APP_API_URL=http://localhost:3000/api`, `REACT_APP_MAIN_PAGE=http://localhost:3000`
+- Always include protocol and port for URLs: `ORIGIN_URI=http://localhost:5000`, `REACT_APP_API_URL=http://localhost:5000/api`, `REACT_APP_MAIN_PAGE=http://localhost:3000`
 
 ### 2. Launch with Docker Compose
 ```bash
@@ -62,7 +62,7 @@ docker-compose up --build -d
 - base_url = http://localhost:5000
 - email = IamTester@gmail.com
 - password = IamTester
-- token =
+- token = (null if not logged in or absent)
 
 #### Pre-request Script (Collection -> Pre-request Script)
 ``` javascript
@@ -116,6 +116,9 @@ if (!pm.environment.get("token")) {
   });
 }
 ```
+
+Reminder 
+    - If you run services locally (not via Docker), replace container hostnames with `localhost` and ensure `PORT` matches the backend port you started (e.g., 5000)
 
 #### Request to run
 1. Login
