@@ -60,7 +60,7 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
             <Typography sx={ModalSubTitleSyntax}>Do you want to create this {type}?</Typography>
 
                 {
-                    value === 0 ? <Typography>Author: {Data.author}</Typography>:<Typography>Language: {Data.publisher}</Typography>
+                    value === 0 ? <Typography>Author: {Data.author}</Typography>:<Typography>Publisher: {Data.publisher}</Typography>
                 }
 
                 <Typography>Phone No: {Data.phoneNumber !== "" ? Data.phoneNumber : "N/A"}</Typography>
