@@ -11,30 +11,18 @@ const AlertProvider: FC<ChildProps> = ({ children }) =>
     const [alertConfig, setAlertConfig] = useState<AlertConfig | null>(null);
     const Duration = 3000;
 
-    const handleClose = () => 
-    {
-        if (alertConfig) 
-        {
-            setAlertConfig({ ...alertConfig, open: false });
-        }
-    };
+    const handleClose = () => setAlertConfig(null);
 
     return (
         <AlertContext.Provider value={{ setAlertConfig }}>
-            {children}
-            {alertConfig && (
-                <Snackbar 
-                    open={alertConfig.open} 
-                    autoHideDuration={Duration} 
-                    onClose={handleClose}
-                >
-                    <Alert onClose={handleClose} severity={alertConfig.AlertType}>
-                        {alertConfig.Message}
-                    </Alert>
-                </Snackbar>
-            )}
+        {children}
+        {alertConfig && (
+            <Snackbar open={true} autoHideDuration={Duration} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={alertConfig.AlertType}>{alertConfig.Message}</Alert>
+            </Snackbar>
+        )}
         </AlertContext.Provider>
-    );
+  );
 };
 
 export { AlertProvider, AlertContext };

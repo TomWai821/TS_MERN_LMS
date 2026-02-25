@@ -43,11 +43,11 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Unfavourite successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Unfavourite successfully!" });
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Unfavourite! Please try again", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Unfavourite! Please try again" });
             }
         }
     }

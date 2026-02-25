@@ -17,7 +17,7 @@ import SelfLoanConfirmationModalBody from "./ModalBody/SelfLoanConfirmationModal
 import UserLoanModalBody from "./ModalBody/UserLoanModalBody";
 import UserLoanBookConfirmationModal from "./UserLoanBookConfirmModal";
 import { AlertContext } from "../../../../Context/AlertContext";
-
+import { errorResponse } from "../../../../Model/ResultModel";
 
 const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) => 
 {
@@ -36,19 +36,22 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
 
     const ConfirmLoanBook = async () =>     
     {
-        const response = loanBook(_id);
+        const response:Response = await loanBook(_id);
 
         if (alertContext && alertContext.setAlertConfig) 
         {
-            if (await response) 
+            switch (response?.status) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
-                setTimeout(() => { handleClose() }, 2000);
+                case 200:
+                    alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book successfully!` });
+                    setTimeout(() => { handleClose() }, 2000);
+                    break;
+
+                case 401:
+                    const result = response.json() as Promise<errorResponse>;
+                    alertContext.setAlertConfig({ AlertType: "error", Message: (await result).error });
+                    break;
             } 
-            else 
-            {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to Loan book! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
-            }
         }
     }
 

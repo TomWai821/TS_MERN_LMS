@@ -103,14 +103,10 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
     {
         const loanDate = GetCurrentDate("Date") as Date
         const dueDate = CalculateDueDate(7);
-        const result = await createLoanBookRecord(authToken, bookID, loanDate, dueDate, userID);
+        const result: Response = await createLoanBookRecord(authToken, bookID, loanDate, dueDate, userID);
 
-        if(result)
-        {
-            fetchAllBook();
-            return true;
-        }
-        return false;
+        fetchAllBook();
+        return result;
 
     },[fetchAllBook])
 

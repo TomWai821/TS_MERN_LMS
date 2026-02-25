@@ -29,12 +29,12 @@ const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Delete book record successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Delete book record successfully!" });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Delete book record! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Delete book record! Please try again later" });
             }
         }
     }

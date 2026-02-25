@@ -12,6 +12,7 @@ import { QRCodeInterface, UserLoanBookModalBodyInterface } from "../../../../Mod
 import LoanBookConfirmationModal from "./LoanBookConfirmationModal";
 import { AlertContext } from "../../../../Context/AlertContext";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
+import { errorResponse } from "../../../../Model/ResultModel";
 
 
 const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBookData) => 
@@ -34,19 +35,29 @@ const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBo
 
     const ConfirmLoanBook = async () => 
     {
-        const response = loanBook(_id, handleScanData().authToken);
+        const response = await loanBook(_id, handleScanData().authToken);
+
+        console.log(response);
 
         if (alertContext && alertContext.setAlertConfig) 
-        {
-            if (await response) 
+        {   
+            switch (response?.status)
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book to ${handleScanData().username} successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
-                setTimeout(() => { handleClose() }, 2000);
-            } 
-            else 
-            {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to loan book to the user! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                case 200:
+                    alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book to ${handleScanData().username} successfully!` });
+                    setTimeout(() => { handleClose() }, 2000);
+                    break;
+
+                case 401:
+                    const result = response.json() as Promise<errorResponse>;
+                    alertContext.setAlertConfig({ AlertType: "error", Message: (await result).error });
+                    break;
+
+                default:
+                    alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to loan book to the user! Please try again later" });
+                    break;
             }
+             
         }
     }
 

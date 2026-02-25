@@ -30,12 +30,12 @@ const SubmitFinesConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Change Submit Fine Status successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Change Submit Fine Status successfully!" });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Change Submit Fine Status! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Change Submit Fine Status! Please try again later" });
             }
         }
     }

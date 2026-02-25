@@ -44,12 +44,12 @@ const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Suspend user successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Suspend user successfully!` });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Suspend user! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Suspend user! Please try again later` });
             }
         }
     }

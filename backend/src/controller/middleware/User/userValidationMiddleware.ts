@@ -40,16 +40,16 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
         return res.status(400).json({ success: false, error: 'Invalid email address' });
     }
 
-    if (user.status === "Suspend") 
-    {
-        return res.status(401).json({ successs: false, error: 'This user was suspend' });
-    }
-
     const compare = await comparePassword(password, user.password);
 
     if (!compare) 
     {
         return res.status(400).json({ successs: false, error: 'Invalid password' });
+    }
+
+    if (user.status === "Suspend") 
+    {
+        return res.status(401).json({ successs: false, error: 'This user was suspend' });
     }
 
     req.user = user;

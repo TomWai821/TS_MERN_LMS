@@ -61,12 +61,12 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Create Book record successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Create Book record successfully!" });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Create book record! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Create book record! Please try again later" });
             }
         }
     }

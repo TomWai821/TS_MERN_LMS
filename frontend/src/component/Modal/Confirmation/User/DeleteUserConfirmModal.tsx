@@ -38,12 +38,12 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete User record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete User record successfully!` });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete User record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete User record! Please try again later` });
             }
         }
     }

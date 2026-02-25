@@ -172,3 +172,9 @@ export interface LoanBookInterface
     fineAmount?:number;
     finesPaid?:string;
 }
+
+export interface errorResponse
+{
+    success: boolean;
+    error: string;
+}
