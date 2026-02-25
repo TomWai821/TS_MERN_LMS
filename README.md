@@ -655,7 +655,7 @@ Image 8.2 - Chip set
 
 
 ## API Endpoints
-1. For Authenication
+### For Authenication
 1. For login
    ```
    Endpoint: `POST /api/user/Login`
