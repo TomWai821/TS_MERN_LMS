@@ -62,19 +62,25 @@ const LoginPage = () =>
     const handleLogin = async (event: FormEvent) => 
     {
         event.preventDefault();
-        const response: boolean = await LoginController(Credentials.email, Credentials.password, Credentials.stayLogin);
+        const response: Response = await LoginController(Credentials.email, Credentials.password, Credentials.stayLogin);
         setIsSubmitted(true);
     
         if (alertContext && alertContext.setAlertConfig) 
         {
-            if (response) 
+            switch(response.status)
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Login successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
-                setTimeout(() => { ChangePage("/") }, 2000);
-            } 
-            else 
-            {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to login! Please try again", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                case 200:
+                    alertContext.setAlertConfig({ AlertType: "success", Message: "Login successfully!" });
+                    setTimeout(() => { ChangePage("/") }, 2000);
+                    break;
+
+                case 401:
+                    alertContext.setAlertConfig({ AlertType: "error", Message: "This user was suspend!" });
+                    break;
+
+                default:
+                    alertContext.setAlertConfig({ AlertType: "error", Message: "Invalid email or password!" });
+                    break;
             }
         }
     };

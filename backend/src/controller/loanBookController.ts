@@ -6,6 +6,8 @@ import { BookLoanedInterface } from '../model/bookSchemaInterface';
 import { ObjectId } from 'mongodb';
 import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
 import { jwtVerify } from './hashing';
+import { UserInterface } from '../model/userSchemaInterface';
+import { FindUser } from '../schema/user/user';
 
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
@@ -72,11 +74,19 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         {
             const data = await jwtVerify(userID); 
             UserID = data.user?._id;
+
+            const user = await FindUser({ _id: UserID }) as UserInterface;
+
+            if(user.status === "Suspend")
+            {
+                return res.status(401).json({success: false, error: "This user is suspended!"});
+            }
         }
         else 
         {
             UserID = id;
         }
+
 
         const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
 

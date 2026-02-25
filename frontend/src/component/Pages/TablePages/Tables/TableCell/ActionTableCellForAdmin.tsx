@@ -122,11 +122,11 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `${favouriteText} successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `${favouriteText} successfully!` });
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to ${favouriteText}! Please try again`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to ${favouriteText}! Please try again` });
             }
         }
     }

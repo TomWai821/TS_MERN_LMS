@@ -68,12 +68,12 @@ const RegisterPage = () =>
         {
             if (response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting...", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting..." });
                 setTimeout(() => { ChangePage("/"); }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again.", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again." });
             }
         }
     };

@@ -39,11 +39,7 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
         }
     );
     
-    if(response.ok)
-    {
-        const result = await response.json();
-        return response.ok;
-    }
+    return response;
 }
 
 export const createFavouriteBookRecord = async (authToken:string, bookID:string) => 

@@ -2,6 +2,7 @@ import { NextFunction, Response } from "express";
 import { jwtVerify } from "../../hashing";
 import { AuthRequest } from "../../../model/requestInterface";
 import { FindUser } from "../../../schema/user/user";
+import { UserInterface } from "../../../model/userSchemaInterface";
 
 export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
@@ -29,7 +30,7 @@ export const AuthIdValidation = async (req: AuthRequest, res: Response, next: Ne
 
     if (!userId) 
     {
-        return res.status(401).json({ success: false, error: "Invalid auth Token!" });
+        return res.status(400).json({ success: false, error: "Invalid auth Token!" });
     }
 
     next();

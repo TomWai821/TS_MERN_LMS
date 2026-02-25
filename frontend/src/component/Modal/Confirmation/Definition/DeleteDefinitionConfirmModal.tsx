@@ -44,12 +44,12 @@ const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!` });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later` });
             }
         }
     }

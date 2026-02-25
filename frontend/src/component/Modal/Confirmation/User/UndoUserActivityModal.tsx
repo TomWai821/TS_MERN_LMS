@@ -38,12 +38,12 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Unsuspend user successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Unsuspend user successfully!` });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Unsuspend user! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Unsuspend user! Please try again later` });
             }
         }
     }

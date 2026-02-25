@@ -13,8 +13,6 @@ export interface AlertConfig
 {
     AlertType: 'success' | 'info' | 'warning' | 'error';
     Message: string;
-    open: boolean;
-    onClose?: () => void;
 }
 
 export interface AlertContextProps
@@ -71,7 +69,7 @@ export interface BookContextProps
     fetchLoanBookWithFliterData: (type:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => Promise<void>;
     createBook: (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => Promise<boolean>;
     editBook: (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => Promise<boolean>;
-    loanBook: (bookID:string, userID?:string) => Promise<boolean>;
+    loanBook: (bookID:string, userID?:string) => Promise<Response>;
     returnBook: (loanRecordID:string, finesPaid?:string) => Promise<boolean>;
     deleteBook: (bookID:string) => Promise<boolean>;
 }

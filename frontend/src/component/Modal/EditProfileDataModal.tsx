@@ -89,13 +89,13 @@ const EditProfileDataModal = () =>
         {
             if (response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                 setTimeout(() => {handleClose(); window.location.reload()}, 2000);
                 
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${option}!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${option}!` });
             }
         }
     }

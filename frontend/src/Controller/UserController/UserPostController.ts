@@ -25,7 +25,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
             const result: ResultInterface = await response.json();
             handleSuccess(result, stayLogin);
         }
-        return response.ok;
+        return response as Response;
     }
     catch(error)
     {

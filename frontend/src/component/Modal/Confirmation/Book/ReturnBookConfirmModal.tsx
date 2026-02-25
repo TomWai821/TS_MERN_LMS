@@ -36,12 +36,12 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Return Book successfully!", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: "Return Book successfully!" });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Return book! Please try again later", open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Return book! Please try again later" });
             }
         }
     }

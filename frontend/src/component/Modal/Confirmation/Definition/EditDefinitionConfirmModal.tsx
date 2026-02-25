@@ -54,12 +54,12 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
         {
             if (await response) 
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!` });
                 setTimeout(() => { handleClose() }, 2000);
             } 
             else 
             {
-                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later`, open: true, onClose: () => alertContext.setAlertConfig(null) });
+                alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later` });
             }
         }
     }
