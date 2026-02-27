@@ -2,7 +2,6 @@ import { NextFunction, Response } from "express";
 import { UserInterface } from "../../../model/userSchemaInterface";
 import { FindUserByID, FindUserWithData, GetUser } from "../../../schema/user/user";
 import { AuthRequest } from "../../../model/requestInterface";
-import { ObjectId } from "mongoose";
 
 // for build query (GET method in user, which require login)
 export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -15,7 +14,7 @@ export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, 
     if (userId) 
     {
         const hasBodyParameter = Object.keys(queryParams).length > 0;
-        foundUser = (!hasBodyParameter && !tableName)? await FindUserByID(userId) : await fetchUserData(tableName, queryParams, userId);
+        foundUser = (!hasBodyParameter && !tableName)? await FindUserByID(userId as unknown as string) : await fetchUserData(tableName, queryParams, userId as unknown as string);
     } 
     else 
     {
@@ -31,7 +30,7 @@ export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, 
     next();
 };
 
-const fetchUserData = async (tableName: string, queryParams: any, userId?: ObjectId) => 
+const fetchUserData = async (tableName: string, queryParams: any, userId?: string) => 
 {
     const query = buildQuery(queryParams);
     return await FindUserWithData(tableName, query, userId);

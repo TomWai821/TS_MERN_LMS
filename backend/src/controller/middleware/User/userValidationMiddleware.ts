@@ -59,7 +59,7 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
 // for found user with used to modify or delete (Require login)
 export const FoundUserFromParams = async (req: AuthRequest, res:Response, next:NextFunction) => 
 {
-    const userId = req.params.id as unknown as ObjectId;
+    const userId = req.params.id as unknown as string;
     const foundUser = await FindUserByID(userId);
         
     if (!foundUser) 

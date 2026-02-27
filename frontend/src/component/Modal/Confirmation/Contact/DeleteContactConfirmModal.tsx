@@ -57,8 +57,6 @@ const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 
                 <Typography>Phone No: {data.phoneNumber}</Typography>
                 <Typography>Email: {data.email}</Typography>
-                
-                { type === "Publisher" && <Typography>Address: {data.address}</Typography>}
             </Box>
             
             <DeleteTypography/>

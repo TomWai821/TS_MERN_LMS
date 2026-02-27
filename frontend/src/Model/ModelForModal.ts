@@ -54,7 +54,7 @@ export interface SuspendModalInterface
 
 export interface DeleteModalInterface
 {
-    _id:string;
+    _id: string;
     value?: number;
     type?: string;
     data: any;

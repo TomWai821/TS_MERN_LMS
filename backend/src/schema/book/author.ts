@@ -54,15 +54,15 @@ export const FindAuthor = async (data: Record<string, any>) =>
     }
 }
 
-export const FindAuthorByID = async (publisherID: string, select?: Record<string, any>) => 
+export const FindAuthorByID = async (authorID: string, select?: Record<string, any>) => 
 {
     try
     {
         if(select)
         {
-            return await Author.findById(publisherID).select(select);
+            return await Author.findById(authorID).select(select);
         }
-        return await Author.findById(publisherID);
+        return await Author.findById(authorID);
     }
     catch(error)
     {
@@ -70,11 +70,11 @@ export const FindAuthorByID = async (publisherID: string, select?: Record<string
     }
 }
 
-export const FindAuthorByIDAndUpdate = async (publisherID: string, data: Record<string, any>) => 
+export const FindAuthorByIDAndUpdate = async (authorID: string, data: Record<string, any>) => 
 {
     try
     {
-        return await Author.findByIdAndUpdate(publisherID, data);
+        return await Author.findByIdAndUpdate(authorID, data);
     }
     catch(error)
     {
@@ -82,11 +82,11 @@ export const FindAuthorByIDAndUpdate = async (publisherID: string, data: Record<
     }
 }
 
-export const FindAuthorByIDAndDelete = async (publisherID: ObjectId) =>
+export const FindAuthorByIDAndDelete = async (authorID: string) =>
 {
     try
     {
-        return await Author.findByIdAndDelete(publisherID);
+        return await Author.findByIdAndDelete(authorID);
     }
     catch(error)
     {
