@@ -82,7 +82,7 @@ export const FindPublisherByIDAndUpdate = async (publisherID: string, data: Reco
     }
 }
 
-export const FindPublisherByIDAndDelete = async (publisherID: ObjectId) =>
+export const FindPublisherByIDAndDelete = async (publisherID: string) =>
 {
     try
     {

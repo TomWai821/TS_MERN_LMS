@@ -54,7 +54,7 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const CreateStatusList = async (statusForUserList:string, userId:ObjectId, description: string, startDate: Date, dueDate: Date) => 
+export const CreateStatusList = async (statusForUserList:string, userId:string, description: string, startDate: Date, dueDate: Date) => 
 {
     const ListHandlers:Record<string, { find: () => Promise<any>; actions: () => Promise<any>; }> = 
     {

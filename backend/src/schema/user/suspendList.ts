@@ -68,15 +68,15 @@ export const FindSuspendList = async (data: Record<string, any>) =>
     }
 }
 
-export const FindSuspendListByID = async (banListID: ObjectId, select?: Record<string, any>) =>
+export const FindSuspendListByID = async (suspendListID: string, select?: Record<string, any>) =>
 {
     try 
     {
         if (select) 
         {
-            return await SuspendList.findById(banListID).select(select);
+            return await SuspendList.findById(suspendListID).select(select);
         }
-        return await SuspendList.findById(banListID);
+        return await SuspendList.findById(suspendListID);
     } 
     catch (error) 
     {
@@ -84,11 +84,11 @@ export const FindSuspendListByID = async (banListID: ObjectId, select?: Record<s
     }
 }
 
-export const FindSuspendListByIDAndUpdate = async (banListID: ObjectId, data: Record<string, any>) =>
+export const FindSuspendListByIDAndUpdate = async (suspendListID: string, data: Record<string, any>) =>
 {
     try 
     {
-        return await SuspendList.findByIdAndUpdate(banListID, data, { new: true });
+        return await SuspendList.findByIdAndUpdate(suspendListID, data, { new: true });
     } 
     catch (error) 
     {
@@ -110,7 +110,7 @@ export const detectExpiredSuspendRecord = async () =>
 
             for(const record of expiresRecord)
             {
-                const modifyUserStatus = await FindUserByIDAndUpdate(record.userID, {status: 'Normal'});
+                const modifyUserStatus = await FindUserByIDAndUpdate(record.userID as unknown as string, {status: 'Normal'});
 
                 if(!modifyUserStatus)
                 {
@@ -118,7 +118,7 @@ export const detectExpiredSuspendRecord = async () =>
                     continue;
                 }
 
-                const modifySuspendStatus = await FindSuspendListByIDAndUpdate(record._id, {status: 'Unsuspend', unSuspendDate: currentDate});
+                const modifySuspendStatus = await FindSuspendListByIDAndUpdate(record._id as unknown as string, {status: 'Unsuspend', unSuspendDate: currentDate});
             
                 if(!modifySuspendStatus)
                 {

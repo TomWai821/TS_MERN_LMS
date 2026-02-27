@@ -73,7 +73,7 @@ export const FindGenreByIDAndUpdate  = async (genreId: string, data: Record<stri
 {
     try
     {
-        return await Genre.findByIdAndUpdate(genreId as unknown as ObjectId, data);
+        return await Genre.findByIdAndUpdate(genreId, data);
     }
     catch(error)
     {
@@ -85,7 +85,7 @@ export const FindGenreByIDAndDelete = async (genreId: string) =>
 {
     try
     {
-        return await Genre.findByIdAndDelete(genreId as unknown as ObjectId);
+        return await Genre.findByIdAndDelete(genreId);
     }
     catch(error)
     {

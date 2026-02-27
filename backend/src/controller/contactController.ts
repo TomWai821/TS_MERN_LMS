@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import { AuthRequest } from '../model/requestInterface';
 import { CreateAuthor, FindAuthorByIDAndDelete, FindAuthorByIDAndUpdate, GetAuthor } from '../schema/book/author';
 import { CreatePublisher, FindPublisherByIDAndDelete, FindPublisherByIDAndUpdate, GetPublisher } from '../schema/book/publisher';
-import { ObjectId } from 'mongoose';
 
 export const GetContactRecord = async (req: AuthRequest, res: Response) => 
 {
@@ -114,7 +113,7 @@ export const UpdateContactRecord = async (req: AuthRequest, res: Response) =>
             break;
     }
 
-    res.json({ success: true, message: `Create Author successfully!` });
+    res.json({ success: true, message: `Create ${contactType} successfully!` });
 }
 
 const UpdateAuthorRecord = async (req: AuthRequest, res: Response) => 
@@ -124,6 +123,7 @@ const UpdateAuthorRecord = async (req: AuthRequest, res: Response) =>
 
     try 
     {
+        console.log({author: author, phoneNumber: phoneNumber, email: email});
         const updateAuthor = await FindAuthorByIDAndUpdate(id, {author: author, phoneNumber: phoneNumber, email: email});
 
         if(!updateAuthor)
@@ -165,7 +165,7 @@ export const DeleteContactRecord = async (req: Request, res: Response) =>
 
     try 
     {
-        const deleteData = await contactHandler[contactType].Delete(id as ObjectId);
+        const deleteData = await contactHandler[contactType].Delete(id);
         
         if (!deleteData) 
         {
@@ -173,7 +173,7 @@ export const DeleteContactRecord = async (req: Request, res: Response) =>
         }
 
         success = true;
-        return res.json({ success, message: "Delete Contact Data successfully!" });
+        return res.json({ success, message: `Delete ${contactType} Data successfully!` });
     } 
     catch (error) 
     {

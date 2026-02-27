@@ -56,7 +56,7 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
 
     const detectNullData = (data:string) =>
     {
-        return data === "" ? data : "N/A";
+        return data === "" ? "N/A" : data;
     }
 
     const compareDifference = (editData: ContactInterface, compareData: ContactInterface) => 

@@ -100,7 +100,7 @@ export const ChangeUserData = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const modifyData = await FindUserByIDAndUpdate(foundUser._id, updateData); 
+        const modifyData = await FindUserByIDAndUpdate(foundUser._id as unknown as string, updateData); 
 
         if(!modifyData)
         {
@@ -136,7 +136,7 @@ export const UpdateUserData = async (req:AuthRequest, res:Response) =>
                     return res.status(400).json({ success, error: "The user with this username are already exist!" });
                 }
 
-                updateData = await FindUserByIDAndUpdate(userId as unknown as ObjectId, {username: username});
+                updateData = await FindUserByIDAndUpdate(userId as unknown as string, {username: username});
                 break;
 
             case "password":
@@ -148,7 +148,7 @@ export const UpdateUserData = async (req:AuthRequest, res:Response) =>
                 }
 
                 const hashedPassword = await bcryptHash(password);
-                updateData = await FindUserByIDAndUpdate(userId as unknown as ObjectId, {password: hashedPassword})
+                updateData = await FindUserByIDAndUpdate(userId as unknown as string, {password: hashedPassword})
                 break;
 
             default:
@@ -180,7 +180,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
     {
         if(statusForUserList !== "Normal" && foundUser.status === "Normal")
         {
-            const createStatusData = await CreateStatusList(statusForUserList, userId as ObjectId, description, startDate, dueDate);
+            const createStatusData = await CreateStatusList(statusForUserList, userId as unknown as string, description, startDate, dueDate);
 
             if(!createStatusData)
             {
@@ -188,7 +188,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
             }
         }
 
-        const changeStatusInUsertable = await FindUserByIDAndUpdate(userId, {status: statusForUserList});
+        const changeStatusInUsertable = await FindUserByIDAndUpdate(userId as unknown as string, {status: statusForUserList});
 
         if(!changeStatusInUsertable)
         {
@@ -223,7 +223,7 @@ export const ModifySuspendListData = async (req: AuthRequest, res:Response) =>
 
     try
     {
-        const modifySuspendList = await FindSuspendListByIDAndUpdate(banListID as ObjectId, {dueDate, description});
+        const modifySuspendList = await FindSuspendListByIDAndUpdate(banListID as unknown as string, {dueDate, description});
 
         if(!modifySuspendList)
         {
@@ -246,7 +246,7 @@ export const DeleteUser = async (req: AuthRequest, res: Response) =>
 
     try 
     {
-        const deleteUser = await FindUserByIDAndDelete(foundUser._id);
+        const deleteUser = await FindUserByIDAndDelete(foundUser._id as unknown as string);
 
         if(!deleteUser)
         {

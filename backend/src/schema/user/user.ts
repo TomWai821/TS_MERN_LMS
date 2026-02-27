@@ -69,7 +69,7 @@ export const FindUser = async (data: Record<string, any>) =>
     }
 }
 
-export const FindUserWithData = async (tableName:string, data: Record<string, any>, userId?: ObjectId) =>
+export const FindUserWithData = async (tableName:string, data: Record<string, any>, userId?: string) =>
 {
     try
     {
@@ -143,7 +143,7 @@ const GetUsersWithDeleteDetails = async (data: any) =>
     );
 }
 
-export const FindUserByID = async (userID: ObjectId, select?: Record<string, any>) =>
+export const FindUserByID = async (userID: string, select?: Record<string, any>) =>
 {
     try 
     {
@@ -159,7 +159,7 @@ export const FindUserByID = async (userID: ObjectId, select?: Record<string, any
     }
 }
 
-export const FindUserByIDAndUpdate = async (userID: ObjectId, data: Record<string, any>) =>
+export const FindUserByIDAndUpdate = async (userID: string, data: Record<string, any>) =>
 {
     try 
     {
@@ -171,7 +171,7 @@ export const FindUserByIDAndUpdate = async (userID: ObjectId, data: Record<strin
     }
 }
 
-export const FindUserByIDAndDelete = async (userID: ObjectId) =>
+export const FindUserByIDAndDelete = async (userID: string) =>
 {
     try 
     {

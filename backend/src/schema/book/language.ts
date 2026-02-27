@@ -73,7 +73,7 @@ export const FindLanguageByIDAndUpdate = async (languageID: string, data: Record
 {
     try
     {
-        return await Language.findByIdAndUpdate(languageID as unknown as ObjectId, data);
+        return await Language.findByIdAndUpdate(languageID, data);
     }
     catch(error)
     {
@@ -81,11 +81,11 @@ export const FindLanguageByIDAndUpdate = async (languageID: string, data: Record
     }
 }
 
-export const FindLanguageByIDAndDelete = async (languageID: ObjectId) =>
+export const FindLanguageByIDAndDelete = async (languageID: string) =>
 {
     try
     {
-        return await Language.findByIdAndDelete(languageID as unknown as ObjectId);
+        return await Language.findByIdAndDelete(languageID);
     }
     catch(error)
     {
