@@ -278,7 +278,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     cd TS_MERN_LMS
 
 2. **Set up environment variable:**
-    `.env.example` templates are included at `./frontend/.env.example` and `./backend/.env.example`. Copy the appropriate file, fill required values, then remove the `.example` suffix to run.
+    `.example` templates are included at `./frontend/.env.example` and `./backend/.env.example`. Copy the appropriate file, fill required values, then remove the `.example` suffix to run.
     ### Frontend
     1. Copy template:
        ```bash
@@ -286,8 +286,6 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
       REACT_APP_API_URL
       
     2. Required variables (fill with real values):
-       - REACT_APP_GOOGLE_BOOKS_API_KEY  —> Google Books API key
-       - REACT_APP_GOOGLE_BOOKS_BASE_URL —> e.g. https://www.googleapis.com/books/v1/volumes
        - REACT_APP_API_URL               —> Backend API endpoint, e.g. http://localhost:5000/api
        - REACT_APP_MAIN_PAGE             —> Frontend URL, e.g. http://localhost:3000
       
@@ -305,6 +303,8 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
            - If connection issues, append /test (e.g. mongodb://localhost:27017/test)
        - JWT_SECRET —> secret for JWT authentication
        - ORIGIN_URI —> frontend URL, e.g. http://localhost:3000
+       - GOOGLE_BOOKS_API_KEY  —> Google Books API key
+       - GOOGLE_BOOKS_BASE_URL —> e.g. https://www.googleapis.com/books/v1/volumes
 
     
 3. **Import data into MongoDB (Local only):**
@@ -692,7 +692,7 @@ Image 8.2 - Chip set
    ```
 
 
-### For User Data (Require auth token in header)
+### For User Data (Require authToken in header)
 1. Get User data (For user management/suspend list)
    ```
    - Endpoint: `GET /api/user/UserData/tableName=:tableName` (For all record)
@@ -708,7 +708,7 @@ Image 8.2 - Chip set
    Endpoint: `GET /api/user/UserData`
 
    Remarks:
-   1. It just require the auth token in header
+   1. It just require the authToken in header
 5. Modify User data 
    ```
    Endpoint: `PUT /api/user/UserData/id=:id`
@@ -741,7 +741,7 @@ Image 8.2 - Chip set
 
    Remarks:
    1. type = username/password
-   2. It will get the data from user collection with auth token(unhashed by JWT, then transfer to userID) before modify the username/password
+   2. It will get the data from user collection with authToken(unhashed by JWT, then transfer to userID) before modify the username/password
    ```
    
 7. Modify user Status (Include Suspend User/Unsuspend User)
@@ -774,7 +774,7 @@ Image 8.2 - Chip set
    ```
 
    
-### For Suspend List (Require auth token in header)
+### For Suspend List (Require authToken in header)
    1. Modify Suspend List data
       ```
       Endpoint: `PUT /SuspendListData/id=:id`
@@ -792,7 +792,7 @@ Image 8.2 - Chip set
       ```
 
 
-### For Book Data (Require auth token in header)
+### For Book Data (Require authToken in header)
    1. Get book data
       ```
       - Endpoint:`GET /api/book/BookData` (For all books)
@@ -862,7 +862,7 @@ Image 8.2 - Chip set
       1. id = MongoDB ObjectID in book collection
       ```
 
-### For Loan Books Data (Require auth token in header)
+### For Loan Books Data (Require authToken in header)
 1. Get Loan book record
    ```
    - Endpoint: `GET /api/book/LoanBook` (For all loan book record)
@@ -906,7 +906,7 @@ Image 8.2 - Chip set
    ```
 
    
-### For Favourite Book (Require auth token in header)
+### For Favourite Book (Require authToken in header)
 1. Get favourite book record
    ```
    Endpoint:`GET /api/book/FavouriteBook`
@@ -922,7 +922,7 @@ Image 8.2 - Chip set
    }
 
    Remarks:
-   1. It will get the userID from auth token(unhash by jwt)
+   1. It will get the userID from authToken(unhash by jwt)
    2. BookID  = MongoDB ObjectID in book collection
    ```
    
@@ -934,7 +934,7 @@ Image 8.2 - Chip set
    1. id = MongoDB ObjectID in favourite book collection
    ```
    
-### For Book data definition (Require auth token in header)
+### For Book data definition (Require authToken in header)
 1. Create a new definition data:
    ```
    - Endpoint: `GET /api/book/definition/type=:type`
@@ -996,7 +996,7 @@ Image 8.2 - Chip set
    2. id = MongoDB ObjectID in langauge/genre collection
    ```
    
-### For contact data (Require auth token in header)
+### For contact data (Require authToken in header)
 1. Creating a new contact:
    ```
    Endpoint: `GET /api/book/contact/type=:type`
@@ -1058,6 +1058,44 @@ Image 8.2 - Chip set
    
    Remarks:
    1. id = MongoDB ObjectID
+   ```
+### For external data (Require authToken in header)
+   ```
+   Endpoint: `GET /api/book/external/bookname=${bookname}&author=${author}`
+   ```
+
+   Response (Does not have suitable data in External API):
+   ```Json
+   {
+       "success": true,
+       "foundExternalBook": {
+            "averageRating": "N/A",
+            "ratingsCount": "N/A",
+            "categories": "N/A",
+            "saleability": "N/A",
+            "listPrice": "N/A",
+            "retailPrice": "N/A",
+            "ISBN_13_Code": "N/A",
+            "ISBN_10_Code": "N/A"
+        }
+   }
+   ```
+
+   Response (Have suitable data in External API):
+   ```Json
+   {
+       "success": true,
+       "foundExternalBook": {
+            "averageRating": "4.5 (From Google Books)",
+            "ratingsCount": "34",
+            "categories": "Science Fiction",
+            "saleability": "FOR_SALE",
+            "listPrice": "HKD$99.99",
+            "retailPrice": "HKD$99.99",
+            "ISBN_13_Code": "978XXXXXXXXXX",
+            "ISBN_10_Code": "XXXXXXXXX"
+        }
+   }
    ```
 
 ### Response
