@@ -32,7 +32,7 @@ A full-stack application that streamlines library operations built as a Informat
 The Library Management System was developed to modernise library operations by addressing inefficiencies such as reliance on physical library cards and the lack of a recommendation system. Built with the MERN stack and TypeScript, the goal was to create a secure, scalable, and user-friendly platform that improves both librarian workflows and user experience
 
 ### Features 
-Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). The system also incorporates role-based access control (RBAC) to ensure secure authentication and permission management. Together, these features highlight the ability to combine modern web technologies with practical library needs, delivering both secure access and an intuitive user experience
+Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). Due to project time constraints, role‑based access control (RBAC) is currently implemented on the frontend only. Together, these features highlight the ability to combine modern web technologies with practical library needs, and improves UX for the prototype but is not a substitute for backend authorisation.
 
 ### Technical Learns 
 This project allowed me to develop skills in designing and implementing scalable single-page applications, managing global state with React’s Context API and useState, and building modular RESTful APIs with Express.js, while also gaining practical experience with React Router for SPA navigation. I also developed awareness of testing and performance optimisation practices essential for scalable frontend development
@@ -404,7 +404,11 @@ This sequence diagram illustrates the confirmation flow via a frontend PUT reque
 4. Data Deletion
 <img src="doc/Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:90%;"/><br>
 This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request. The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion. Through structured response handling and modular orchestration across services, it ensures secure and reliable user operations<br>
-    
+
+5. Get Data From Google Book (API Integration)
+<img src="doc/Image/Diagrams/GetDataFromGoogleBookAPI.png" style="width:90%;"/><br>
+The application uses a Node.js middleware to bridge the React frontend with the Google Books API. When a user searches for a book, the backend first validates the user's Auth Token for security. After fetching the raw data from the external API, the backend filters and refines the response into a clean payload, ensuring the frontend only receives the necessary information for UI rendering. This approach optimises performance and enhances data security<br>
+
 
 ### Backend
 
@@ -1187,8 +1191,8 @@ Image 8.2 - Chip set
     - Enhance efficiency by allowing bulk input rather than filling fields one by one
 
 #### Backend Side
-1. **Implement server-side pagination**
-    - Limit data returned in each GET request, improving frontend performance and user experience
+1. **Server side RBAC (Role-Base Access Control)**
+    - Production will enforce role checks server‑side, so each API request validates the user’s role before returning or modifying data (RBAC is currently implemented on the frontend for the prototype due to time limitations)
 
 2. **Upgrade server-side scheduled data updates**
     - Replace prototype-level Node.js Interval with a production-grade scheduler (e.g. node-cron or cloud-based job scheduler) to ensure reliability, scalability, and better error handling
