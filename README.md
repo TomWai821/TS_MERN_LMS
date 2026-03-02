@@ -45,8 +45,8 @@ Disclaimer: All contact information provided in this file is fictitious and used
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 ```
-- Edit backend/.env: set at minimum: MONGO_URI, JWT_SECRET, PORT, ORIGIN_URI
-- Edit frontend/.env: set at minimum: REACT_APP_GOOGLE_BOOKS_API_KEY, REACT_APP_API_URL, REACT_APP_MAIN_PAGE
+- Edit backend/.env: set at minimum: MONGO_URI, JWT_SECRET, PORT, ORIGIN_URI, GOOGLE_BOOKS_API_KEY, GOOGLE_BOOKS_BASE_URL
+- Edit frontend/.env: set at minimum: REACT_APP_API_URL, REACT_APP_MAIN_PAGE
 
 **Notes about ports and hostnames** 
 - If you run the project with **Docker Compose**, use the Docker examples in `.env.example` (e.g. `MONGO_URI=mongodb://mongo:27017/...`). Docker Compose maps container ports to the host automatically
@@ -233,7 +233,7 @@ These automated backend functions run silently in the background and are difficu
 
 ***1. Detect Record Functions***<br>
 <img src="doc/Image/Functions/DetectRecordDaily.png" style="width:60%;"/><br>
-Performs scheduled scans for:
+Performs scheduled scans for:(\
 - Expired Loan Records
 - Suspension Records
 - Fine Calculations
@@ -243,6 +243,7 @@ This function acts as the entry point for daily automation checks (located in "b
 Daily automation checks are triggered using a combination of `setTimeout` and `setInterval`: 
 - `setTimeout` calculates the delay until the next fixed time (e.g., midnight) and ensures the first run aligns correctly
 - `setInterval` then repeats the task every 24 hours at the same time
+- UTC-8 variables are Customized since JavaScript/TypeScript lacks a native API
 This design avoids drift that occurs when using `setInterval` alone, ensuring consistent daily execution and predictable reset behaviour
 
 ***2. Detect Expired Loan Book Records***<br>
@@ -355,7 +356,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 
 6. **Expected URLs:**
     - Backend API → http://localhost:5000/api
-    - Frontend UI → http://localhost:3000
+    - Frontend    → http://localhost:3000
   
 ### Notes
 - Express backend default port: 5000. React frontend default port: 3000.
