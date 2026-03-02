@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 // another file functions
 import { connectToMongoDB } from './connectToMongo';
-import { detectRecordsDaily } from './detectRecord';
+import { scheduleDailyMidnightTasks  } from './detectRecord';
 
 // routes
 import userRoutes from './routes/user';
@@ -38,4 +38,4 @@ app.listen(PORT, () =>
     console.log(`Server listen to http://localhost:${PORT}`);
 })
 
-detectRecordsDaily();
+scheduleDailyMidnightTasks();
