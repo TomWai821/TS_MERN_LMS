@@ -240,11 +240,11 @@ Performs scheduled scans for:(\
 This function acts as the entry point for daily automation checks (located in "backend/src/detectRecord.ts")
 
 ### Scheduling Logic 
-Daily automation checks are triggered using a combination of `setTimeout` and `setInterval`: 
-- `setTimeout` calculates the delay until the next fixed time (e.g., midnight) and ensures the first run aligns correctly
-- `setInterval` then repeats the task every 24 hours at the same time
-- UTC-8 variables are Customized since JavaScript/TypeScript lacks a native API
-This design avoids drift that occurs when using `setInterval` alone, ensuring consistent daily execution and predictable reset behaviour
+- Daily automation checks are triggered using a combination of `setTimeout` and `setInterval`: 
+    - `setTimeout` calculates the delay until the next fixed time (e.g., midnight) and ensures the first run aligns correctly
+    - `setInterval` then repeats the task every 24 hours at the same time
+    - UTC-8 variables are Customized since JavaScript/TypeScript lacks a native API
+- This design avoids drift that occurs when using `setInterval` alone (Ensure consistent daily execution and predictable reset behaviour)
 
 ***2. Detect Expired Loan Book Records***<br>
 <img src="doc/Image/Functions/DetectExpiredLoanRecord.png" style="width:90%;"/><br>
