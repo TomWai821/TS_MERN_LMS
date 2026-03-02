@@ -232,16 +232,22 @@ Notes:
 These automated backend functions run silently in the background and are difficult to showcase in a live demo. Instead, we present annotated source code images and accompanying logic descriptions to clearly explain their purpose and behavior<br>
 
 ***1. Detect Record Functions***<br>
-<img src="doc/Image/Functions/DetectRecordDaily.png" style="width:40%;"/><br>
+<img src="doc/Image/Functions/DetectRecordDaily.png" style="width:90%;"/><br>
 Performs scheduled scans for:
 - Expired Loan Records
 - Suspension Records
 - Fine Calculations
-This function acts as the entry point for daily automation checks (located in "backend/detectRecord.ts")
+This function acts as the entry point for daily automation checks (located in "backend/src/detectRecord.ts")
+
+### Scheduling Logic 
+Daily automation checks are triggered using a combination of `setTimeout` and `setInterval`: 
+- `setTimeout` calculates the delay until the next fixed time (e.g., midnight) and ensures the first run aligns correctly
+- `setInterval` then repeats the task every 24 hours at the same time
+This design avoids drift that occurs when using `setInterval` alone, ensuring consistent daily execution and predictable reset behaviour
 
 ***2. Detect Expired Loan Book Records***<br>
 <img src="doc/Image/Functions/DetectExpiredLoanRecord.png" style="width:90%;"/><br>
-This source code (located in backend/schema/book/bookloaned.ts, Line 159–196) automatically performs detection and handling of expired loan records:
+This source code (located in backend/src/schema/book/bookloaned.ts, Line 159–196) automatically performs detection and handling of expired loan records:
 - Fetch: All loan records with "Loaned" status
 - Compare: Each dueDate vs today
 - Update Logic:
@@ -251,7 +257,7 @@ This source code (located in backend/schema/book/bookloaned.ts, Line 159–196) 
 
 ***3. Automatically Fines Calculation***<br>
 <img src="doc/Image/Functions/FinesAmountCalculation.png" style="width:90%;"/><br>
-This source code (located in backend/schema/book/bookloaned.ts, Line 198–232) automatically performs detection and handling of fines amount calculation:
+This source code (located in backend/src/schema/book/bookloaned.ts, Line 198–232) automatically performs detection and handling of fines amount calculation:
 - Days Overdue: Calculated from due date
 - Fine Formula: $1.5 × days overdue, capped at $130
 - Updates:
@@ -1173,8 +1179,8 @@ Image 8.2 - Chip set
 3. **Modularised backend routes for cleaner structure**
     - Reduced redundant code in authentication and data verification, improving maintainability
 
-4. **Implemented server-side scheduled data updates (Node.js Interval)**
-    - Backend automatically refreshes or syncs data at defined intervals, reducing manual triggers (located in `./backend/src/detectRecord.ts`)
+4. **Implemented server-side scheduled data updates (Interval+ setTimeout in Node.js)**
+    - Ensured consistent daily automation and reduced manual triggers (located in `./backend/src/detectRecord.ts`)
 
 ### Planned Improvements
 #### Frontend side
