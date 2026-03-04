@@ -41,7 +41,10 @@ jobs:
             sleep 5
           done
       # Import seed data (Collection Schemas)
-      - run: bash ./backend/MongoDBSchema/init.sh
+      - run: docker compose exec -T mongo \
+          mongoimport --db mydb --collection mycollection \
+          --file /docker-entrypoint-initdb.d/data.json --jsonArray
+
       # Integration test
       - run: npm run test:e2e --prefix backend
 
