@@ -44,10 +44,6 @@ jobs:
             echo "Waiting for backend..."
             sleep 5
           done
-      # Import seed data (Collection Schemas)
-      - run: docker compose exec -T mongo \
-          mongosh mydb --eval 'db.mycollection.insertMany(JSON.parse(cat("/docker-entrypoint-initdb.d/data.json")))'
-
 
       # Integration test
       - run: npm run test:e2e --prefix backend
