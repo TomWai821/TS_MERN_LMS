@@ -49,6 +49,8 @@ services:
       interval: 10s 
       timeout: 5s 
       retries: 5
+    volumes: 
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
