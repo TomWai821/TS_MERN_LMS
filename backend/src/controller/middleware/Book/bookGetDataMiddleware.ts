@@ -1,10 +1,10 @@
 import { NextFunction, Response } from "express";
 import { AuthRequest, Book } from "../../../model/requestInterface";
-import { BookFavouriteInterface, BookInterface } from "../../../model/bookSchemaInterface";
+import { BookInterface } from "../../../model/bookSchemaInterface";
 import { GetBook } from "../../../schema/book/book";
 import { ObjectId } from "mongodb";
 import { GetBookFavourite } from "../../../schema/book/bookFavourite";
-import { calculateTFIDF } from "../../Utils";
+import { calculateTFIDF } from "../../TF-IDF_Logic";
 
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -74,40 +74,44 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             }
         
             const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.author} ${book.publisher}`);
+
+            const preferedGenre = Array.from(new Set((suggestionData as Book[]).map(book => book.genre)));
         
             const allBooks = await GetBook(undefined);
         
             const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.authorDetails.author} ${book.publisherDetails.publisher}` }));
         
-            const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus);
-        
-            const topBookIds = TF_IDF_Scores.map(book => book.id);
+            const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus, preferedGenre);
+
+            const scoreMap = new Map(TF_IDF_Scores.map(s => [s.id.toString(), s.score]));
+            
+            const topBookIds = TF_IDF_Scores.slice(0, 20).map((book: { id: any; }) => book.id);
+
             foundBook = await GetBook({ _id: { $in: topBookIds } }, undefined);
-            
-            const scoreMap = new Map<string, number>();
-            
-            TF_IDF_Scores.forEach(item =>  { scoreMap.set(item.id.toString(), item.score); });
 
             const suggestedBookNames = (suggestionData as Book[]).map(book => book.bookname);
 
+            // Exclude top 5 loan book records (Top 5 due to the limited book amount in database)
+            const excludedNames = suggestedBookNames.slice(0, 5);
+
             foundBook = (foundBook as BookInterface[])
-                .filter(book => !suggestedBookNames.slice(0, 5).includes(book.bookname))
-                .sort((a, b) => 
-                {
-                    const scoreA = scoreMap.get(a._id.toString()) || 0;
-                    const scoreB = scoreMap.get(b._id.toString()) || 0;
-                    return scoreB - scoreA;
-                })
-                .slice(0, 8);
+            .filter(book => !excludedNames.includes(book.bookname))
+            .sort((a, b) => 
+            {
+                const scoreA = scoreMap.get(a._id.toString()) || 0;
+                const scoreB = scoreMap.get(b._id.toString()) || 0;
+                return scoreB - scoreA;
+            })
+            .slice(0, 8);
             break;
 
         default:
-            return res.status(400).json({success: false, message:`Invalid Suggest Type: ${suggestType}`});
+            return res.status(400).json({success: false, message: `Invalid Suggest Type: ${suggestType}`});
     }
 
     if (!foundBook) 
     {
-        return res.status(404).json({success: false, message:"Could not found suggested book"});
+        return res.status(404).json({success: false, message: "Could not found suggested book"});
     }
 
     req.foundBook = foundBook;
