@@ -1,34 +1,16 @@
 // packages
-import express from 'express';
-import cors from 'cors';
 import dotenv from "dotenv";
 
 // another file functions
 import { connectToMongoDB } from './connectToMongo';
-import { scheduleDailyMidnightTasks  } from './detectRecord';
-import { routerHandler } from './routerList';
+import { scheduleDailyMidnightTasks } from './detectRecord';
+import app from './app'
 
 dotenv.config({ debug: false });
 
 const PORT = process.env.PORT || 5000;
-const ORIGIN_URI = process.env.ORIGIN_URI as string;
 
 connectToMongoDB();
-const app = express();
-
-app.use(cors
-(
-    {
-        origin: ORIGIN_URI,
-        methods: ["GET", "POST", "DELETE", "PUT"],
-        allowedHeaders: ["content-type", "authToken"]
-    }
-));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-routerHandler(app);
 
 app.listen(PORT, () => 
 { 
