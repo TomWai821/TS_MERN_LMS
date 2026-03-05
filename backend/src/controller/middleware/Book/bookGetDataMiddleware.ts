@@ -5,6 +5,7 @@ import { GetBook } from "../../../schema/book/book";
 import { ObjectId } from "mongodb";
 import { GetBookFavourite } from "../../../schema/book/bookFavourite";
 import { calculateTFIDF } from "../../TF-IDF_Logic";
+import { GetBookLoaned } from "../../../schema/book/bookLoaned";
 
 // for build query (GET method in user, which require login)
 export const BuildBookQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
@@ -66,43 +67,57 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
             break;
 
         case "forUser":
-            const {suggestionData} = req.body;
-            
             if (!userId) 
             {
                 return res.status(400).json({ success: false, message: `This suggestion type requires authToken!` });
             }
-        
-            const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.author} ${book.publisher}`);
-
-            const preferedGenre = Array.from(new Set((suggestionData as Book[]).map(book => book.genre)));
-        
-            const allBooks = await GetBook(undefined);
-        
-            const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: `${book.bookname} ${book.genreDetails.genre} ${book.authorDetails.author} ${book.publisherDetails.publisher}` }));
-        
-            const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus, preferedGenre);
-
-            const scoreMap = new Map(TF_IDF_Scores.map(s => [s.id.toString(), s.score]));
             
-            const topBookIds = TF_IDF_Scores.slice(0, 20).map((book: { id: any; }) => book.id);
+            const userObjectId = new ObjectId(userId as unknown as ObjectId);
+            const getBookLoanedRecord = await GetBookLoaned({ userID: userObjectId }, 5, { loanDate: -1 });
 
-            foundBook = await GetBook({ _id: { $in: topBookIds } }, undefined);
-
-            const suggestedBookNames = (suggestionData as Book[]).map(book => book.bookname);
-
-            // Exclude top 5 loan book records (Top 5 due to the limited book amount in database)
-            const excludedNames = suggestedBookNames.slice(0, 5);
-
-            foundBook = (foundBook as BookInterface[])
-            .filter(book => !excludedNames.includes(book.bookname))
-            .sort((a, b) => 
+            if((getBookLoanedRecord as any[]).length > 0)
             {
-                const scoreA = scoreMap.get(a._id.toString()) || 0;
-                const scoreB = scoreMap.get(b._id.toString()) || 0;
-                return scoreB - scoreA;
-            })
-            .slice(0, 8);
+                const suggestionData = (getBookLoanedRecord as any[]).map((book) => (
+                {
+                    _id: book.bookDetails?._id,
+                    bookname: book.bookDetails?.bookname ?? 'Unknown Book Name',
+                    genre: book.genreDetails?.genre ?? 'Unknown Genre',
+                    author: book.authorDetails?.author ?? 'Unknown Author',
+                    publisher: book.publisherDetails?.publisher ?? 'Unknown Publisher',
+                }));
+            
+                const loanedBooksCorpus = (suggestionData as Book[]).map( book => `${book.bookname} ${book.genre} ${book.author} ${book.publisher}`);
+
+                const preferedGenre = [...new Set((suggestionData as Book[]).map(book => book.genre))];
+            
+                const allBooks = await GetBook(undefined);
+            
+                const allBooksCorpus = (allBooks as any[]).map(book => 
+                (
+                    { 
+                        id: book._id, 
+                        metadata: `${book.bookname} ${book.genreDetails.genre} ${book.authorDetails.author} ${book.publisherDetails.publisher}` 
+                    }
+                ));
+            
+                const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus, allBooksCorpus, preferedGenre);
+
+                const scoreMap = new Map(TF_IDF_Scores.map(s => [s.id.toString(), s.score]));
+                
+                const topBookIds = TF_IDF_Scores.slice(0, 20).map((book: { id: any; }) => book.id);
+                const excludedNames = suggestionData.map(book => book.bookname);
+
+                foundBook = await GetBook({ _id: { $in: topBookIds }, bookname: { $nin: excludedNames } }, undefined);
+
+                foundBook = (foundBook as BookInterface[])
+                .sort((a, b) => 
+                {
+                    const scoreA = scoreMap.get(a._id.toString()) || 0;
+                    const scoreB = scoreMap.get(b._id.toString()) || 0;
+                    return scoreB - scoreA;
+                })
+                .slice(0, 8);
+            }
             break;
 
         default:

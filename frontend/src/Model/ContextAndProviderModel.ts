@@ -89,7 +89,6 @@ export interface SelfBookRecordContextProps
     bookForUser: BookDataInterface[];
     fetchFavouriteRecord: () => Promise<void>;
     fetchSelfLoanRecord: () => Promise<boolean>;
-    GetSuggestData: (suggestBookData: LoanBookInterface[]) => Promise<{ bookname: string; genre: any; author: any; publisher: any; }[]>;
     fetchSelfFavouriteBookWithFilterData: (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => Promise<void>;
     fetchSelfLoanBookWithFilterData: (type:string, bookname?:string, status?:string) => Promise<void>;
     favouriteBook: (bookID:string) => Promise<boolean>;

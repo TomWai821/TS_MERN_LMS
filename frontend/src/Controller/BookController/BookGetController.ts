@@ -21,7 +21,7 @@ export const fetchBook = async (bookname?:string, status?:string, genreID?:strin
     }
 }
 
-export const fetchSuggestBook = async (type:string, authToken?:string, data?:Record<string,any>) => 
+export const fetchSuggestBook = async (type:string, authToken?:string) => 
 {
     const headers: Record<string, string> = 
     {
@@ -41,13 +41,11 @@ export const fetchSuggestBook = async (type:string, authToken?:string, data?:Rec
         {
             method: 'POST',
             headers: headers,
-            body: JSON.stringify({ suggestionData: data })
         });
     }
     else
     {
-        const queryParams = data ? '?' + Object.entries(data).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&'): '';
-        const url = type === "mostPopular" ? `${localhost}/book/loanBook/type=${type}${queryParams}` : `${localhost}/book/bookData/type=${type}${queryParams}`
+        const url = type === "mostPopular" ? `${localhost}/book/loanBook/type=${type}` : `${localhost}/book/bookData/type=${type}`
     
         response = await fetch(url,
             {

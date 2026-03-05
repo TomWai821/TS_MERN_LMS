@@ -1,14 +1,14 @@
 type ScoreType = { id: string; score: number }[];
 type BookCorpusType = { id: string; metadata: string }[];
 
-// Calculate TF
+// Calculate TF (Term Frequency)
 const termFrequency = (term: string, doc: string[]): number =>
 {
     const count = doc.filter(t => t === term).length;
     return count / doc.length;
 }
 
-// Calcuate IDF
+// Calcuate IDF (Inverse Document Frequency)
 const inverseDocumentFrequency = (term: string, docs: string[][]): number =>
 {
     const numDocsWithTerm = docs.filter(doc => doc.includes(term)).length;
@@ -39,10 +39,10 @@ export const calculateTFIDF = (loanCorpus: string[], allBooksCorpus: BookCorpusT
       const docVector = vocab.map(term => termFrequency(term, doc) * inverseDocumentFrequency(term, docs));
       const tfidfScore = cosineSimilarity(userVector, docVector);
 
-      // genre similarity: 如果書籍 genre 在使用者偏好裡，加分
+      // genre similarity: Gain more score when book genre is similar as loan record
       const genreScore = preferredGenres.includes(book.metadata.split(/\s+/)[1]) ? 1 : 0;
 
-      // Final score = TF-IDF + genre 加權
+      // Final score = TF-IDF + genre Weight
       const finalScore = 0.7 * tfidfScore + 0.3 * genreScore;
 
       return { id: book.id, score: finalScore };

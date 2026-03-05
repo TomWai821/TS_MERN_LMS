@@ -31,13 +31,13 @@ export const CreateBookLoaned = async (data:Record<string, any>) =>
     }
 }
 
-export const GetBookLoaned = async (data?:Record<string, any>, limit?:number) =>
+export const GetBookLoaned = async (data?:Record<string, any>, limit?:number, sortRequirements?: Record<string, any>) =>
 {
     try
     {
         if(limit)
         {
-            return await GetSuggestBookDetails(data, limit);
+            return await GetSuggestBookDetails(data, limit, sortRequirements);
         }
         return await GetBooksWithOtherDetails(data);
     }
@@ -65,7 +65,7 @@ const GetBooksWithOtherDetails = async (data?:Record<string, any>) =>
     return await BookLoaned.aggregate(pipeline);
 }
  
-const GetSuggestBookDetails = async (data?: Record<string, any>, limit?: number) => 
+const GetSuggestBookDetails = async (data?: Record<string, any>, limit?: number, sortRequirements?: Record<string, any>) => 
 {
     let pipeline: PipelineStage[] = [];
 
@@ -73,7 +73,12 @@ const GetSuggestBookDetails = async (data?: Record<string, any>, limit?: number)
 
     pipeline.push({ $group: { _id: "$bookID", count: { $sum: 1 } }});
 
-    pipeline.push({ $sort: { count: -1 } });
+    if(!sortRequirements)
+    {
+        sortRequirements = { count: -1 };
+    }
+
+    pipeline.push({ $sort: sortRequirements });
 
     if (limit) {pipeline.push({ $limit: limit });}
 

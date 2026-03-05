@@ -23,7 +23,6 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
     {
         fetchFavouriteRecord();
         fetchSelfLoanRecord();
-        fetchRecommendBookForUser();
     },[])
 
     const fetchFavouriteRecord = useCallback(async() => 
@@ -43,42 +42,18 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
         if (resultForSelfLoanBook && Array.isArray(resultForSelfLoanBook.foundLoanBook)) 
         {
             setSelfLoanBook(resultForSelfLoanBook.foundLoanBook);
-            GetSuggestData(resultForSelfLoanBook.foundLoanBook);
             return true;
         }
         return false;
     },[])
 
-    const GetSuggestData = useCallback(async (suggestBookData: LoanBookInterface[]) => 
-    {
-        if (!suggestBookData || !Array.isArray(suggestBookData) || suggestBookData.length === 0) 
-        {
-            return []; 
-        }
-        
-        return suggestBookData.slice(0, 10).map((book) =>
-        (
-            {
-                bookname: book.bookDetails?.bookname || 'Unknown Book Name',
-                genre: book.genreDetails?.genre || 'Unknown Genre',
-                author: book.authorDetails?.author || 'Unknown Author',
-                publisher: book.publisherDetails?.publisher || 'Unknown Publisher'
-            }
-        ));
-    }, []);
-
     const fetchRecommendBookForUser = useCallback(async () => 
     {
-        const suggestionData = await GetSuggestData(SelfLoanBook);
+        const resultForUser = await fetchSuggestBook("forUser", authToken);
 
-        if (suggestionData.length > 0) 
+        if (resultForUser && Array.isArray(resultForUser.foundBook)) 
         {
-            const resultForUser = await fetchSuggestBook("forUser", authToken, suggestionData);
-
-            if (resultForUser && Array.isArray(resultForUser.foundBook)) 
-            {
-                setBookForUser(resultForUser.foundBook);
-            }
+            setBookForUser(resultForUser.foundBook);
         }
     }, [SelfLoanBook]);
 
@@ -135,7 +110,7 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
     }, [SelfLoanBook]);
 
     return (
-        <SelfBookRecordContext.Provider value={{ BookRecordForUser, bookForUser, fetchFavouriteRecord, fetchSelfLoanRecord, GetSuggestData, fetchSelfFavouriteBookWithFilterData, fetchSelfLoanBookWithFilterData, favouriteBook, unfavouriteBook }}>
+        <SelfBookRecordContext.Provider value={{ BookRecordForUser, bookForUser, fetchFavouriteRecord, fetchSelfLoanRecord, fetchSelfFavouriteBookWithFilterData, fetchSelfLoanBookWithFilterData, favouriteBook, unfavouriteBook }}>
             {children}
         </SelfBookRecordContext.Provider>
     );
