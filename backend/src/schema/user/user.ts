@@ -182,3 +182,15 @@ export const FindUserByIDAndDelete = async (userID: string) =>
         printError(error);
     }
 }
+
+export const FindUserAndDelete = async (username: string, email: string) => 
+{
+    try 
+    {
+        return await User.deleteOne({username: username, email: email});
+    } 
+    catch (error) 
+    {
+        printError(error);
+    }
+}

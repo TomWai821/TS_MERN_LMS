@@ -6,43 +6,42 @@ on:
   pull_request:
 
 jobs:
-  build-test:
+  lint-typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      # Install Dependices
-      - run: npm install --prefix backend
-      - run: npm install --prefix frontend
+      - run: npm ci --prefix backend
+      - run: npm ci --prefix frontend
+      - run: npm run lint --prefix backend || true
+      - run: npm run typecheck --prefix backend
+      - run: npm run lint --prefix frontend || true
 
-      # Static check
-      - run: npm run lint --prefix ./backend || true
-      - run: npm run typecheck --prefix ./backend
+  test:
+    runs-on: ubuntu-latest
+    needs: lint-typecheck
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci --prefix backend
+      - run: npm test --prefix backend
+      - run: docker compose -f docker-compose.test.yml up --abort-on-container-exit
+      - run: docker compose -f docker-compose.test.yml down
 
-      - run: npm run lint --prefix ./frontend || true
-
-      # Unit test (Backend)
-      #- run: npm test --prefix backend
-
-      # Build Service
-      - run: npm run build --prefix ./backend
-        env: 
-          CI: false
-
-      - run: npm run build --prefix ./frontend
-        env: 
-          CI: false
-
-      # Start the docker
-      - run: docker compose up --build -d
-      # Waiting for health check
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci --prefix backend
+      - run: npm ci --prefix frontend
+      - run: npm run build --prefix backend
+      - run: npm run build --prefix frontend
+      - run: docker compose -f docker-compose.prod.yml up --build -d
       - run: |
           for i in {1..10}; do
             curl -f http://localhost:5000/health/ && break
             echo "Waiting for backend..."
             sleep 5
           done
-
-

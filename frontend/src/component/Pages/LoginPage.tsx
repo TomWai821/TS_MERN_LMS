@@ -101,6 +101,7 @@ const LoginPage = () =>
                             <Typography>{field.label}</Typography>
                             <TextField
                                 name={field.name} type={field.type}
+                                placeholder={field.name}
                                 value={Credentials[field.name as keyof LoginModel]}
                                 helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
                                 error={isSubmitted && errors[field.name as keyof typeof errors] !== ""}

@@ -59,21 +59,23 @@ const RegisterPage = () =>
         event.preventDefault();
         setIsSubmitted(true);
     
-        const response: boolean = await RegisterController( 
+        const response: Response  = await RegisterController( 
             "RegisterPanel", Credentials.username, Credentials.email, Credentials.password, 
             "User", Credentials.gender, Credentials.birthDay
         );
     
         if (alertContext && alertContext.setAlertConfig) 
         {
-            if (response) 
+            switch(response.status)
             {
-                alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting..." });
-                setTimeout(() => { ChangePage("/"); }, 2000);
-            } 
-            else 
-            {
-                alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again." });
+                case 200:
+                    alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting..." });
+                    setTimeout(() => { ChangePage("/"); }, 2000);
+                    break;
+
+                default:
+                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again." });
+                    break;
             }
         }
     };
@@ -95,7 +97,8 @@ const RegisterPage = () =>
                                 <FormControl key={index} sx={{ marginBottom: 3, width: '100%'}}>
                                     <Typography>{field.label}</Typography>
                                     <TextField 
-                                        name={field.name} type={field.type} value={Credentials[field.name as keyof RegisterModel]}
+                                        name={field.name} type={field.type} placeholder={field.name}
+                                        value={Credentials[field.name as keyof RegisterModel]}
                                         helperText={isSubmitted && helperTexts[field.name as keyof typeof helperTexts]}
                                         error={isSubmitted && errors[field.name as keyof typeof errors] !== ""} 
                                         onChange={onChange} size="small" required/>

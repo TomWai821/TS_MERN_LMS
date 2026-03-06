@@ -17,10 +17,20 @@ export const GetDefinition = async (type:string, data?:string) =>
             }
         );
 
+        if (!response) 
+        {
+            throw new Error("No response from fetch");
+        }
+
         if(response.ok)
         {
             const result:GetResultInterface = await response.json();
             return result;
+        }
+        else 
+        {
+            const error = await response.json();
+            throw new Error(error.error || "Request failed");
         }
     }
     catch(error)

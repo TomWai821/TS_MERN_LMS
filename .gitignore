@@ -6,9 +6,9 @@ frontend/node_modules/
 # env files
 .env
 
-# build & coverage
+# build & coverageg
 /build
-/coverage
+backend/coverage
 
 # IDE
 .vscode/
