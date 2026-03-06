@@ -10,11 +10,14 @@ import { FindSuspendListByIDAndUpdate } from '../schema/user/suspendList';
 
 export const UserRegister = async(req: Request, res: Response) =>
 {
-    const { email, username, password, gender, birthDay, role, status, avatarUrl }: CreateUserInterface = req.body;
+    const { email, username, password, gender, birthDay, role, status }: CreateUserInterface = req.body;
     let success = false;
 
     try
     {   
+        const initals = (username.split(' ').map((word) => word[0].toUpperCase())).slice(0, 2);
+        const avatarUrl = `https://via.placeholder.com/150?text=${initals}`
+
         // Hash password with bcrypt after validate email and username
         const hashedPassword = await bcryptHash(password); 
         const mongoDate = new Date(birthDay);

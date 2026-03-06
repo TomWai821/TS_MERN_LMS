@@ -35,10 +35,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
 
 const RegisterController = async (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string): Promise<any> => 
 {
-    const initals = (username.split(' ').map((word) => word[0].toUpperCase())).slice(0, 2);
-    const avatarUrl = `https://via.placeholder.com/150?text=${initals}`
-
-    const user = {username, email, password, gender, role, avatarUrl, birthDay};
+    const user = {username, email, password, gender, role, birthDay};
 
     try
     {
@@ -50,12 +47,17 @@ const RegisterController = async (registerPosition:string, username:string, emai
             }
         )
 
+        if (!response) 
+        {
+            throw new Error("No response from fetch");
+        }
+
         if(registerPosition === "RegisterPanel" && response.ok)
         {
             const result: ResultInterface = await response.json();
             handleSuccess(result, false);
         }
-        return response.ok;
+        return response;
     }
     catch(error)
     {

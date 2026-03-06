@@ -8,7 +8,30 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
+  backend-test:
+    profiles: ["test"]
+    build:
+      context: ./backend
+      target: test
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/test"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+
+  frontend-test:
+    profiles: ["test"]
+    build:
+      context: ./frontend
+      target: test
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
   backend:
+    profiles: ["production"]
     build:
       context: ./backend
     command: npm run dev
@@ -30,6 +53,7 @@ services:
         condition: service_healthy
       
   frontend:
+    profiles: ["production"]
     build:
       context: ./frontend
     command: npm start
