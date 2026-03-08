@@ -76,17 +76,21 @@ docker-compose -f compose.yaml up --build -d
 - **Data security:** JWT(JSON web token) for Authentication, Bcrypt for password hashing
 - **Environment Configuration:** dotenv for managing environment variables
 - **Algorithms:** TF‑IDF for recommendation engine
-- **CI/CD & Code quality:** GitHub Actions for CI/CD, Jest for testing, ESLint for linting, Prettier for formatting
-- **Other**: RESTful APIs with modular design, Docker for containerization and environment consistency
+- **CI/CD & Code quality:** GitHub Actions for CI/CD, Jest for testing, ESLint for linting
+- **Other**: RESTful APIs with modular design, Docker for containerisation and environment consistency
 
 
 
 ## CI/CD Pipeline
-- **CI:** Implemented with GitHub Actions  
-    - Runs Jest tests automatically on push/PR  
-    - ESLint checks for code quality  
-    - Logs kept clean for recruiter/demo clarity
-- **CD:** Deployment pipeline planned (Render integration pending)  
+
+### Continuous Integration (CI)
+- Implemented with GitHub Actions
+- Runs Jest tests automatically on push/PR
+- ESLint checks for code quality
+- Docker image build for reproducibility
+
+### Continuous Deployment (CD)
+- Deployment pipeline planned (Render integration pending)
 
 
 
