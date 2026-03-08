@@ -15,7 +15,7 @@ const inverseDocumentFrequency = (term: string, docs: string[][]): number =>
     return Math.log(docs.length / (1 + numDocsWithTerm));
 }
 
-// Calculate Cosine Similarity
+// Cosine Similarity (Data Comparing)
 const cosineSimilarity = (vecA: number[], vecB: number[]): number =>
 {
     const dot = vecA.reduce((sum, a, i) => sum + a * vecB[i], 0);
@@ -26,24 +26,24 @@ const cosineSimilarity = (vecA: number[], vecB: number[]): number =>
 
 export const calculateTFIDF = (loanCorpus: string[], allBooksCorpus: BookCorpusType, preferredGenres: string[]): ScoreType => 
 {
-  const userDoc = loanCorpus.join(" ").split(/\s+/);
-  const docs = [userDoc, ...allBooksCorpus.map(b => b.metadata.split(/\s+/))];
+    const userDoc = loanCorpus.join(" ").split(/\s+/);
+    const docs = [userDoc, ...allBooksCorpus.map(b => b.metadata.split(/\s+/))];
 
-  const vocab = Array.from(new Set(docs.flat()));
+    const vocab = Array.from(new Set(docs.flat()));
 
-  const userVector = vocab.map(term => termFrequency(term, userDoc) * inverseDocumentFrequency(term, docs));
+    const userVector = vocab.map(term => termFrequency(term, userDoc) * inverseDocumentFrequency(term, docs));
 
-  const scores: ScoreType = allBooksCorpus.map((book) => 
-  {
-      const doc = book.metadata.split(/\s+/);
-      const docVector = vocab.map(term => termFrequency(term, doc) * inverseDocumentFrequency(term, docs));
-      const tfidfScore = cosineSimilarity(userVector, docVector);
+    const scores: ScoreType = allBooksCorpus.map((book) => 
+    {
+        const doc = book.metadata.split(/\s+/);
+        const docVector = vocab.map(term => termFrequency(term, doc) * inverseDocumentFrequency(term, docs));
+        const tfidfScore = cosineSimilarity(userVector, docVector);
 
-      // genre similarity: Gain more score when book genre is similar as loan record
-      const genreScore = preferredGenres.includes(book.metadata.split(/\s+/)[1]) ? 1 : 0;
+        // genre similarity: Gain more score when book genre is similar as loan record
+        const genreScore = preferredGenres.includes(book.metadata.split(/\s+/)[1]) ? 1 : 0;
 
-      // Final score = TF-IDF + genre Weight
-      const finalScore = 0.7 * tfidfScore + 0.3 * genreScore;
+        // Final score = TF-IDF + genre Weight
+        const finalScore = 0.7 * tfidfScore + 0.3 * genreScore;
 
       return { id: book.id, score: finalScore };
     });

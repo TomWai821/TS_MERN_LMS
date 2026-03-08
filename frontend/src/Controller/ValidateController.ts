@@ -82,7 +82,7 @@ const BirthDayValidate = (name:string, value:string, limitAge:number) =>
     if (isNaN(birthDate.getTime()) || !isOldEnough) 
     {
         error = "Invalid Birthday!";
-        helperText = `Only users aged ${limitAge} years and older can register.`;
+        helperText = `Only users aged ${limitAge} years and older can register`;
     }
 
     if(error === "" && helperText === "")

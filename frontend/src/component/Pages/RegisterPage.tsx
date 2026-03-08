@@ -74,7 +74,7 @@ const RegisterPage = () =>
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again." });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again" });
                     break;
             }
         }
