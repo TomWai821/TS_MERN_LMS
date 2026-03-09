@@ -1468,6 +1468,8 @@ Image 8.2 - Chip set
       "foundFavouriteBook": [ {/* user favourite book data */}]
     }
 
+
+
 ## Improvements
 
 ### Completed
@@ -1483,6 +1485,7 @@ Image 8.2 - Chip set
 4. **Implemented server-side scheduled data updates (Interval+ setTimeout in Node.js)**
     - Ensured consistent daily automation and reduced manual triggers (located in `./backend/src/detectRecord.ts`)
 
+
 ### Planned Improvements
 #### Frontend side
 1. **Apply custom hooks to centralize commonly used state**
@@ -1496,6 +1499,7 @@ Image 8.2 - Chip set
 
 4. **Support multiple contact (Publisher/Author) inputs via JSON**
     - Enhance efficiency by allowing bulk input rather than filling fields one by one
+
 
 #### Backend Side
 1. **Server side RBAC (Role-Base Access Control)**
@@ -1524,7 +1528,7 @@ Image 8.2 - Chip set
 - No unified error handling despite modular API design (Currently handle with console.error and return error message with http status 500/400)
 
 ### CI/CD
-- Continuous Deployment (CD) not implemented due to the credit card requirement
+- Deployment workflows were experimented with (Render/Fly.io), but Continuous Deployment (CD) was not implemented due to the credit card requirement and excluded from demo scope
 - Workflows limited to CI validation for demo purposes
 - Frontend coverage reporting not implemented (Scope limited to backend validation)
 
