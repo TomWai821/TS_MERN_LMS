@@ -27,6 +27,7 @@ A full-stack application that streamlines library operations built as a Informat
 - [UI Layout](#ui-layout)
 - [API endpoints](#api-endpoints)
 - [Improvements](#improvements)
+- [Product Limitation](#product-limitation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -85,13 +86,14 @@ docker-compose -f compose.yaml up --build -d
 - Runs Jest tests automatically on push/PR
 - ESLint checks for code quality
 - Docker image build for reproducibility
+- Coverage reports uploaded as CI artefacts for reviewer visibility  
 
 
 ## Testing Strategy
 
 ### Overview
 - **Frontend:** Unit tests with Jest + React Testing Library (mock APIs, setup/teardown hooks)  
-- **Backend:** Integration tests with Jest + Supertest (in-memory MongoDB, setup/teardown hooks)  
+- **Backend:** Unit tests with Jest + Supertest (in-memory MongoDB, setup/teardown hooks)  
 - **Result:** CI pipeline runs tests automatically on push/PR, logs kept clean for recruiter/demo clarity
 
 #### 1. Docker test compose (Jest)
@@ -1507,6 +1509,29 @@ Image 8.2 - Chip set
   
 4. **Built CRUD Query with OOP + Factory design pattern and Generic**
     - Create a CRUD Factory with commonly used queries for each collection (located in `./backend/src/improvement/CRUDFactory.ts`)
+
+
+
+## Product Limitation
+
+### Frontend
+- Overall frontend structure lacks clear separation of concerns (Controllers and views in component are coupled, making maintenance relatively difficult in production; acceptable for demo scope)
+- No production-grade performance optimisation (e.g., lazy loading, caching)
+
+### Backend
+- Integration test coverage constrained by project scope
+- Core flows validated (authentication), but full production scenarios not included
+- No unified error handling despite modular API design (Currently handle with console.error and return error message with http status 500/400)
+
+### CI/CD
+- Continuous Deployment (CD) not implemented due to the credit card requirement
+- Workflows limited to CI validation for demo purposes
+
+### Summary
+- These limitations reflect the demo-oriented nature of the project
+- Core flows are validated, while production-grade features (scaling, CD, unified error handling) are intentionally excluded to keep the scope focused
+
+
 
 ## Contributing
 1. Fork the repository.
