@@ -1518,26 +1518,31 @@ Image 8.2 - Chip set
 
 ## Product Limitation
 
+### Architecture
+- A 3NF‑style schema was adopted early to accelerate prototyping given limited MongoDB experience (This design increases cross‑collection lookups, complicating server‑side RBAC and raising runtime cost)
+- Initially relied heavily on aggregation pipelines for cross‑collection queries (later recognised that most basic join functions are more efficiently handled with `populate`, improving readability and reducing query complexity)
+
 ### Frontend
-- Overall frontend structure lacks clear separation of concerns (Controllers and views in component are coupled, making maintenance relatively difficult in production; acceptable for demo scope)
+- Overall frontend structure lacks clear separation of concerns (Controllers and views in the component are coupled, making maintenance relatively difficult in production; appropriate for demo scope)
 - No production-grade performance optimisation (e.g., lazy loading, caching)
 
 ### Backend
 - Integration test coverage constrained by project scope
 - Core flows validated (authentication), but full production scenarios not included
-- No unified error handling despite modular API design (Currently handle with console.error and return error message with http status 500/400)
+- Error handling kept minimal for demo clarity (Currently handled with console.error and return error message with HTTP status code 500/400)
 
 ### CI/CD
 - Deployment workflows were experimented with (Render/Fly.io)
-- But Continuous Deployment (CD) was not implemented due to platform requirements and therefore excluded from demo scope:
+- But Continuous Deployment (CD) was not implemented due to platform requirements and therefore excluded from the demo scope:
     - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
     - Render/Fly.io’s credit card binding 
 - Workflows limited to CI validation for demo purposes
-- Frontend coverage reporting not implemented (Scope limited to backend validation)
+- Coverage reporting is limited to backend validation
 
 ### Summary
 - These limitations reflect the demo-oriented nature of the project
 - Core flows are validated, while production-grade features (scaling, CD, unified error handling) are intentionally excluded to keep the scope focused
+- Design choices highlight prototyping efficiency and recruiter clarity, while remaining extendable to production environments
 
 
 
