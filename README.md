@@ -102,6 +102,7 @@ docker-compose -f compose.yaml up --build -d
     - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
     - Render/Fly.io’s credit card binding
 - Workflows are therefore limited to **CI validation for demo purposes**, ensuring lint/typecheck, test, and build stages are fully validated
+- CI/CD workflow definitions are located in `.github/workflows/`
 
 ## Testing Strategy
 
