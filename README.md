@@ -16,7 +16,7 @@ A full-stack application that streamlines library operations built as a Informat
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
 - [Technology Stack](#technology-stack)
-- [Continuous Integration](#continuous-integration)
+- [CI and CD](#ci-and-cd)
 - [Features](#features)
 - [Testing Strategy](#testing-strategy)
 - [QR Code Handling (Frontend Only)](#qr-code-handling-frontend-only)
@@ -81,13 +81,27 @@ docker-compose -f compose.yaml up --build -d
 - **Other**: RESTful APIs with modular design, Docker for containerisation and environment consistency
 
 
-## Continuous Integration
+## CI and CD
+
+### Continuous Integration (CI)
 - Implemented with GitHub Actions
 - Runs Jest tests automatically on push/PR
 - ESLint checks for code quality
 - Docker image build for reproducibility
 - Backend coverage reports uploaded as CI artefacts for reviewer visibility
 
+### Continuous Deployment (CD)
+- Deployment workflows were experimented with (Vercel/Fly.io)
+- Deploy hooks were applied
+    -  **Vercel Deploy Hook** → triggers a new frontend build & deployment when called
+    -  **Fly.io Deploy Hook** → triggers backend redeployment from the latest image
+- These hooks demonstrate the ability to integrate CI/CD pipelines with external platforms
+
+### Remarks
+- Continuous Deployment (CD) was not implemented due to platform requirements and therefore excluded from the demo scope:
+    - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
+    - Render/Fly.io’s credit card binding
+- Workflows are therefore limited to **CI validation for demo purposes**, ensuring lint/typecheck, test, and build stages are fully validated
 
 ## Testing Strategy
 
@@ -1531,12 +1545,8 @@ Image 8.2 - Chip set
 - Core flows validated (authentication), but full production scenarios not included
 - Error handling kept minimal for demo clarity (Currently handled with console.error and return error message with HTTP status code 500/400)
 
-### CI/CD
-- Deployment workflows were experimented with (Render/Fly.io)
-- But Continuous Deployment (CD) was not implemented due to platform requirements and therefore excluded from the demo scope:
-    - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
-    - Render/Fly.io’s credit card binding 
-- Workflows limited to CI validation for demo purposes
+### CI/CD pipeline
+- This repository does not provide production deployment (Deploy jobs are blocked and only serve to demonstrate CI/CD structure)
 - Coverage reporting is limited to backend validation
 
 ### Summary
