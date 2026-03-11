@@ -16,7 +16,7 @@ A full-stack application that streamlines library operations built as a Informat
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
 - [Technology Stack](#technology-stack)
-- [CI and CD](#ci-and-cd)
+- [ and CD](#ci-and-cd)
 - [Features](#features)
 - [Testing Strategy](#testing-strategy)
 - [QR Code Handling (Frontend Only)](#qr-code-handling-frontend-only)
@@ -38,7 +38,7 @@ The Library Management System was developed to modernise library operations by a
 
 
 ### Features 
-Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). Due to project time constraints, role‑based access control (RBAC) is currently implemented on the frontend only. Together, these features highlight the ability to combine modern web technologies with practical library needs, and improves UX for the prototype but is not a substitute for backend authorisation.
+Key features include QR code-based book loans, automated return tracking, a TF-IDF-powered recommendation engine for book discovery, and seamless third-party API integration (Google Books). Due to project time constraints, role‑based access control (RBAC) is currently implemented on the frontend only. Together, these features highlight the ability to combine modern web technologies with practical library needs, and improves UX for the prototype but is not a substitute for backend authorisation
 
 
 
@@ -102,7 +102,7 @@ docker-compose -f compose.yaml up --build -d
     - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
     - Render/Fly.io’s credit card binding
 - Workflows are therefore limited to **CI validation for demo purposes**, ensuring lint/typecheck, test, and build stages are fully validated
-- CI/CD workflow definitions are located in `.github/workflows/`
+- CI/CD workflow definitions are located in `.github/workflows/` (The whole process could be viewed in the actions tab)
 
 ## Testing Strategy
 
@@ -775,10 +775,10 @@ Book
 | languageID    | ObjectID |                       | True     |           | References for the Language collection, indicating the book's language   |
 | genreID       | ObjectID |                       | True     |           | References the Genre collection, categorising the book                   |
 | authorID      | ObjectID |                       | True     |           | Links to the Author collection, storing authorship details               |
-| publisherID   | ObjectID |                       | True     |           | Associates with the publisher collection for book publishing details     |
+| publisherID   | ObjectID |                       | True     |           | Assoates with the publisher collection for book publishing details     |
 | status        | String   | ['OnShelf', 'OnLoan'] | True     | 'OnShelf' | Defines the book’s availability, such as OnShelf and Loaned              |
 | description   | String   |                       |          | 'N/A'     | Provides a brief overview or synopsis of the book                        |
-| publishDate   | Date     |                       |          |  Date.now | The official publication date of the book, indexed for search efficiency |
+| publishDate   | Date     |                       |          |  Date.now | The offial publication date of the book, indexed for search effiency |
 
 Genre
 | Key Attribute | Type   | Required  | Unique | Description                                                                   |
@@ -824,7 +824,7 @@ SuspendList
 | Key Attribute |	Type    | Enum                     | Required | Default            | Description                                                                                                |
 | ------------- | --------- | ------------------------ | -------- | ------------------ | -----------------------------------------------------------------------------------------------------------|
 | userID        | ObjectID  |                          |          |                    | Links to the user collection, ensuring proper tracking of suspended individuals                            |
-| description	| String	|                          |          | 'N/A'              | Stores details about the reason for the user's suspension, ensuring proper enforcement of library policies |
+| description	| String	|                          |          | 'N/A'              | Stores details about the reason for the user's suspension, ensuring proper enforcement of library polies |
 | Status        | String    | ['Suspend', 'Unsuspend'] | True     | 'Suspend'          | Describe the account status, such as Normal, Suspend                                                       |
 | startDate	    | Date	    |                          |          |                    | The date when the user suspension begins                                                                   |
 | dueDate	    | Date	    |                          |          |                    | The scheduled date when the suspension will end, allowing access restoration                               |
@@ -867,9 +867,9 @@ Image 1.2 - Navigation For Authenticated User<br>
 Image 1.3 - Navigation For Admin(Librarian)<br>
 
 #### Description:<br>
-- Guest users require an account to edit profile data or view records, and they just have permission to view book data<br>
-- Authenticated Users have permission to view book data from the internal database and external data from Google Books. Also, it could view suspended users in the suspend list, view profile, modify profile data, view records(loan book and favourite book) and use QR Code to loan book (on the right-hand side)<br>
-- Administrator (Librarian) can manage book, user, contact and book definition data. And the right-hand side function is the same as Authenticated User<br>
+- The Guest user allow to view book data (Image 1.1)
+- Authenticated Users could view book data, suspend list, view records, profile with data modify function and the QR Code (Image 1.2)
+- Administrator (Librarian) can manage book, user, contact and book definition data (Image 1.3), another function is the same as that of an authenticated user
 
 
 ***2. Main page (Book recommendation)***<br>
@@ -880,9 +880,8 @@ Image 2.1 - Main Page For User / Authenticated User (who does not have a loan bo
 Image 2.2 - Main Page For Authenticated User (Include Librarian)<br>
 
 #### Description:<br>
-- Guest users and Authenticated Users who do not have a loan book record could see the most popular book and the newest published book on the main page<br>
-- Authenticated Users who have a loan book record could view recommended books from the backend system, just as with Guest users and Authenticated Users who do not have a loan book record<br>
-
+- Without the Loan Book record (Image 2.1) could see the most popular book and the newest published book
+- With the Loan Book record (Image 2.2) could view recommended books from the backend system
 
 ***3. Authenticate Pages***<br>
 <img src="doc/Image/UILayout/RegisterCard.png" style="width:40%;"/><br>
@@ -891,9 +890,9 @@ Image 3.1 - Registration Page<br>
 <img src="doc/Image/UILayout/LoginCard.png" style="width:40%;"/><br>
 Image 3.2 - Login Page<br>
 
-#### Description:<br>
-- Registration Page requires input of all the data to register an account, also has a validator to verify data in the input field<br>
-- The Login Page requires input of all the data to log in, and it also has a validator to verify the data in the input field. Furthermore, it has a checkbox to decide whether to store data in session storage or cookie storage<br>
+#### Description:
+- Registration Page (Image 3.1) requires input of all the data to register an account, also has a validator to verify data in the input field
+- The Login Page (Image 3.2) requires input of all the data to log in, and it also has a validator to verify the data in the input field (It has a checkbox to decide whether to store data in session storage or cookie storage)
 
 
 ***4. Profile Page***<br>
@@ -909,11 +908,11 @@ Image 4.3 - Edit Profile Data Modal (Username)<br>
 <img src="doc/Image/UILayout/EditProfileDataModal-password.png" style="width:40%;"/><br>
 Image 4.4 - Edit Profile Data Modal (Password)<br>
 
-#### Description:<br>
-- Profile card could view all the data<br>
-- QR Code modal has a QR Code used to loan book, and here has a hint to ask user how to use the QR Code<br>
-- The edit modal for username, it just require to input new username<br>
-- The edit modal for password, it requires input new password and confirm password<br>
+#### Description
+- Profile card (Image 4.1) could view all the data
+- QR Code modal (Image 4.2) has a QR Code used to loan book, and here has a hint to ask user how to use the QR Code
+- The Username Edit Modal (Image 4.3) require to input new username
+- The Edit Password Modal (Image 4.4) requires input new password and confirm password
 
 
 ***5. Content Page***<br>
@@ -923,9 +922,9 @@ Image 5.1 - Top of Table Content With Filter (For User)<br>
 <img src="doc/Image/UILayout/TopOfTableContentWithFilter-Admin.png" style="width:90%;"/><br>
 Image 5.2 - Top of Table Content With Filter (For Librarian)<br>
 
-#### Description:<br>
-- The top of the table content for the user, which includes a filter with an expandable panel, a title with the total number of records and a dropdown for the pagination <br>
-- The top of the table content for the librarian, which has a tab to change the table and has an action button between the search button, another function is the same as that of the user<br>
+#### Description
+- The User Table Top (Image 5.1) includes a filter with an expandable panel, a title with the total number of records and a dropdown for the pagination 
+- Librarian Table Top (Image 5.2) has a tab to change the table and has an action button between the search button, another function is the same as that of the user
 
 
 ***6. Modal for view data***<br>
@@ -938,13 +937,13 @@ Image 6.2 - Book data modal (For Authenticated User)<br>
 <img src="doc/Image/UILayout/BookInfo_GoogleBook-AuthenicateUser.png" style="width:40%;"/><br>
 Image 6.3 - Book data modal (Google Book - For Authenticated User)<br>
 
-#### Description:<br>
-- The book data modal for guest users only includes basic book data<br>
-- The book data modal for authenticated users (including librarians) allows them to view book status, and it is the same as that of guest users<br>
-- The book data modal for authenticated users (including librarians) allows them to view Google Book data, and ISBM display as a BarCode Image<br>
+#### Description
+- Guest users book data modal (Image 6.1) only includes basic book data
+- Authenticated users (including librarians) book data modal (Image 6.2) has book status, and it is the same as that of guest users
+- Authenticated users (including librarians) book data modal (image 6.3) has Google Book data, and ISBM display as a BarCode Image
 
 
-***7. Modal for CRUD operations***<br>
+***7. Modal for CRUD operations (Librarian only)***<br>
 <img src="doc/Image/UILayout/CreateBookModal.png" style="width:50%;"/><br>
 Image 7.1 - Book record Creation Modal <br>
 
@@ -960,12 +959,12 @@ Image 7.4 - Book data Modify Confirmation Modal <br>
 <img src="doc/Image/UILayout/DeleteBookConfrimationModal.png" style="width:40%;"/><br>
 Image 7.5 - Book record Delete Confirmation Modal <br>
 
-#### Description:<br>
-- The modal for book record creation requires input of most of the data and has a validator to validate data<br>
-- The modal for book record create confirmation allows the librarian to view the input data again<br>
-- The modal for book record modification requires input of most of the data and has a validator to validate data<br>
-- The modal for book record modify confirmation, it allows the librarian to view which data was modified<br>
-- The modal for book record delete confirmation, it allows the librarian to view which data will be deleted and let the librarian confirm the process<br>
+#### Description
+- Book Creation Model (Image 7.1) requires input data and has a validator to validate data
+- Book Create Confirmation Modal (Image 7.2) allows to view the input data again
+- Book Data Modification Modal (Image 7.3) requires input of most of the data and has a validator to validate data
+- Book Data Modify Confirmation Modal (Image 7.4) displays the modified data
+- Book Data Delete Confirmation  Modal (Image 7.5) displays the data to be deleted and requires librarian confirmation
 
 
 ***8. Way to display data***<br>
@@ -975,9 +974,9 @@ Image 8.1 - Table Cell with buttons
 <img src="doc/Image/UILayout/DefinitionPage.png" style="width:90%;"/><br>
 Image 8.2 - Chip set
 
-#### Description:<br>
-- The table cell which stores book data and the actions allow the user/librarian to implement<br>
-- The data is stored with chips, which could reduce the space to display data<br>
+#### Description
+- The table cell (Image 8.1) stores book data and the actions allow the user/librarian to implement
+- The Chip set table (Image 8.2) could reduce the space to display data
 
 
 ## API Endpoints
@@ -1546,8 +1545,8 @@ Image 8.2 - Chip set
 - Core flows validated (authentication), but full production scenarios not included
 - Error handling kept minimal for demo clarity (Currently handled with console.error and return error message with HTTP status code 500/400)
 
-### CI/CD pipeline
-- This repository does not provide production deployment (Deploy jobs are blocked and only serve to demonstrate CI/CD structure)
+### /CD pipeline
+- This repository does not provide production deployment (Deploy jobs are blocked and only serve to demonstrate /CD structure)
 - Coverage reporting is limited to backend validation
 
 ### Summary
