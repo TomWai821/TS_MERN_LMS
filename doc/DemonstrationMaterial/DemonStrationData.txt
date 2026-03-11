@@ -20,14 +20,25 @@ Author: BeastSenpai
 Publisher: Beast Senpai Company
 Description: It record the beast senpai travelling experience, and it require $114514 to bought it
 
-## For loan books
+## For loan books (For no scanner gun demo)
 # QR Code Data
 {"username":"WhateverAdmin","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YzdjZjE0NWZkY2IwZTBlNTc1YWJlYSJ9LCJpYXQiOjE3NzI4ODg3NTR9.9htTliqerFlG0ytMtBzWnuOCxdqbaRFfX90AxdeOrfo"}
 
 # QR Code Data
 {"username":"IamTester","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4MTFiZjFmODEzZDQ4NTY1MWI1YmY3MCJ9LCJpYXQiOjE3NzI4ODc5MTN9.hRp5kAIX-zcJvi4wDn_Z7vE7GGESHjRX5PwKNTD7wpg"}
 
+Remarks:
+- QR Code Data: Scanning the QR code with a Scanner Gun or mobile camera will output the following JSON (username, authToken)
+- [Demo Only] Manual Fallback: If no scanner is available, manually retrieve your active authToken from Session/Cookie storage and update the JSON below to simulate the process:
+  {"username": "IamTester", "authToken": "PASTE_YOUR_TOKEN_HERE"}
 
+Scenario Simulation: 
+- The QR code data (containing username and authToken) simulates a mobile-to-scanner gun borrowing process
+
+How to Test Without a Scanner:
+- Find Token: Open browser DevTools (F12) > Application > Session Storage (or Cookies)
+- Copy Value: Copy your current authToken and username
+- Simulate Scan: Replace the values in the JSON template above and paste the entire JSON string into the [Target Field] to trigger the process
 
 ---For user page
 # user creation data
