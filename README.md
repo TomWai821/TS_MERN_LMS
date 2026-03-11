@@ -1,5 +1,6 @@
 # MERN Library Management System
-A full-stack application that streamlines library operations built as a Information Technology Project (ITP)
+![TypeScript](https://img.shields.io) ![MongoDB](https://img.shields.io) ![Express.js](https://img.shields.io) ![React](https://img.shields.io) ![Node.js](https://img.shields.io)
+A full-stack application that streamlines library operations, built as an Information Technology Project (ITP)
 
 ## Video for presentation and demonstration
 ### SpeedRun version
@@ -51,7 +52,6 @@ Key enhancements include:
 - Automated Loan Tracking: Built an automated tracking system for loaned books and return statuses, ensuring real-time data consistency and operational visibility
 - QR-based Operations:  Streamlined book loaning via QR Code integration, implementing a multi-token exchange protocol to facilitate identity verification and transaction authorization between the borrower and the librarian
 - Security Architecture: Implemented JWT-based Authentication with Bcrypt hashing, utilizing Frontend Route Guards and Role-aware UI rendering for access control
-
 
 
 
