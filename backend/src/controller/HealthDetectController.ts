@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 
-export const APIHealthDetect = (req: Request, res: Response) => {
+export const APIHealthDetect = (req: Request, res: Response) => 
+{
     try 
     {
         const state = mongoose.connection.readyState; // 1 = connected

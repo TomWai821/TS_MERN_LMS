@@ -11,44 +11,42 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     const foundUser = req.foundUser as UserInterface;
 
     const updateData: Record<string, any> = {};
-
-    if (username && username !== foundUser.username) 
-    {
-        const existingUserByUsername = await FindUser({ username });
-        
-        if (existingUserByUsername) 
-        {
-            return res.status(400).json({ success: false, error: "Username already in use" });
-        }
-        updateData.username = username;
-    }
     
-    if (email && email !== foundUser.email) 
-    {
-        const existingUserByEmail = await FindUser({ email });
+    let checkPromise: Promise<any>[] = [];
+    let labels: string[] = [];
 
-        if (existingUserByEmail) 
+    if(username && username !== foundUser.username)
+    {
+        checkPromise.push(FindUser({username}));
+        labels.push("username");
+    }
+
+    if(email && email !== foundUser.email)
+    {
+        checkPromise.push(FindUser({email}));
+        labels.push("email");
+    }
+
+    const result = await Promise.all(checkPromise);
+
+    for(let i = 0; i < result.length; i++)
+    {
+        if(result[i])
         {
-            return res.status(400).json({ success: false, error: "Email already in use" });
+            const field = result[i];
+            return res.status(400).json({ success: false, error: `${field == 0 ? 'Username' : 'Email'} already in use` });
         }
-        updateData.email = email;
     }
 
-    if (gender && gender !== foundUser.gender) 
-    {
-        updateData.gender = gender;
-    }
+    if (gender && gender !== foundUser.gender)  updateData.gender = gender;
 
-    if (role && role !== foundUser.role) 
-    {
-        updateData.role = role;
-    }
+    if (role && role !== foundUser.role)  updateData.role = role;
 
     if (Object.keys(updateData).length === 0) 
     {
         return res.status(400).json({ success: false, error: "No changes detected" });
     }
-
+    
     req.updateData = updateData;
     next();
 }

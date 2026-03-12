@@ -87,14 +87,14 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
             UserID = id;
         }
 
-        const createLoanRecord = await CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate})
+        const [createLoanRecord, changeBookState] = await Promise.all(
+            [CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate}), FindBookByIDAndUpdate(bookID, {status: 'Loaned'})]
+        );
 
         if(!createLoanRecord)
         {
             return res.status(400).json({success, error:"Failed to create Loaned Book Record"});
         }
-
-        const changeBookState = await FindBookByIDAndUpdate(bookID, {status: 'Loaned'})
 
         if(!changeBookState)
         {
@@ -124,14 +124,17 @@ export const UpdateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         
         const status = dueDate && currentDate <= dueDate ? 'Returned' : 'Returned(Late)';
 
-        const changeLoanRecordStatus = await FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, finesPaid: finesPaid})
+        const [changeLoanRecordStatus, changeBookStatus] = await Promise.all(
+            [
+                FindBookLoanedByIDAndUpdate(foundLoanedRecord._id as unknown as string, {status: status, returnDate: currentDate, finesPaid: finesPaid}),
+                FindBookByIDAndUpdate(foundLoanedRecord.bookID as unknown as string, {status: 'OnShelf'})
+            ]
+        );
 
         if(!changeLoanRecordStatus)
         {
             return res.status(400).json({success, error: "Failed to return Book"});
         }
-
-        const changeBookStatus = await FindBookByIDAndUpdate(foundLoanedRecord.bookID as unknown as string, {status: 'OnShelf'});
 
         if(!changeBookStatus)
         {

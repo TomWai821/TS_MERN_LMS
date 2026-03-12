@@ -54,16 +54,14 @@ export const BookGenreIDAndLanguageIDValidation = async (req:Request, res:Respon
 
     try
     {
-        const findLanguageID = await FindLanguageByID(languageID);
+        const [findLanguage, findGenre] = await Promise.all([FindLanguageByID(languageID), FindGenreByID(genreID)]);
 
-        if(!findLanguageID)
+        if(!findLanguage)
         {
             return res.status(404).json({success: false, error: `Could not found Language ID: ${languageID}!`});
         }
 
-        const findGenreID = await FindGenreByID(genreID);
-
-        if(!findGenreID)
+        if(!findGenre)
         {
             return res.status(404).json({success: false, error: `Could not found Genre ID: ${genreID}!`});
         }

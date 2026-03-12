@@ -43,12 +43,12 @@ export const UserLoginDataValidation = async (req: AuthRequest, res: Response, n
 
     if (!compare) 
     {
-        return res.status(400).json({ successs: false, error: 'Invalid password' });
+        return res.status(400).json({ success: false, error: 'Invalid password' });
     }
 
     if (user.status === "Suspend") 
     {
-        return res.status(401).json({ successs: false, error: 'This user was suspend' });
+        return res.status(401).json({ success: false, error: 'This user was suspend' });
     }
 
     req.user = user;
@@ -95,7 +95,7 @@ export const SuspendListValidation = async (req: AuthRequest, res: Response, nex
 
         if(!foundSuspendList)
         {
-            return res.status(404).json({ success: false, error:"Invalid Suspend List ID!"});
+            return res.status(404).json({ success: false, error: "Invalid Suspend List ID!"});
         }
     }
     next();
