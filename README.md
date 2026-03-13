@@ -46,17 +46,17 @@ Developed as an Information Technology Project (ITP) to modernise traditional li
 ### The Engineering Evolution
 After graduation, I dedicated myself to deep-diving into Software Engineering best practices, specifically focusing on maintainability and scalability<br>
 Key enhancements include:
-- Architectural Overhaul: Migrated to a Layered Architecture (Route-Middleware-Controller-Data Access) to ensure code decoupling and maintainability
-- Logic Refactoring: Shifted core business logic (e.g., Recommendation Engine) from frontend-side processing to the Backend Service Layer to improve data reliability and system performance
-- DevOps Integration: Implemented Docker containerisation and GitHub Actions (CI) for automated linting and integration testing
+- **Architectural Overhaul**: Migrated to a Layered Architecture (Route-Middleware-Controller-Data Access) to ensure code decoupling and maintainability
+- **Logic Refactoring**: Shifted core business logic (e.g., Recommendation Engine) from frontend-side processing to the Backend Service Layer to improve data reliability and system performance
+- **DevOps Integration**: Implemented Docker containerisation and GitHub Actions (CI) for automated linting and integration testing
 
 
 ### Technical Learns 
-- System Architecture: Designed and implemented a Layered Architecture (Controller-Service-Data Access) in Express.js, achieving clear separation of concerns and high code maintainability
-- Type-Safe Development: Leveraged TypeScript across the full stack to enforce rigorous data structures, significantly reducing runtime errors and improving developer productivity
-- State Orchestration: Optimised frontend performance by managing global application state with React Context API and Custom Hooks, ensuring efficient data flow without unnecessary re-renders
-- Automated QA & DevOps: Gained hands-on experience in Containerization (Docker) and Automated CI (GitHub Actions), establishing a pipeline that enforces Linting and Integration Testing (using Supertest and Jest)
-- Security Logic: Implemented Stateless Authentication (JWT) and developed a multi-token verification workflow for handling secure book loan authorisations between different user roles
+- **System Architecture**: Designed and implemented a Layered Architecture (Controller-Service-Data Access) in Express.js, achieving clear separation of concerns and high code maintainability
+- **Type-Safe Development**: Leveraged TypeScript across the full stack to enforce rigorous data structures, significantly reducing runtime errors and improving developer productivity
+- **State Orchestration**: Optimised frontend performance by managing global application state with React Context API and Custom Hooks, ensuring efficient data flow without unnecessary re-renders
+- ***Automated QA & DevOps**: Gained hands-on experience in Containerization (Docker) and Automated CI (GitHub Actions), establishing a pipeline that enforces Linting and Integration Testing (using Supertest and Jest)
+- **Security Logic**: Implemented Stateless Authentication (JWT) and developed a multi-token verification workflow for handling secure book loan authorisations between different user roles
 
 ### Disclaimer
 All contact information provided in this file is fictitious and used solely for demonstration purposes
@@ -366,17 +366,17 @@ Remarks:
 ## CI and CD
 
 ### Continuous Integration (CI)
-- Automated Pipeline: Orchestrated with GitHub Actions to trigger on every Push and Pull Request.
-- Quality Assurance:
-    - Frontend: Executes Unit Testing with Jest to ensure UI logic reliability
-    - Backend: Performs Integration Testing to validate full API request-response cycles and database interactions
-- Linting: Enforces code consistency via ESLint across the entire stack
-- Artefact Management: Automatically generates and uploads backend Test Coverage Reports as CI artefacts for reviewer visibility
-- Docker Integration: Automates Docker Image builds within the pipeline to ensure cross-environment reproducibility
+- **Automated Pipeline**: Orchestrated with GitHub Actions to trigger on every Push and Pull Request.
+- **Quality Assurance**:
+    - **Frontend**: Executes Unit Testing with Jest to ensure UI logic reliability
+    - **Backend**: Performs Integration Testing to validate full API request-response cycles and database interactions
+- **Linting**: Enforces code consistency via ESLint across the entire stack
+- **Artefact Management**: Automatically generates and uploads backend Test Coverage Reports as CI artefacts for reviewer visibility
+- **Docker Integration**: Automates Docker Image builds within the pipeline to ensure cross-environment reproducibility
 
 ### Continuous Deployment (CD)
 - Deployment workflows were experimented with (Vercel/Fly.io)
-- Deploy hooks were applied
+- Deploy hooks were applied (In ./github/workflows/ci.yml)
     -  **Vercel Deploy Hook** → triggers a new frontend build & deployment when called
     -  **Fly.io Deploy Hook** → triggers backend redeployment from the latest image
 - These hooks demonstrate the ability to integrate CI/CD pipelines with external platforms
@@ -1627,7 +1627,7 @@ Image 8.2 - Chip set
 - **Vulnerability:** Susceptible to client-side script access (XSS risk), this trade-off is accepted specifically for the **Initial Prototype/Demo phase**
 
 ### Summary
-- These limitations reflect the **demo-oriented nature** of the project.
+- These limitations reflect the **demo-oriented nature** of the project
 - Core flows are validated, while production-grade features (scaling, unified error handling) are intentionally deferred to focus on prototyping efficiency and recruiter clarity
 
 
