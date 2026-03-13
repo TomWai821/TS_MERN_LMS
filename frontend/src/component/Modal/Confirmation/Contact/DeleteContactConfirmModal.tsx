@@ -8,6 +8,7 @@ import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { AlertContext } from "../../../../Context/AlertContext";
+import { GetResultInterface } from "../../../../Model/ResultModel";
 
 const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) => 
 {
@@ -32,17 +33,19 @@ const DeleteContactConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
     {
         const response: Response = await deleteContactData(type as string, data._id);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

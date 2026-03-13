@@ -5,7 +5,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 import { UserActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
-import { BookDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, GetResultInterface } from "../../../../../Model/ResultModel";
 
 import { AlertContext } from "../../../../../Context/AlertContext";
 import { useSelfBookRecordContext } from "../../../../../Context/Book/SelfBookRecordContext";
@@ -24,18 +24,18 @@ const ActionTableCellForUser:FC<UserActionTableCellInterface> = (actionTableCell
     const FavouriteHandler = async () => 
     {
         let response = isFavourite ? await unfavouriteBook(FavouriteID as string) : await favouriteBook((Information as BookDataInterface)._id); 
-        const favouriteText = isFavourite ? "Unfavourite" : "Favourite";
+         const result: GetResultInterface = await response.json();
 
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `${favouriteText} successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to ${favouriteText}! Please try again` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

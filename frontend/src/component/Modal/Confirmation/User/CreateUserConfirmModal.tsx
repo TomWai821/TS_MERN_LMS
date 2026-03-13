@@ -17,6 +17,7 @@ import CreateUserModal from "../../User/CreateUserModal";
 
 // Data (CSS Synxax)
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
+import { GetResultInterface } from "../../../../Model/ResultModel";
 
 
 
@@ -36,19 +37,21 @@ const CreateUserConfirmModal = ({...userData}) =>
 
     const registerUser = async () => 
     {
-        const response: Response  = await createUser("UserManagementPanel", username, email, password, role, gender, birthDay);
+        const response: Response  = await createUser(username, email, password, role, gender, birthDay);
 
+         const result: GetResultInterface = await response.json();
+               
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                   alertContext.setAlertConfig({ AlertType: "success", Message: `Create User record successfully!` });
-                setTimeout(() => { handleClose() }, 2000)
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
+                    setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to create User record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

@@ -17,7 +17,7 @@ import SelfLoanConfirmationModalBody from "./ModalBody/SelfLoanConfirmationModal
 import UserLoanModalBody from "./ModalBody/UserLoanModalBody";
 import UserLoanBookConfirmationModal from "./UserLoanBookConfirmModal";
 import { AlertContext } from "../../../../Context/AlertContext";
-import { errorResponse } from "../../../../Model/ResultModel";
+import { GetResultInterface } from "../../../../Model/ResultModel";
 
 const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) => 
 {
@@ -38,20 +38,21 @@ const LoanBookConfirmationModal:FC<LoanBookModalInterface> = (LoanBookData) =>
     {
         const response: Response = await loanBook(_id);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
-            switch (response?.status) 
+            switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
-                case 401:
-                    const result = response.json() as Promise<errorResponse>;
-                    alertContext.setAlertConfig({ AlertType: "error", Message: (await result).error });
+                default:
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
-            } 
+            }
         }
     }
 

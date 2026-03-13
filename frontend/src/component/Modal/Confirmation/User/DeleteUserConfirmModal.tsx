@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material'
 
 // Models
 import { DeleteModalInterface } from '../../../../Model/ModelForModal';
-import { UserResultDataInterface } from '../../../../Model/ResultModel';
+import { GetResultInterface, UserResultDataInterface } from '../../../../Model/ResultModel';
 
 // UI Fragment
 import DeleteTypography from '../../../UIFragment/DeleteTypography';
@@ -34,17 +34,19 @@ const DeleteUserConfirmModal:FC<DeleteModalInterface> = ({...userData}) =>
     {
         const response: Response = await actualDeleteUser(_id);
         
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Delete User record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete User record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

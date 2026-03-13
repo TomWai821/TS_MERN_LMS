@@ -16,7 +16,7 @@ import { ModalBodySyntax, ModalSubTitleSyntax, ModalRemarkSyntax } from "../../.
 
 // Models
 import { CreateModalInterface } from "../../../../Model/ModelForModal";
-import { DefinitionInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface, GetResultInterface } from "../../../../Model/ResultModel";
 
 // Another Modal
 import CreateDefinitionModal from "../../Definition/CreateDefinitionModal";
@@ -56,18 +56,20 @@ const CreateDefinitionConfirmModal:FC<CreateModalInterface> = (definationData) =
                 console.log("Invalid value");
                 return;
         }
-
+        
+         const result: GetResultInterface = await response.json();
+        
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Create ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to create ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

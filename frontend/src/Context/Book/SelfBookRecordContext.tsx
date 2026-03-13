@@ -98,11 +98,20 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
 
     },[authToken, fetchSelfRecord])
 
+    const allRecordTask = useCallback(async () => 
+    {
+        const task = [fetchFavouriteRecord(), fetchSelfLoanRecord()];
+
+        if(authToken)
+        {
+            await Promise.allSettled(task);
+        }
+    },[authToken, fetchFavouriteRecord, fetchSelfLoanRecord])
+
     useEffect(() => 
     {
-        fetchSelfRecord();
-        fetchRecommendBookForUser();
-    },[fetchSelfRecord, fetchRecommendBookForUser])
+        allRecordTask();
+    },[allRecordTask])
 
     return (
         <SelfBookRecordContext.Provider value={{ BookRecordForUser, bookForUser, fetchFavouriteRecord, fetchSelfLoanRecord, fetchSelfFavouriteBookWithFilterData, fetchSelfLoanBookWithFilterData, favouriteBook, unfavouriteBook }}>

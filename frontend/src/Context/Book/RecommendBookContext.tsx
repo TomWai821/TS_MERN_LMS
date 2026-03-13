@@ -37,8 +37,8 @@ export const RecommendBookProvider:FC<ChildProps> = ({children}) =>
 
     const fetchRecommendBook = useCallback(async () =>
     {
-        fetchNewPublishBook();
-        fetchMostPopularBook();
+        const task = [fetchNewPublishBook(), fetchMostPopularBook()];
+        await Promise.allSettled(task);
     },[fetchNewPublishBook, fetchMostPopularBook])
 
     useEffect(() =>

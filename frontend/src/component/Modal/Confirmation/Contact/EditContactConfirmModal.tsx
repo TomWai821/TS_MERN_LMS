@@ -7,7 +7,7 @@ import { useContactContext } from "../../../../Context/Book/ContactContext";
 import { Box, Typography } from "@mui/material";
 import { ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import ModalConfirmButton from "../../../UIFragment/ModalConfirmButton";
-import { ContactInterface } from "../../../../Model/ResultModel";
+import { ContactInterface, GetResultInterface } from "../../../../Model/ResultModel";
 import { AlertContext } from "../../../../Context/AlertContext";
 
 const EditContactConfirmModal:FC<EditModalInterface> = (data) => 
@@ -44,17 +44,19 @@ const EditContactConfirmModal:FC<EditModalInterface> = (data) =>
                 return;
         }
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

@@ -51,7 +51,7 @@ test('register successfully', async () =>
     await user.click(screen.getByRole('button', { name: /Register/i }));
 
     const alert = await screen.findByRole('alert');
-    expect(alert).toHaveTextContent(/Registration successful! Redirecting.../);
+    expect(alert).toHaveTextContent(/Register successfully!/);
 });
 
 test('fail to register (Use already registration data)', async () => 
@@ -81,7 +81,7 @@ test('fail to register (Use already registration data)', async () =>
 
 
     const alert = await screen.findByRole('alert');
-    expect(alert).toHaveTextContent(/Failed to register! Please try again/);
+    expect(alert).toHaveTextContent(/Invalid email address/);
 });
 
 test('Input the DOB which less than 6 years old', async () => 

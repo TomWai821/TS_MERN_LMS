@@ -1,34 +1,25 @@
-import { GetResultInterface } from "../../Model/ResultModel";
-
 const localhost = process.env.REACT_APP_API_URL;
 const contentType = "application/json";
 
-export const GetContact = async (type:string, author?:string, publisher?:string) => 
+export const GetContact = async (type:string, filterData?:string) => 
 {
     try
     {
-        const invalidQuery = (type === "Author" && publisher) || (type === "Publisher" && author);
         let query:string = "";
-
-        if (invalidQuery)
-        {
-            console.log(`Invalid query data: ${type === "Author" ? "publisher" : "author"}`);
-            return undefined;
-        }
     
         switch(type)
         {
             case "Author":
-                if(author)
+                if(filterData)
                 {
-                    query = `?author=${author}`;
+                    query = `?author=${filterData}`;
                 }
                 break;
         
             case "Publisher":
-                if(publisher)
+                if(filterData)
                 {
-                    query = `?publisher=${publisher}`;
+                    query = `?publisher=${filterData}`;
                 }
                 break;
         }
@@ -42,22 +33,7 @@ export const GetContact = async (type:string, author?:string, publisher?:string)
             }
         );
 
-        if (!response) 
-        {
-            throw new Error("No response from fetch");
-        }
-
-        if(response.ok)
-        {
-            const result:GetResultInterface = await response.json();
-            return result;
-        }
-        else 
-        {
-            const error = await response.json();
-            throw new Error(error.error || "Request failed");
-        }
-
+        return response;
     }
     catch(error)
     {

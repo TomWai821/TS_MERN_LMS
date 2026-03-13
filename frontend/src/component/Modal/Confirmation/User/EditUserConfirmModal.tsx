@@ -6,7 +6,7 @@ import { useModal } from "../../../../Context/ModalContext";
 import { useUserContext } from "../../../../Context/User/UserContext";
 
 // Models
-import { DetailsInterfaceForSuspend, UserResultDataInterface } from "../../../../Model/ResultModel";
+import { DetailsInterfaceForSuspend, GetResultInterface, UserResultDataInterface } from "../../../../Model/ResultModel";
 import { UserDataInterface } from "../../../../Model/UserTableModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
@@ -126,17 +126,19 @@ const EditUserConfirmModal:FC<EditModalInterface> = (editModalData) =>
                     return;
             }
 
+             const result: GetResultInterface = await response.json();
+                   
             if (alertContext && alertContext.setAlertConfig) 
             {
                 switch(response.status)
                 {
                     case 200:
-                        alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!` });
+                        alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                         setTimeout(() => { handleClose() }, 2000);
                         break;
-
+           
                     default:
-                        alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Edit ${type} record! Please try again later` });
+                        alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                         break;
                 }
             }

@@ -64,9 +64,9 @@ export const UserProvider: FC<ChildProps> = ({ children }) =>
         }
     },[authToken])
 
-    const createUser = useCallback(async (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string) => 
+    const createUser = useCallback(async (username:string, email:string, password:string, role:string, gender:string, birthDay:string) => 
     {
-        const result: Response = await RegisterController(registerPosition, username, email, password, role, gender, birthDay);
+        const result: Response = await RegisterController(username, email, password, role, gender, birthDay);
 
         if(result)
         {

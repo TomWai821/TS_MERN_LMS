@@ -15,7 +15,6 @@ const BookContext = createContext<BookContextProps | undefined>(undefined);
 export const BookProvider:FC<ChildProps> = ({children}) => 
 {
     const { GetData } = useAuthContext();
-    const { fetchFavouriteRecord, fetchSelfLoanRecord} = useSelfBookRecordContext();
     const { fetchNewPublishBook, fetchMostPopularBook } = useRecommendBookContext();
     
     const [AllBook, setAllBook] = useState<BookDataInterface[]>([]);
@@ -131,16 +130,9 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
     const fetchAllRecord = useCallback(async () => 
     {
-        fetchAllBook();
-        fetchNewPublishBook();
-        fetchMostPopularBook();
-
-        if(authToken)
-        {
-            fetchFavouriteRecord();
-            fetchSelfLoanRecord();
-        }
-    },[authToken, fetchAllBook, fetchNewPublishBook, fetchMostPopularBook, fetchFavouriteRecord, fetchSelfLoanRecord])
+        const task = [fetchAllBook(), fetchNewPublishBook(), fetchMostPopularBook()];
+        await Promise.allSettled(task);
+    },[fetchAllBook, fetchNewPublishBook, fetchMostPopularBook])
 
     useEffect(() => 
     {

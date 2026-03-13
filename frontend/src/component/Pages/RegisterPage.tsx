@@ -16,6 +16,8 @@ import { RegisterModel } from '../../Model/InputFieldModel';
 // Data(CSS Syntax and dropdown option)
 import { PageItemToCenter, PageTitleSyntax } from '../../Data/Style';
 import { RegisterField } from '../../Data/TextFieldsData';
+import { GetResultInterface, ResultInterface } from '../../Model/ResultModel';
+import { handleSuccess } from '../../Controller/OtherUsefulController';
 
 const RegisterPage = () => 
 {
@@ -59,22 +61,22 @@ const RegisterPage = () =>
         event.preventDefault();
         setIsSubmitted(true);
     
-        const response: Response = await RegisterController( 
-            "RegisterPanel", Credentials.username, Credentials.email, Credentials.password, 
-            "User", Credentials.gender, Credentials.birthDay
-        );
+        const response: Response = await RegisterController( Credentials.username, Credentials.email, Credentials.password, "User", Credentials.gender, Credentials.birthDay);
     
+        const result: GetResultInterface = await response.json();
+                        
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Registration successful! Redirecting..." });
-                    setTimeout(() => { ChangePage("/"); }, 2000);
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
+                    handleSuccess(result as unknown as ResultInterface, false);
+                    setTimeout(() => { ChangePage("/") }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to register! Please try again" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

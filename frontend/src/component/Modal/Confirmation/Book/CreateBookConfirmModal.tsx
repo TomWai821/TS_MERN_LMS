@@ -18,6 +18,7 @@ import { useDefinitionContext } from "../../../../Context/Book/DefinitionContext
 import { useContactContext } from "../../../../Context/Book/ContactContext"
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography"
 import { AlertContext } from "../../../../Context/AlertContext"
+import { GetResultInterface } from "../../../../Model/ResultModel"
 
 const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) => 
 {
@@ -57,17 +58,19 @@ const CreateBookConfirmModal:FC<CreateModalInterface> = ({...bookData}) =>
     {
         const response: Response = await createBook(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
 
+        const result: GetResultInterface = await response.json();
+
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Create Book record successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Create book record! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

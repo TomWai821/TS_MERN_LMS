@@ -12,7 +12,7 @@ import { QRCodeInterface, UserLoanBookModalBodyInterface } from "../../../../Mod
 import LoanBookConfirmationModal from "./LoanBookConfirmationModal";
 import { AlertContext } from "../../../../Context/AlertContext";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
-import { errorResponse } from "../../../../Model/ResultModel";
+import { GetResultInterface } from "../../../../Model/ResultModel";
 
 
 const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBookData) => 
@@ -37,25 +37,21 @@ const UserLoanBookConfirmationModal:FC<UserLoanBookModalBodyInterface> = (LoanBo
     {
         const response: Response  = await loanBook(_id, handleScanData().authToken);
 
+         const result: GetResultInterface = await response.json();
+               
         if (alertContext && alertContext.setAlertConfig) 
-        {   
-            switch (response?.status)
+        {
+            switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Loan book to ${handleScanData().username} successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
-                case 401:
-                    const result = response.json() as Promise<errorResponse>;
-                    alertContext.setAlertConfig({ AlertType: "error", Message: (await result).error });
-                    break;
-
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Unable to loan book to the user! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
-             
         }
     }
 

@@ -1,7 +1,7 @@
 import { FC, useContext } from "react"
 import ModalTemplate from "../../../Templates/ModalTemplate"
 import { CreateModalInterface } from "../../../../Model/ModelForModal"
-import { ContactInterface } from "../../../../Model/ResultModel";
+import { ContactInterface, GetResultInterface } from "../../../../Model/ResultModel";
 import { useModal } from "../../../../Context/ModalContext";
 import CreateContextModal from "../../Contact/CreateContactModal";
 import { useContactContext } from "../../../../Context/Book/ContactContext";
@@ -44,17 +44,19 @@ const CreateContactConfirmModal:FC<CreateModalInterface> = (createModalData) =>
                 return;
         }
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Create ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to create ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

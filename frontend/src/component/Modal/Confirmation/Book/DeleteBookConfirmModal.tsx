@@ -13,6 +13,7 @@ import { useBookContext } from '../../../../Context/Book/BookContext';
 import { useModal } from '../../../../Context/ModalContext';
 import { DeleteButton, ModalBodySyntax, ModalSubTitleSyntax } from '../../../../Data/Style';
 import { AlertContext } from '../../../../Context/AlertContext';
+import { GetResultInterface } from '../../../../Model/ResultModel';
 
 const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) => 
 {  
@@ -24,19 +25,20 @@ const DeleteBookModal:FC<BookDataInterfaceForDelete> = ({...bookData}) =>
     const DeleteBook = async () => 
     {
         const response: Response  = await deleteBook(bookID);
-        console.log(response.status);
+        
+         const result: GetResultInterface = await response.json();
 
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Delete book record successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Delete book record! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

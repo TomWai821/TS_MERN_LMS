@@ -114,7 +114,7 @@ export const UpdateContactRecord = async (req: AuthRequest, res: Response) =>
             break;
     }
 
-    res.json({ success: true, message: `Create ${contactType} successfully!` });
+    res.json({ success: true, message: `Update ${contactType} successfully!` });
 }
 
 const UpdateAuthorRecord = async (req: AuthRequest, res: Response) => 

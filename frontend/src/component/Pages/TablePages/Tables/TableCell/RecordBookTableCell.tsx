@@ -10,7 +10,7 @@ import { useModal } from "../../../../../Context/ModalContext";
 import ReturnBookConfirmModal from "../../../../Modal/Confirmation/Book/ReturnBookConfirmModal";
 
 // Models
-import { LoanBookInterface } from "../../../../../Model/ResultModel";
+import { GetResultInterface, LoanBookInterface } from "../../../../../Model/ResultModel";
 import { RecordTableCellInterface } from "../../../../../Model/TablePagesAndModalModel";
 
 // Controllers
@@ -39,16 +39,18 @@ const RecordBookTableCell:FC<RecordTableCellInterface> = (returnBookTableCellDat
     {
         const response =  await unfavouriteBook(Information._id);
         
+          const result: GetResultInterface = await response.json();
+
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                     alertContext.setAlertConfig({ AlertType: "success", Message: "Unfavourite successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Unfavourite! Please try again" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

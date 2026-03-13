@@ -58,13 +58,24 @@ const ContactPage = () =>
     const SearchContact = () => 
     {
         const title = ["Author", "Publisher"];
-        fetchContactDataWithFilterData(title[tabValue], searchContact.author, searchContact.publisher);
+        switch(tabValue)
+        {
+            case 0:
+                fetchContactDataWithFilterData(title[tabValue], searchContact.author);
+                break;
+
+            case 1:
+                fetchContactDataWithFilterData(title[tabValue], searchContact.publisher);
+                break;
+
+        }
+        
     }
 
     const resetFilter = () => 
     {
         const title = ["Author", "Publisher"];
-        fetchContactDataWithFilterData(title[tabValue], "", "");
+        fetchContactDataWithFilterData(title[tabValue], "");
         setSearchContact(defaultValue);
     }
 

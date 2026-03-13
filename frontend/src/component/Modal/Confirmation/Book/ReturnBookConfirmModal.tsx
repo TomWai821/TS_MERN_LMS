@@ -7,7 +7,7 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 import { ReturnBookInterface } from "../../../../Model/ModelForModal";
 import { countLateReturn, TransferDateToISOString } from "../../../../Controller/OtherController";
-import { LoanBookInterface } from "../../../../Model/ResultModel";
+import { GetResultInterface, LoanBookInterface } from "../../../../Model/ResultModel";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";
@@ -32,17 +32,19 @@ const ReturnBookConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
     {
         const response = data.fineAmount as number > 0 ? await returnBook(data._id, finesPaid) : await returnBook(Data._id);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Return Book successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Return book! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

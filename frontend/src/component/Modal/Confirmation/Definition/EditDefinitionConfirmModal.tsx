@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { FC, useContext, useEffect, useState } from "react";
 
 // Models
-import { DefinitionInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface, GetResultInterface } from "../../../../Model/ResultModel";
 import { EditModalInterface } from "../../../../Model/ModelForModal";
 
 // UI fragment
@@ -50,17 +50,19 @@ const EditDefinitionConfirmModal:FC<EditModalInterface>  = (data) =>
                 break;
         }
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Edit ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

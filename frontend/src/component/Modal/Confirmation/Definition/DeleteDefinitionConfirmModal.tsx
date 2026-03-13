@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 // Models
 import { DeleteModalInterface } from "../../../../Model/ModelForModal";
-import { DefinitionInterface } from "../../../../Model/ResultModel";
+import { DefinitionInterface, GetResultInterface } from "../../../../Model/ResultModel";
 
 // UI Fragment
 import ModalTemplate from "../../../Templates/ModalTemplate";
@@ -20,8 +20,8 @@ import { AlertContext } from "../../../../Context/AlertContext";
 
 const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 {
-    const {type, data} = deleteData;
-    const {handleClose} = useModal();
+    const { type, data } = deleteData;
+    const { handleClose } = useModal();
     const { deleteDefinition } = useDefinitionContext();
     const alertContext = useContext(AlertContext);
 
@@ -40,17 +40,19 @@ const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
     {
         const response: Response  = await deleteDefinition(type as string, deleteData._id);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Delete ${type} record successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to delete ${type} record! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

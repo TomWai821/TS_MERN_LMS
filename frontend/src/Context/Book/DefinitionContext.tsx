@@ -19,36 +19,52 @@ export const DefinitionProvider:FC<ChildProps> = ({children}) =>
 
     const fetchAllDefinition = useCallback(async () => 
     {
-        const getGenreData: GetResultInterface | undefined = await GetDefinition("Genre");
-        const getLanguageData : GetResultInterface | undefined = await GetDefinition("Language");
+        const [getGenreData, getLanguageData] = await Promise.allSettled([GetDefinition("Genre"), GetDefinition("Language")])
 
-        if(getGenreData && Array.isArray(getGenreData.foundDefinition as DefinitionInterface[]))
+        if(getGenreData.status === "fulfilled" && getGenreData.value)
         {
-            setDefinition((prev) => ({...prev, Genre:getGenreData.foundDefinition as DefinitionInterface[]}));
-        }
+            const GenreResponse = getGenreData.value;
+            const GenreData: GetResultInterface = await GenreResponse.json();
 
-        if(getLanguageData && Array.isArray(getLanguageData.foundDefinition as DefinitionInterface[]))
-        {
-            setDefinition((prev) => ({...prev, Language:getLanguageData.foundDefinition as DefinitionInterface[]}));
+            if(Array.isArray(GenreData.foundDefinition as DefinitionInterface[]))
+            {
+                setDefinition((prev) => ({...prev, Genre:GenreData.foundDefinition as DefinitionInterface[]}));
+            }
         }
+        
+        if(getLanguageData.status === "fulfilled" && getLanguageData.value)
+        {
+            const LanguageResponse = getLanguageData.value;
+            const LanguageData: GetResultInterface = await LanguageResponse.json();
+
+            if(Array.isArray(LanguageData.foundDefinition as DefinitionInterface[]))
+            {
+                setDefinition((prev) => ({...prev, Language:LanguageData.foundDefinition as DefinitionInterface[]}));
+            }
+        }    
     }
     ,[])
 
     const fetchDefinitionDataWithFilterData = useCallback(async (type:string, data?:string) => 
     {
-        const getData: GetResultInterface | undefined = await GetDefinition(type, data);
+        const getData = await GetDefinition(type, data);
     
-        if(getData && Array.isArray(getData.foundDefinition as DefinitionInterface[]))
+        if((getData as Response).ok)
         {
-            switch(type)
+            const DefinitionData: GetResultInterface = await (getData as Response).json();
+
+            if(Array.isArray(DefinitionData.foundDefinition as DefinitionInterface[]))
             {
-                case "Genre":
-                    setDefinition((prev) => ({...prev, Genre:getData.foundDefinition as DefinitionInterface[]}));
-                    break;
-    
-                case "Language":
-                    setDefinition((prev) => ({...prev, Language:getData.foundDefinition as DefinitionInterface[]}));
-                    break;
+                switch(type)
+                {
+                    case "Genre":
+                        setDefinition((prev) => ({...prev, Genre:DefinitionData.foundDefinition as DefinitionInterface[]}));
+                        break;
+        
+                    case "Language":
+                        setDefinition((prev) => ({...prev, Language:DefinitionData.foundDefinition as DefinitionInterface[]}));
+                        break;
+                }
             }
         }
     }

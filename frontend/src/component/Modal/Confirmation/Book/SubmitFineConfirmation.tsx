@@ -6,7 +6,7 @@ import ModalTemplate from "../../../Templates/ModalTemplate";
 
 
 import { ReturnBookInterface } from "../../../../Model/ModelForModal";
-import { LoanBookInterface } from "../../../../Model/ResultModel";
+import { GetResultInterface, LoanBookInterface } from "../../../../Model/ResultModel";
 
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { useModal } from "../../../../Context/ModalContext";
@@ -26,17 +26,19 @@ const SubmitFinesConfirmModal:FC<ReturnBookInterface> = (returnBookModalData) =>
     {
         const response: Response  = await returnBook(Data._id, "Paid");
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Change Submit Fine Status successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Change Submit Fine Status! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

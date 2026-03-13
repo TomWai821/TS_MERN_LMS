@@ -16,6 +16,8 @@ import { ChangePage } from '../../Controller/OtherController';
 // Data (CSS Syntax and dropdown)
 import { PageItemToCenter, PageTitleSyntax } from '../../Data/Style';
 import { LoginField } from '../../Data/TextFieldsData';
+import { GetResultInterface, ResultInterface } from '../../Model/ResultModel';
+import { handleSuccess } from '../../Controller/OtherUsefulController';
 
 const LoginPage = () => 
 {
@@ -66,21 +68,20 @@ const LoginPage = () =>
         
         const response: Response = await LoginController(Credentials.email, Credentials.password, Credentials.stayLogin);
     
+        const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Login successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
+                    handleSuccess(result as unknown as ResultInterface, Credentials.stayLogin);
                     setTimeout(() => { ChangePage("/") }, 2000);
                     break;
 
-                case 401:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "This user was suspend!" });
-                    break;
-
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Invalid email or password!" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

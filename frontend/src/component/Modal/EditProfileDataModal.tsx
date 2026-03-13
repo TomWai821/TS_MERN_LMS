@@ -83,7 +83,7 @@ const EditProfileDataModal = () =>
 
         const response = await ModifyProfileDataController(GetData("authToken") as string, option, bodyData);
 
-        const result = response as unknown as GetResultInterface;
+         const result: GetResultInterface = await response.json();
 
         if (alertContext && alertContext.setAlertConfig) 
         {
@@ -95,7 +95,7 @@ const EditProfileDataModal = () =>
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to edit ${option}!` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

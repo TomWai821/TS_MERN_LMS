@@ -22,6 +22,7 @@ import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 import { dateOption } from "../../../../Data/TextFieldsData";
 import ExpandableTypography from "../../../UIFragment/ExpandableTypography";
 import { AlertContext } from "../../../../Context/AlertContext";
+import { GetResultInterface } from "../../../../Model/ResultModel";
 
 const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) => 
 {
@@ -40,17 +41,19 @@ const SuspendUserConfirmModal:FC<SuspendModalInterface> = (banData) =>
     {
         const response: Response = await changeUserStatus("Suspend", _id, "Suspend", undefined, duration, description);
          
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Suspend user successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Suspend user! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }

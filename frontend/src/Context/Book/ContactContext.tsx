@@ -14,36 +14,52 @@ export const ContactProvider:FC<ChildProps> = ({children}) =>
 
     const fetchAllContactData = useCallback(async () => 
     {
-        const getAuthorData: GetResultInterface | undefined = await GetContact("Author", undefined, undefined);
-        const getPublisherData : GetResultInterface | undefined = await GetContact("Publisher", undefined, undefined);
-
-        if(getAuthorData && Array.isArray(getAuthorData.foundContact as ContactInterface[]))
+        const [getAuthorData, getPublisherData] = await Promise.allSettled([GetContact("Author", undefined), GetContact("Publisher", undefined)])
+        
+        if(getAuthorData.status === "fulfilled" && getAuthorData.value)
         {
-            setContact((prev) => ({...prev, Author:getAuthorData.foundContact as ContactInterface[]}));
+            const AuthorResponse = getAuthorData.value;
+            const AuthorData: GetResultInterface = await AuthorResponse.json();
+
+            if(Array.isArray(AuthorData.foundContact as ContactInterface[]))
+            {
+                setContact((prev) => ({...prev, Author:AuthorData.foundContact as ContactInterface[]}));
+            }
         }
-
-        if(getPublisherData && Array.isArray(getPublisherData.foundContact as ContactInterface[]))
+        
+        if(getPublisherData.status === "fulfilled" && getPublisherData.value)
         {
-            setContact((prev) => ({...prev, Publisher:getPublisherData.foundContact as ContactInterface[]}));
+            const PublisherResponse = getPublisherData.value;
+            const PublisherData: GetResultInterface = await PublisherResponse.json();
+
+            if(Array.isArray(PublisherData.foundContact as ContactInterface[]))
+            {
+                setContact((prev) => ({...prev, Publisher:PublisherData.foundContact as ContactInterface[]}));
+            }
         }
     }
     ,[])
 
-    const fetchContactDataWithFilterData = useCallback(async (type:string, author:string, publisher:string) => 
+    const fetchContactDataWithFilterData = useCallback(async (type:string, filtData:string) => 
     {
-        const getData: GetResultInterface | undefined = await GetContact(type, author, publisher);
-
-        if(getData && Array.isArray(getData.foundContact as ContactInterface[]))
+        const getData = await GetContact(type, filtData);
+            
+        if((getData as Response).ok)
         {
-            switch(type)
-            {
-                case "Author":
-                    setContact((prev) => ({...prev, Author:getData.foundContact as ContactInterface[]}));
-                    break;
+            const ContactData: GetResultInterface = await (getData as Response).json();
 
-                case "Publisher":
-                    setContact((prev) => ({...prev, Publisher:getData.foundContact as ContactInterface[]}));
-                    break;
+            if(Array.isArray(ContactData.foundContact as ContactInterface[]))
+            {
+                switch(type)
+                {
+                    case "Author":
+                        setContact((prev) => ({...prev, Author:ContactData.foundContact as ContactInterface[]}));
+                        break;
+
+                    case "Publisher":
+                        setContact((prev) => ({...prev, Publisher:ContactData.foundContact as ContactInterface[]}));
+                        break;
+                }
             }
         }
     }

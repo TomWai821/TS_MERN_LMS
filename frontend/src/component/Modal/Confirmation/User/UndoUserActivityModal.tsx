@@ -17,7 +17,7 @@ import { DeleteModalInterface } from "../../../../Model/ModelForModal";
 
 // Data (CSS Syntax)
 import { ModalBodySyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
-import { UserResultDataInterface } from "../../../../Model/ResultModel";
+import { GetResultInterface, UserResultDataInterface } from "../../../../Model/ResultModel";
 import { AlertContext } from "../../../../Context/AlertContext";
 
 const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) => 
@@ -34,17 +34,19 @@ const UndoUserActivityModal:FC<DeleteModalInterface> = ({...userData}) =>
     {
         const response: Response  = await changeUserStatus("UnSuspend", _id, "Normal", Data.bannedDetails?._id as string);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `Unsuspend user successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to Unsuspend user! Please try again later` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

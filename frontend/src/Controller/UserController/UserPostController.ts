@@ -20,12 +20,6 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
             }
         );
 
-        if(response.ok)
-        {
-            const result: ResultInterface = await response.json();
-            handleSuccess(result, stayLogin);
-        }
-
         return response;
     }
     catch(error)
@@ -34,7 +28,7 @@ const LoginController = async (email:String, password:String, stayLogin:boolean)
     }
 }
 
-const RegisterController = async (registerPosition:string, username:string, email:string, password:string, role:string, gender:string, birthDay:string): Promise<any> => 
+const RegisterController = async (username:string, email:string, password:string, role:string, gender:string, birthDay:string): Promise<any> => 
 {
     const user = {username, email, password, gender, role, birthDay};
 
@@ -46,15 +40,8 @@ const RegisterController = async (registerPosition:string, username:string, emai
                 headers: { 'content-type': contentType },
                 body: JSON.stringify(user)
             }
-        )
-
-        if(registerPosition === "RegisterPanel" && response.ok)
-        {
-            const result: ResultInterface = await response.json();
-            handleSuccess(result, false);
-        }
+        )        
         
-        console.log(response);
         return response;
     }
     catch(error)

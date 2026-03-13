@@ -26,7 +26,7 @@ import LoanBookConfirmationModal from "../../../../Modal/Confirmation/Book/LoanB
 
 // Model
 import { ActionTableCellInterface } from "../../../../../Model/TablePagesAndModalModel"
-import { BookDataInterface, DetailsInterfaceForSuspend, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
+import { BookDataInterface, DetailsInterfaceForSuspend, GetResultInterface, LoanBookInterface, UserResultDataInterface } from "../../../../../Model/ResultModel";
 
 // Data(CSS Syntax)
 import { ImportantActionButtonSyntax } from "../../../../../Data/Style";
@@ -116,18 +116,19 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
     const FavouriteHandler = async () => 
     {
         let response = isFavourite ? await unfavouriteBook(FavouriteID as string) : await favouriteBook((Information as BookDataInterface)._id); 
-        const favouriteText = isFavourite ? "Unfavourite" : "Favourite";
+
+         const result: GetResultInterface = await response.json();
 
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: `${favouriteText} successfully!` });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: `Failed to ${favouriteText}! Please try again` });
+                    alertContext.setAlertConfig({ AlertType: "error", Message: result.error as string });
                     break;
             }
         }

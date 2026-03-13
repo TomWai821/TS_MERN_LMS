@@ -14,7 +14,7 @@ import { EditModalInterface } from "../../../../Model/ModelForModal";
 import EditBookModal from "../../Book/EditBookModal";
 
 // Data (CSS Syntax)
-import { BookDataInterfaceForEdit } from "../../../../Model/ResultModel";
+import { BookDataInterfaceForEdit, GetResultInterface } from "../../../../Model/ResultModel";
 import { useBookContext } from "../../../../Context/Book/BookContext";
 import { BookImageFormatForEdit, displayAsRow, ModalBodySyntax, ModalRemarkSyntax, ModalSubTitleSyntax } from "../../../../Data/Style";
 
@@ -93,17 +93,19 @@ const EditBookConfirmModal:FC<EditModalInterface> = (editModalData) =>
 
         const response: Response = await editBook(EditData._id, CompareData.filename, EditData.image as File, EditData.bookname, genreID, langaugeID, publisherID, EditData.publishDate as string, authorID, EditData.description);
 
+         const result: GetResultInterface = await response.json();
+                
         if (alertContext && alertContext.setAlertConfig) 
         {
             switch(response.status)
             {
                 case 200:
-                    alertContext.setAlertConfig({ AlertType: "success", Message: "Edit book record successfully!" });
+                    alertContext.setAlertConfig({ AlertType: "success", Message: result.message as string });
                     setTimeout(() => { handleClose() }, 2000);
                     break;
 
                 default:
-                    alertContext.setAlertConfig({ AlertType: "error", Message: "Failed to Edit book record! Please try again later" });
+                    alertContext.setAlertConfig({ AlertType: "error", Message:  result.error as string });
                     break;
             }
         }
