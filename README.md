@@ -280,11 +280,11 @@ Remarks:
 
 
 ## Features 
-- Intelligent Recommendation: Developed a custom TF-IDF engine to provide data-driven book recommendations based on user history, enhancing personalized content discovery
-- External Data Enrichment: Integrated Google Books API on the client side to fetch and display extended metadata, providing a rich user experience without bloating the backend database
-- Automated Loan Tracking: Built an automated tracking system for loaned books and return statuses, ensuring real-time data consistency and operational visibility
-- QR-based Operations:  Streamlined book loaning via QR Code integration, implementing a multi-token exchange protocol to facilitate identity verification and transaction authorization between the borrower and the librarian
-- Security Architecture: Implemented JWT-based Authentication with Bcrypt hashing, utilizing Frontend Route Guards and Role-aware UI rendering for access control
+- **Intelligent Recommendation**: Developed a custom TF-IDF engine to provide data-driven book recommendations based on user history, enhancing personalized content discovery
+- **External Data Enrichment**: Integrated Google Books API on the client side to fetch and display extended metadata, providing a rich user experience without bloating the backend database
+- **Automated Loan Tracking**: Built an automated tracking system for loaned books and return statuses, ensuring real-time data consistency and operational visibility
+- **QR-based Operations**: Streamlined book loaning via QR Code integration, implementing a multi-token exchange protocol to facilitate identity verification and transaction authorization between the borrower and the librarian
+- **Security Architecture**: Implemented JWT-based Authentication with Bcrypt hashing, utilizing Frontend Route Guards and Role-aware UI rendering for access control
 
 
 
@@ -292,7 +292,7 @@ Remarks:
 
 ### Completed
 
-#### Frontend side
+#### Frontend Side
 1. **Response-Driven API Service (frontend side)**
     - Refactored legacy API wrappers to return full HTTP Response objects, enabling granular error handling and dynamic UI state management based on status code
   
@@ -300,7 +300,7 @@ Remarks:
     - Implemented concurrent API fetching using Promise.allSettled to parallelise independent data requests<br>
       (This ensures UI resilience, allowing the dashboard to render partially even if individual microservices or endpoints fail)
 
-#### Backend side
+#### Backend Side
 1. **Modularised backend routes for cleaner structure**
     - Decoupled monolithic routes into modularised controllers, implementing Middleware for centralised authentication and validation to ensure DRY (Don't Repeat Yourself) principles
 
@@ -330,7 +330,7 @@ Remarks:
 
 ### Planned Improvements
 
-#### Frontend side
+#### Frontend Side
 1. **Apply custom hooks to centralise commonly used state**
     - Reduce redundant state creation in view components (Ref: `./frontend/src/customhook.tsx`)
     
@@ -343,13 +343,16 @@ Remarks:
 4. **Bulk Input Support**
     - Support multiple contact (Publisher/Author) inputs via JSON strings to enhance efficiency over manual field entry
 
+5. **Unified API Transport Layer (Ajax Utils)**
+    - Centralised API communication into a generic transport layer (Ref: `./frontend/src/improvement/AjaxUtils`)
+      (This standardises request/response formats and error-handling protocols, significantly decoupling business logic from the underlying fetch implementation)
 
 #### Backend Side
 1. **Server-side RBAC (Role-Based Access Control)**
     - Implement server-side role validation for all API requests to ensure data integrity (currently handled on the frontend for demo scope)
   
 2. **Production-Grade Task Scheduling**
-    - Replace basic `setInterval` with **node-cron** or cloud-based schedulers for better reliability and error handling
+    - Replace basic `setInterval` + `setTimeout` with **node-cron** or cloud-based schedulers for better reliability and error handling
     
 3. **Standardised Response Wrapper**
     - Implement a unified response structure (e.g., `errorCode`, `errorMessage`, `totalCount`) to improve API usability (Ref: `./backend/src/improvement/`)
