@@ -1530,24 +1530,31 @@ Image 8.2 - Chip set
 
 ### Completed
 
-1. **Introduced dotenv for environment variable management (backend side)**
-    - Sensitive configuration (API keys, DB URI, JWT secret) now stored securely in .env instead of hardcoding
-
-2. **Redirected packages into separate frontend and backend directories**
-    - Independent package.json and node_modules, ensuring clean separation and avoiding mixed dependencies
-
-3. **Modularised backend routes for cleaner structure**
-    - Reduced redundant code in authentication and data verification, improving maintainability
-
-4. **Implemented server-side scheduled data updates (Interval+ setTimeout in Node.js)**
-    - Ensured consistent daily automation and reduced manual triggers (located in ./backend/src/detectRecord.ts)
-
-5. **I/O Concurrency Optimisation (Promise.all) in backend**
-    - Refactored decoupled database lookups into concurrent operations to minimise API latency during multi-field validations
+#### Frontend side
+1. **Response-Driven API Service (frontend side)**
+    - Refactored legacy API wrappers to return full HTTP Response objects, enabling granular error handling and dynamic UI state management based on status code
   
-6. **Response-Driven API Service (frontend side)**
-    - Refactored legacy API wrappers to return full Response objects instead of boolean values (This enables granular UI state management and error handling based on HTTP Status Codes and backend-specific error messages)
+2. **I/O Concurrency & Fault Tolerance (Promise.allSettled)**
+    - Implemented concurrent API fetching using Promise.allSettled to parallelise independent data requests (This ensures UI resilience, allowing the dashboard to render partially even if individual microservices or endpoints fail)
 
+#### Backend side
+1. **Modularised backend routes for cleaner structure**
+    - Decoupled monolithic routes into modularised controllers, implementing Middleware for centralised authentication and validation to ensure DRY (Don't Repeat Yourself) principles
+
+2. **Automated Library Compliance & Fine Processing**
+    - Engineered a custom task scheduler to automate mission-critical daily operations (Expired Loans, Fines Calculation, Suspend Records) at UTC+8 midnight
+
+3. **Performance Optimisation (Promise.all)**
+    - Optimised multi-field database validations by refactoring sequential lookups into concurrent operations via Promise.all (This significantly reduced API response latency by processing independent I/O tasks in parallel)
+  
+#### Security
+1. **Modular Workspace & Dependency Isolation**
+    - Architected a Monorepo-style structure by separating Frontend and Backend into independent directories with isolated package.json and node_modules
+      (It improved CI/CD pipeline efficiency and prevented dependency conflicts, ensuring a cleaner and more scalable development workflow)<br>
+
+2. **Secure Configuration Management (dotenv)**
+   - Implemented Environment Variable management using dotenv to decouple sensitive configuration from the source code
+     (It enhanced system security by protecting API keys, Database URIs, and JWT secrets, facilitating seamless transitions between development and production environments)
 
 ### Planned Improvements
 
