@@ -12,13 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli@3.11.0 
-        
-      - name: Deploy Backend to Railway
-        run: railway redeploy --service ${{ secrets.RAILWAY_SERVICE_ID }} -y
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Trigger Railway Redeploy via GraphQL
+        run: |
+          RESPONSE=$(curl -s -X POST \
+            --url https://backboard.railway.app \
+            --header 'Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}' \
+            --header 'Content-Type: application/json' \
+            --data '{"query":"mutation { serviceInstanceRedeploy(serviceId: \"${{ secrets.RAILWAY_SERVICE_ID }}\") }"}' \
+            -o /dev/null -w "%{http_code}")
+          
+          echo "Railway Response Code: $RESPONSE"
+          
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "Error: Railway redeploy failed with status $RESPONSE"
+            exit 1
+          fi
 
   deploy-frontend:
     runs-on: ubuntu-latest
