@@ -854,51 +854,73 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 
 ## TF-IDF Logic Overview
 
-***1. Calculate Term Frequence and Inverse Document Frequence***<br>
+****1. Calculate Term Frequency and Inverse Document Frequency****<br>
 <img src="doc/Image/Functions/TF-IDF_BasicFunction.png" style="width:60%;"/><br>
 
-****Term Frequence (TF)****
-- It measures how often a word appears in a document relative to its length
-- Formula:<br>
+**Term Frequency (TF) - Build User Interest Profile**
+- **Definition***
+    - It measures how often a word appears in a document relative to its length
+- **Usage**
+    - Used to extract the User Interest Profile from borrowing history
+- **Formula**<br>
   <img src="doc/Image/Formula/TF-formula.png" style="width:30%;"/><br>
 
-****Inverse Document Frequence (IDF)****
-- It reduces the weight of common words by considering how many documents contain the term
-- Formula:<br>
+****Inverse Document Frequency (IDF) - Feature Engineering****
+- **Definition**
+    - It reduces the weight of common words by considering how many documents contain the term
+- **Usage**
+    - It automatically de-prioritises generic metadata and highlights distinctive attributes that define a book's true character
+- **Formula**<br>
   <img src="doc/Image/Formula/IDF-formula.png" style="width:30%;"/><br>
 
-****TF-IDF Vector****
-- Each document (user history or book metadata) is represented as a vector of TF‑IDF values across the vocabulary
+****Vector Space Representation - Feature Encoding****
+- **Definition**
+    - Converts document metadata into high-dimensional numerical vectors based on the global vocabulary
+- **Usage**
+    - Treats "User Interests" and "Books" as coordinate points, enabling mathematical comparison beyond simple text searching (Geometric Mapping)
+- **Project Logic***
+    - Acts as the Common Language to measure "proximity" between user history and library inventory
 
-***Cosine Similarity***<br>
-- It compares two vectors by measuring the cosine of the angle between them
-- It produces a score between 0 and 1:
-    - 1 → vectors point in the same direction (high similarity)
-    - 0 → vectors are orthogonal (no similarity)
-- Formula:<br>
+****Cosine Similarity****<br>
+- **Definition**
+    - It compares two vectors by measuring the cosine of the angle between them and produces a score between 0 and 1:
+        - 1 → vectors point in the same direction (high similarity)
+        - 0 → vectors are orthogonal (no similarity)
+- **Usage**
+    - It maps both the User's Cumulative Interest and Each Book's Metadata into a shared high-dimensional space
+      (The closer the angle (score near 1.0), the more relevant the recommendation, regardless of literal title matches)
+- **Formula**<br>
   <img src="doc/Image/Formula/CosineSimilarity-formula.png" style="width:30%;"/><br>
 
 
 ***2. Calculation Logic (TF-IDF + Genre Weight)***<br>
 <img src="doc/Image/Functions/TF-IDF_CalculateFunction.png" style="width:90%;"/><br>
 
-****Corpus Construction****
-- User loan history → loanCorpus
-- All books in the collection → allBooksCorpus
+****Data Vectorization (Corpus Construction)****
+- **Process**
+    - Constructing the User Interest Profile (loanCorpus) from borrowing history and the Global Book Registry (allBooksCorpus) from the entire library inventory
+- **Goal**
+    - To establish the raw text data required for high-dimensional feature extraction
 
-****Vocabulary & Vectors****
-- Build a vocabulary (vocab) from all documents
-- Generate a TF‑IDF vector for the user’s loan history (loanCorpus)
-- Generate TF‑IDF vectors for each book (allBooksCorpus)
+****Vocabulary Mapping & TF-IDF Encoding****
+- **Process**
+    - Generating a global Vocabulary Index across all documents to encode both user history and book metadata into TF-IDF Vectors
+- **Goal**
+    - To translate text-based attributes into a unified numerical format for mathematical comparison
 
-****Similarity Calculation****
-- Apply Cosine Similarity between the user vector and each book vector
-- Obtain tfidfScore representing textual similarity
+****Similarity Scoring (Cosine Similarity)****
+- **Process** 
+    - Executing Cosine Similarity between the user’s interest vector and each book’s feature vector
+- **Goal**
+    - To derive the tfidfScore, representing the degree of semantic proximity between a user's taste and a book's characteristics
 
-Genre Weighting
-- If a book’s genre matches the user’s loan history → genreScore = 1
-- Otherwise → genreScore = 0
-- Final score is a weighted sum: finalScore = 0.7 * tdidfScore + 0.3 * genreScore
+****Hybrid Heuristic Tuning (Genre Weighting)****
+- **Process**
+    - Implementing a Linear Combination that adds a genreScore bonus (1.0 for match, 0.0 for mismatch)
+- **Final Logic**
+    - 0.7 * tfidfScore + 0.3 * genreScore
+- **Goal**
+    - To prioritise Genre Consistency (Ensure recommendations remain aligned with the user’s preferred literary categories)
 
 
 ***3. TF-IDF Implementation***<br>
