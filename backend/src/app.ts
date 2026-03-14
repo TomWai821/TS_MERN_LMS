@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { routerHandler } from './routerList';
 
-const ORIGIN_URI = process.env.ORIGIN_URI as string;
-const avaliable_ORIGIN_URI = ORIGIN_URI.split(",");
+const ORIGIN_URI = process.env.ORIGIN_URI || "";
+const avaliable_ORIGIN_URI = ORIGIN_URI ? ORIGIN_URI.split(",").map(url => url.trim()) : [];
 
 const app = express();
 
