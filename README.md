@@ -69,13 +69,13 @@ All contact information provided in this file is fictitious and used solely for 
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 ```
-- Edit backend/.env: set at minimum: MONGO_URI, JWT_SECRET, PORT, ORIGIN_URI, GOOGLE_BOOKS_API_KEY, GOOGLE_BOOKS_BASE_URL
+- Edit backend/.env: set at minimum: MONGO_URI, JWT_SECRET, PORT, ORIGIN_URI, GOOGLE_BOOKS_API_KEY, GOOGLE_BOOKS_BASE_URL, BACKEND_URL
 - Edit frontend/.env: set at minimum: REACT_APP_API_URL, REACT_APP_MAIN_PAGE
 
 **Notes about ports and hostnames** 
 - If you run the project with **Docker Compose**, use the Docker examples in `.env.example` (e.g. `MONGO_URI=mongodb://mongo:27017/...`). Docker Compose maps container ports to the host automatically
 - If you run services locally (not via Docker), replace container hostnames with `localhost` and ensure `PORT` matches the port you start the backend on (e.g. `3000`)
-- Always include protocol and port for URLs: `ORIGIN_URI=http://localhost:5000`, `REACT_APP_API_URL=http://localhost:5000/api`, `REACT_APP_MAIN_PAGE=http://localhost:3000`
+- Always include protocol and port for URLs: `ORIGIN_URI=http://localhost:5000`, `REACT_APP_API_URL=http://localhost:5000/api`, `REACT_APP_MAIN_PAGE=http://localhost:3000`, `BACKEND_URL=http://localhost:5000`
 
 ### 2. Launch with Docker Compose
 ```bash
@@ -323,9 +323,23 @@ Remarks:
     - Architected a Monorepo-style structure by separating Frontend and Backend into independent directories with isolated package.json and node_modules<br>
       (It improved CI/CD pipeline efficiency and prevented dependency conflicts, ensuring a cleaner and more scalable development workflow)<br>
 
-5. **Secure Configuration Management (dotenv)**
+#### CI/CD
+1. **Secure Configuration Management (dotenv)**
    - Implemented Environment Variable management using dotenv to decouple sensitive configuration from the source code<br>
      (It enhanced system security by protecting API keys, Database URIs, and JWT secrets, facilitating seamless transitions between development and production environments)
+
+2. **Automated CI/CD Pipeline (GitHub Actions)**
+   - Automatically triggers Jest suites and ESLint on every Push and Pull Request<br>
+     (It ensures only verified code reaches the main branch and maintains high code quality across the monorepo)
+
+3. **Multi-Platform Automated Deployment**
+   - Orchestrated atomic deployments to Vercel and Railway via Git-integrated triggers<br>
+     (It enables zero-downtime updates and ensures the live site (Vercel) and API (Railway) stay synchronized with the latest codebase)
+     
+4. **Cloud Database & Secret Orchestration**
+   - Integrated MongoDB Atlas and managed sensitive credentials via Platform Environment Variables<br>
+     (It decoupled the database layer from the application logic and secured production secrets like JWT and Database URIs outside the source code)
+
 
 
 ### Planned Improvements
@@ -344,8 +358,9 @@ Remarks:
     - Support multiple contact (Publisher/Author) inputs via JSON strings to enhance efficiency over manual field entry
 
 5. **Unified API Transport Layer (Ajax Utils)**
-    - Centralised API communication into a generic transport layer (Ref: `./frontend/src/improvement/AjaxUtils`)
+    - Centralised API communication into a generic transport layer (Ref: `./frontend/src/improvement/AjaxUtils`)<br>
       (This standardises request/response formats and error-handling protocols, significantly decoupling business logic from the underlying fetch implementation)
+
 
 #### Backend Side
 1. **Server-side RBAC (Role-Based Access Control)**
@@ -380,32 +395,58 @@ Remarks:
 5. **HttpOnly Server-side Cookies**
     - Migrate `authToken` storage to **HttpOnly Cookies** to mitigate **XSS (Cross-Site Scripting)** risks by preventing client-side script access
 
+#### CI/CD
+1. **Enterprise Cloud Migration (AWS/Azure)**
+    - Transitioning from PaaS (Railway/Vercel) to IaaS/FaaS (e.g., AWS EC2/Lambda or Azure App Service)<br>
+      (It provides granular control over server resources and networking configurations for production-scale traffic)
 
+2. **Comprehensive Test Coverage (Jest)**
+    - Expanding the testing suite to include Edge Case Validation and Boundary Testing across all API endpoints<br>
+      (It aims to achieve 80%+ code coverage, ensuring high system resilience against unexpected user inputs and invalid payloads)
+
+3. **Automated System Testing (E2E)**
+    - Implementing End-to-End (E2E) / System Testing to simulate real-world user journeys from Frontend to Database<br>
+      (It provides a higher dimension of verification beyond isolated units, ensuring the entire integrated stack functions correctly as a single system)
 
 ## CI and CD
 
 ### Continuous Integration (CI)
 - **Automated Pipeline**: Orchestrated with GitHub Actions to trigger on every Push and Pull Request.
-- **Quality Assurance**:
+- **Quality Assurance**
     - **Frontend**: Executes Unit Testing with Jest to ensure UI logic reliability
     - **Backend**: Performs Integration Testing to validate full API request-response cycles and database interactions
 - **Linting**: Enforces code consistency via ESLint across the entire stack
 - **Artefact Management**: Automatically generates and uploads backend Test Coverage Reports as CI artefacts for reviewer visibility
 - **Docker Integration**: Automates Docker Image builds within the pipeline to ensure cross-environment reproducibility
 
+
 ### Continuous Deployment (CD)
-- Deployment workflows were experimented with (Vercel/Fly.io)
-- Deploy hooks were applied (In ./github/workflows/ci.yml)
-    -  **Vercel Deploy Hook** → triggers a new frontend build & deployment when called
-    -  **Fly.io Deploy Hook** → triggers backend redeployment from the latest image
-- These hooks demonstrate the ability to integrate CI/CD pipelines with external platforms
+- **Multi-Platform Deployment Strategy**
+    - **Frontend (Vercel)**: Implemented Git-integrated CD (Every push to the main branch triggers an automated build and atomic deployment via Vercel’s global edge network)
+    - **Backend (Railway)**: Configured Auto-Rollout based on Dockerised environments (The pipeline automatically pulls the latest code and redeploys the containerised service upon successful CI completion)
+    - **Database (MongoDB Altas)**: Integrated a cloud-managed Database-as-a-Service (DBaaS) layer (Connection strings are securely injected via Railway's environment variables to ensure data persistence across container redeployments)
+
+- **Deployment Status and Records**
+    - **Images**
+    <img src="doc/Image/Deployment/Vercel_Deployment.png" style="width:90%;"/><br>
+    Image 1 - Vercel Deployment Record<br>
+    <img src="doc/Image/Deployment/Railway_Deployment.png" style="width:90%;"/><br>
+    Image 2 - Railway Deployment Record<br>
+
+- **Changes**
+    - **Production Environment Realignment**
+        - Migrated BACKEND_URL and BASE_URL from localhost to platform-specific production endpoints (Vercel/Railway)<br>
+           (It ensured seamless communication between the decoupled frontend and backend services in a live cloud environment)<br>
+          
+    - **Security & CORS Optimisation**: Enhanced the ORIGINAL_URI configuration to support Multiple Origins
+        - Enhanced the ORIGINAL_URI configuration to support Multiple Origins<br>
+           (It allowed the backend to securely accept requests from both the Vercel production domain and local development environments simultaneously, improving workflow flexibility without compromising security)
+
 
 ### Remarks
-- Continuous Deployment (CD) was not implemented due to platform requirements and therefore excluded from the demo scope:
-    - Railway’s $5 minimum subscription (unsuitable for free demo hosting)
-    - Render/Fly.io’s credit card binding
-- Workflows are therefore limited to **CI validation for demo purposes**, ensuring lint/typecheck, test, and build stages are fully validated
-- CI/CD workflow definitions are located in `.github/workflows/` (The whole process could be viewed in the actions tab)
+- CI/CD workflow definitions are located in `.github/workflows/` (The whole process could be viewed in the actions tab -> All workflows)
+- CD record could be viewed in the actions tab -> All Deployments
+- Backend CD are utilising Railway’s $5 credit/30 days trial/subscription model for consistent backend uptime
 
 
 
