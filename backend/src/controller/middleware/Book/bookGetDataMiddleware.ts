@@ -85,7 +85,7 @@ export const BuildSuggestBookQueryAndGetData = async(req: AuthRequest, res: Resp
                 const allBooks = await GetBook(undefined);
                 const allBooksCorpus = (allBooks as any[]).map(book => ({ id: book._id, metadata: formatBookMetadata(book).corpus }));
             
-                // Calculate the Score and apply jitter for logical randomise recommendation
+                // Calculate scores and apply jitter to introduce controlled randomness for dynamic recommendations
                 const TF_IDF_Scores = calculateTFIDF(loanedBooksCorpus.map(books => books.corpus), allBooksCorpus, genreFrequencyMap, loanedBooksCorpus.length);
                 const scoresWithJitter = TF_IDF_Scores.map(item => ({ ...item, score: item.score + (Math.random() * 0.1) }));
                 
