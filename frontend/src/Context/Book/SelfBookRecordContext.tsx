@@ -104,7 +104,7 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
 
         const task = [fetchFavouriteRecord(), fetchSelfLoanRecord(), fetchRecommendBookForUser()];
         await Promise.allSettled(task);
-        
+
     },[authToken, fetchFavouriteRecord, fetchSelfLoanRecord, fetchRecommendBookForUser])
 
     useEffect(() => 
@@ -113,7 +113,7 @@ export const SelfBookRecordProvider:FC<ChildProps> = ({children}) =>
         {
             allRecordTask();
         }
-    },[allRecordTask])
+    },[authToken, allRecordTask])
 
     return (
         <SelfBookRecordContext.Provider value={{ BookRecordForUser, bookForUser, fetchFavouriteRecord, fetchSelfLoanRecord, fetchSelfFavouriteBookWithFilterData, fetchSelfLoanBookWithFilterData, favouriteBook, unfavouriteBook }}>
