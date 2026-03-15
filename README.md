@@ -101,10 +101,30 @@ docker-compose -f compose.yaml up --build -d
 
 ### System Architecture Overview
 ***Architecture Diagram***
-<img src="doc/Image/Diagrams/ArchitectureDiagram.png" style="width:90%;"/><br>
+<img src="doc/Image/Diagrams/ArchitectureDiagram_Development.png" style="width:90%;"/><br>
 
-- This diagram illustrates the high-level system architecture, showcasing the end-to-end flow from CI/CD deployment to production runtime. It highlights the separation of concerns between the React frontend and Node.js backend, the integration of TF-IDF recommendation logic, and the use of Docker to ensure a consistent environment and data persistence.
+- In the development phase, the system is fully containerised to ensure "it works on my machine" consistency
+    - **Infrastructure**: Orchestrated via Docker Compose
+    - **Networking**: Services communicate within a Docker Virtual Network
+    - **Persistence**: Local MongoDB container with Docker Volumes for data retention
+    - **Configuration**: Managed via local .env files
 
+
+<img src="doc/Image/Diagrams/ArchitectureDiagram_CD.png" style="width:90%;"/><br>
+
+- The production stack leverages managed PaaS/SaaS for high availability and performance
+    - **Frontend**: Hosted on Vercel for optimized edge delivery
+    - **Backend**: Running on Railway with auto-scaling Node.js runtime
+    - **Database**: MongoDB Atlas (DBaaS) for managed security and global scaling
+    - **Security**: Secrets are injected via Platform UIs (Vercel/Railway), keeping credentials out of the source code
+
+### Core Concept for the whole Architecture
+- Regardless of the environment (Local or Production), the core application logic remains consistent and follows a unified quality standard:
+    - **Modular Backend**: Follows the Route-Middleware-Controller pattern with Mongoose for data access
+    - **CI/CD Pipeline**: GitHub Actions serves as the central orchestrator:
+        - **Automation**: Triggers **Deploy Hooks (HTTP POST)** to **Vercel** to initiate automated frontend builds and deployments
+        - **Data Sync**: Interacts with the **Backend (Railway)** via **GraphQL Mutations** to automate data synchronisation or administrative tasks
+        - **Quality Gate**: Ensures code reliability through automated testing and linting before any deployment
 
 ### Frontend
 ***Sequence Diagram (Authentication)***
