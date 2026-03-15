@@ -828,22 +828,42 @@ Notes:
 ## Automated Logic Overview
 These automated backend functions run silently in the background and are difficult to showcase in a live demo. Instead, we present annotated source code images and accompanying logic descriptions to clearly explain their purpose and behavior<br>
 
+**Remarks**
+- The following function located in "backend/src/detectRecord.ts"
+
+
 ***1. Detect Record Functions***<br>
-<img src="doc/Image/Functions/DetectRecordDaily.png" style="width:75%;"/><br>
-Performs scheduled scans for:
-- Expired Loan Records
-- Suspension Records
-- Fine Calculations
-This function acts as the entry point for daily automation checks (located in "backend/src/detectRecord.ts")
+### TasksList
+<img src="doc/Image/Functions/DetectTask.png" style="width:75%;"/><br>
+**Decoupled Task Management**
+- Implemented a Centralised Task Registry using a functional approach
+- This Separation of Concerns ensures that adding new business rules (e.g., auto-notifications) requires zero modification to the core scheduling engine, enhancing system maintainability and extensibility
+
+
+### Task execution
+<img src="doc/Image/Functions/executeAllTask.png" style="width:75%;"/><br>
+To ensure high availability and data integrity, the system implements a Fault-Tolerant Execution Strategy:
+- **High-Throughput Execution**: All tasks are mapped and executed concurrently, maximising server throughput and ensuring the Boot-up Sync completes rapidly upon container wake-up
+- **Fault Isolation**: Utilised Promise.allSettled to ensure that independent tasks (e.g. suspension checks) continue to execute without interruption, even if one specific task (e.g. fine calculation) fails
+- **Runtime Safeguards & Observability**
+    - **Granular Error Tracking**: Each task's outcome is individually inspected (failures are captured with their specific index and reason to facilitate rapid debugging and auditability)
+    - **Panic Prevention**: A global try-catch wrapper acts as a final safety net, preventing unexpected asynchronous exceptions from crashing the Node.js runtime and ensuring service continuity
+
 
 ### Scheduling Logic 
-- Daily automation checks are triggered using a combination of `setTimeout` and `setInterval`: 
-    - `setTimeout` calculates the delay until the next fixed time (e.g., midnight) and ensures the first run aligns correctly
-    - `setInterval` then repeats the task every 24 hours at the same time
-    - UTC-8 variables are Customized since JavaScript/TypeScript lacks a native API
-- This design avoids drift that occurs when using `setInterval` alone (Ensure consistent daily execution and predictable reset behaviour)
+<img src="doc/Image/Functions/DetectRecordDaily.png" style="width:75%;"/><br>
+To ensure consistent daily execution within a distributed cloud environment:
+- **Precision Scheduling Strategy**
+    - **Initial Alignment**: setTimeout calculates the exact delay until the next target time (e.g., Midnight UTC+8) (Ensure the first run aligns perfectly with business hours)
+    - **Drift Prevention**: Unlike a standalone setInterval, this dual-timer design prevents cumulative "Time Drift" (Ensure predictable reset behaviour over long-term operation)
+    - **Timezone Integrity**: Custom UTC+8 logic is implemented to overcome the lack of native timezone-specific scheduling in Node.js (Ensure synchronisation with Hong Kong business hours)
+- **Event-driven Boot-up Sync**
+    - **PaaS Resilience**: Specifically engineered to counter the "sleep cycles" of PaaS providers (e.g. Railway)
+    - **Immediate Reconciliation**: By triggering a synchronisation check upon server wake-up, the system ensures critical business logic is never missed and is processed immediately upon boot (Even if the server was "asleep" during the scheduled midnight slot)
 
-***2. Detect Expired Loan Book Records***<br>
+
+### Tasks
+***1. Detect Expired Loan Book Records***<br>
 <img src="doc/Image/Functions/DetectExpiredLoanRecord.png" style="width:90%;"/><br>
 This source code (located in backend/src/schema/book/bookloaned.ts, Line 159–196) automatically performs detection and handling of expired loan records:
 - Fetch: All loan records with "Loaned" status
@@ -853,7 +873,7 @@ This source code (located in backend/src/schema/book/bookloaned.ts, Line 159–1
     - Apply flat fineAmount of $1.5
 - Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
 
-***3. Automatically Fines Calculation***<br>
+***2. Automatically Fines Calculation***<br>
 <img src="doc/Image/Functions/FinesAmountCalculation.png" style="width:90%;"/><br>
 This source code (located in backend/src/schema/book/bookloaned.ts, Line 198–232) automatically performs detection and handling of fines amount calculation:
 - Days Overdue: Calculated from due date
@@ -864,7 +884,7 @@ This source code (located in backend/src/schema/book/bookloaned.ts, Line 198–2
 - Message Logged: “Loan Record [ID] fines amount and paid status modified successfully!”
 
 
-***4. Automatically Unsuspend User***<br>
+***3. Automatically Unsuspend User***<br>
 <img src="doc/Image/Functions/SuspendRecordDetection.png" style="width:90%;"/><br>
 This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) automatically performs the process of unsuspending users whose suspension period has expired:
 - Compare Dates: Compares each dueDate with today’s date
