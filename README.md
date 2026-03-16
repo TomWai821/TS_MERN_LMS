@@ -55,7 +55,7 @@ Key enhancements include:
 - **System Architecture**: Designed and implemented a Layered Architecture (Router-Middleware-Controller-Model) in Express.js, achieving clear separation of concerns and high code maintainability
 - **Type-Safe Development**: Leveraged TypeScript across the full stack to enforce rigorous data structures, significantly reducing runtime errors and improving developer productivity
 - **State Orchestration**: Optimised frontend performance by managing global application state with React Context API and Custom Hooks, ensuring efficient data flow without unnecessary re-renders
-- ***Automated QA & DevOps**: Gained hands-on experience in Containerization (Docker) and Automated CI (GitHub Actions), establishing a pipeline that enforces Linting and Integration Testing (using Supertest and Jest)
+- **Automated QA & DevOps**: Gained hands-on experience in Containerization (Docker) and Automated CI (GitHub Actions), establishing a pipeline that enforces Linting and Integration Testing (using Supertest and Jest)
 - **Security Logic**: Implemented Stateless Authentication (JWT) and developed a multi-token verification workflow for handling secure book loan authorisations between different user roles
 
 ### Disclaimer
@@ -110,7 +110,7 @@ docker-compose -f compose.yaml up --build -d
     - **Configuration**: Managed via local .env files
           
 2. **Backend Layered Architecture**
-- The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability:
+The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability:
 | Layer            | Responsibility	                                                   | Key Practice                                 |
 | ---------------- | ----------------------------------------------------------------- | -------------------------------------------- |
 | Routing          | Resource-based dispatching (e.g., /books, /users)                 | Decoupled Modules using express.Router       |
@@ -119,12 +119,10 @@ docker-compose -f compose.yaml up --build -d
 | Service Logic    | Core Algorithms (TF-IDF) and Business Operations                  | Encapsulated Functions called by Controller  |
 | Model (DB)	   | Schema definitions and Persistent Storage logic	               | Data Integrity via Mongoose static methods   |
 
-<details>
-<summary><b>View Architectural Decision (Service Logic Integration)</b></summary>
-- To maintain high development velocity and facilitate rapid iteration during the initial MVP phase, the business logic is currently encapsulated within the Controller Layer as a Hybrid Pattern
+***View Architectural Decision (Service Logic Integration)***
+- To maintain high development velocity and facilitate rapid iteration during the initial MVP phase, the business logic is currently encapsulated within the Controller Layer as a Hybrid Patter
 - However, as illustrated in the Request Lifecycle Diagram, the core logic (such as the TF-IDF Recommendation Engine and Data Validation) is designed with modularity in mind
 - These functions are logically separated and ready to be fully decoupled into a dedicated Service Layer to enhance Unit Testability and Separation of Concerns (SoC) as the system scales
-</details>
 
 
 ***Architecture Diagram - CD (Continuous Deployment)***<br>
@@ -162,21 +160,14 @@ docker-compose -f compose.yaml up --build -d
 <img src="doc/Image/Diagrams/SequenceDiagramForGetDataFromGoogleBook.png" style="width:90%;"/><br>
 - This sequence diagram illustrates the book data retrieval flow initiated by a frontend GET request to the Google Books API
 - When the user presses the book image, an event handler constructs and sends a request containing the book name and author name
-- Upon receiving the response, the event handler processes the returned data and renders the book results to the user interface<br>
+- The event handler processes the returned data and renders the book results to the user interface (When receive the response)
     
 2. QR Code Generation<br>
 <img src="doc/Image/Diagrams/QRCodeModalSequenceDiagram.png" style="width:90%;"/><br>
 - This sequence diagram illustrates the QR Code generation flow initiated by a user interaction
 - When the user clicks the "Display QR Code" button, the event handler retrieves the authentication token and username from local or cookie storage
-- It then parses the data and sends a request to the QR Code Generator service<br>
-- Upon receiving the response, the event handler opens a modal and displays the generated QR code to the user<br>
-    
-    
-3. Book Recommendation<br>
-<img src="doc/Image/Diagrams/BookRecommendSystemWithTF-IDF.png" style="width:90%;"/><br>
-- This sequence diagram illustrates the data retrieval flow for book recommendations, initiated by a frontend GET request containing a user's top ten loan records
-- The backend middleware verifies the user's authentication token, then parses and analyzes the loan data using TF-IDF
-- A request is sent to fetch book data based on the analysis, and the top recommended books are selected, structured, and returned to the client with proper status messaging
+- It then parses the data and sends a request to the QR Code Generator service
+- The event handler opens a modal and displays the generated QR code to the user (When receive the response)
 
     
 ***Sequence Diagram (CRUD operations)***
@@ -196,7 +187,8 @@ docker-compose -f compose.yaml up --build -d
     
 3. Data Modification
 <img src="doc/Image/Diagrams/UpdateDataSequenceDiagram.png" style="width:90%;"/><br>
-- This sequence diagram illustrates the confirmation flow via a frontend PUT request, showing how user-modified data is securely validated, parsed, and updated in the backend
+- This sequence diagram illustrates the confirmation flow via a frontend PUT request<Br>
+  (Whowing how user-modified data is securely validated, parsed, and updated in the backend)<br>
 - The system ensures accurate record updates and clear client feedback with middleware safeguards, token verification, and modular backend orchestration
     
     
