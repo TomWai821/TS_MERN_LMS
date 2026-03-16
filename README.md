@@ -110,7 +110,7 @@ docker-compose -f compose.yaml up --build -d
     - **Configuration**: Managed via local .env files
           
 2. **Backend Layered Architecture**
-The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability:
+- The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability
 
 | Layer            | Responsibility	                                                   | Key Practice                                 |
 | ---------------- | ----------------------------------------------------------------- | -------------------------------------------- |
