@@ -5,6 +5,9 @@ on:
     workflows: ["CI Pipeline"]
     types:
       - completed
+    paths-ignore:
+      - 'README.md'
+      - 'doc/**'
       
 jobs:
   deploy-backend:
