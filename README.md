@@ -834,14 +834,14 @@ These automated backend functions run silently in the background and are difficu
 
 ***1. Detect Record Functions***<br>
 ### TasksList
-<img src="doc/Image/Functions/DetectTask.png" style="width:75%;"/><br>
+<img src="doc/Image/Functions/DetectTask.png" style="width:50%;"/><br>
 **Decoupled Task Management**
 - Implemented a Centralised Task Registry using a functional approach
 - This Separation of Concerns ensures that adding new business rules (e.g., auto-notifications) requires zero modification to the core scheduling engine, enhancing system maintainability and extensibility
 
 
 ### Task execution
-<img src="doc/Image/Functions/executeAllTask.png" style="width:75%;"/><br>
+<img src="doc/Image/Functions/executeAllTask.png" style="width:70%;"/><br>
 To ensure high availability and data integrity, the system implements a Fault-Tolerant Execution Strategy:
 - **High-Throughput Execution**: All tasks are mapped and executed concurrently, maximising server throughput and ensuring the Boot-up Sync completes rapidly upon container wake-up
 - **Fault Isolation**: Utilised Promise.allSettled to ensure that independent tasks (e.g. suspension checks) continue to execute without interruption, even if one specific task (e.g. fine calculation) fails
@@ -935,7 +935,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
 
 
 ***2. Calculation Logic (TF-IDF + Genre Weight)***<br>
-<img src="doc/Image/Functions/TF-IDF_CalculateFunction.png" style="width:90%;"/><br>
+<img src="doc/Image/Functions/TF-IDF_CalculateFunction.png" style="width:95%;"/><br>
 
 ****Data Vectorisation (Corpus Construction)****
 - **Process**
@@ -970,7 +970,7 @@ This source code (located in backend/schema/user/suspendlist.ts, Line 99–137) 
     - To balance Discovery (finding new but semantically similar books) with Loyalty (prioritising the user's proven favourite categories)
 
 ***3. Data Normalisation And Corpus Construction***<br>
-<img src="doc/Image/Functions/TF-IDF_formatBookMetaData.png" style="width:50%;"/><br>
+<img src="doc/Image/Functions/TF-IDF_formatBookMetaData.png" style="width:60%;"/><br>
 
 - **Process**
     - Implementing a Metadata Normalisation layer (formatBookMetadata) to sanitise raw book objects<br>
