@@ -13,14 +13,14 @@ password: IamTester
 
 ---For book page
 # book creation data
-BookName: Beast Senpai Travelling Diary
-Genre: Magazine
-Language: Japanese
-Author: Beast Senpai
-Publisher: Beast Senpai Company
-Description: It record the beast senpai travelling experience, and it require $114514 to bought it
+Book Name:Designing Distributed Systems: Patterns and paradigms for scalable service
+Genre: Computer Science
+Language: English
+Author: Brendan Burns
+Publisher: O'Reilly Media
+Description: A definitive guide to the modern patterns and paradigms for building scalable, reliable distributed systems. Written by Brendan Burns, co-founder of Kubernetes, this book explores core architectural concepts such as sidecars, adapters, ambassadors, and multi-node patterns. It provides a practical framework for developers to master the complexity of cloud-native environments and microservices orchestration.
 
-## For loan books (For no scanner gun demo)
+## For loan books to another user (For no scanner gun demo)
 # QR Code Data
 {"username":"WhateverAdmin","authToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YzdjZjE0NWZkY2IwZTBlNTc1YWJlYSJ9LCJpYXQiOjE3NzI4ODg3NTR9.9htTliqerFlG0ytMtBzWnuOCxdqbaRFfX90AxdeOrfo"}
 

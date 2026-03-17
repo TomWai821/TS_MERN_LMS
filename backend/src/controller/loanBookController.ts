@@ -88,17 +88,17 @@ export const CreateLoanBookRecord = async (req: AuthRequest, res:Response) =>
         }
 
         const [createLoanRecord, changeBookState] = await Promise.all(
-            [CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate}), FindBookByIDAndUpdate(bookID, {status: 'Loaned'})]
+            [CreateBookLoaned({userID:UserID, bookID, loanDate, dueDate}), FindBookByIDAndUpdate(bookID, {status: 'OnLoan'})]
         );
 
         if(!createLoanRecord)
         {
-            return res.status(400).json({success, error:"Failed to create Loaned Book Record"});
+            return res.status(400).json({success, error: "Failed to create Loaned Book Record"});
         }
 
         if(!changeBookState)
         {
-            return res.status(400).json({success, error:"Failed to change Book status"});
+            return res.status(400).json({success, error: "Failed to change Book status"});
         }
 
         success = true;

@@ -193,10 +193,10 @@ const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData
             0: 
             [
                 { title: "Edit", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openEditModal, icon: <EditIcon /> },
-                { title: "Delete (Actual)", syntax: ImportantActionButtonSyntax, clickEvent: openDeleteBookModal, icon: <DeleteIcon />, disable: (Information as BookDataInterface).status === "Loaned" },
+                { title: "Delete (Actual)", syntax: ImportantActionButtonSyntax, clickEvent: openDeleteBookModal, icon: <DeleteIcon />, disable: (Information as BookDataInterface).status === "OnLoan" },
                 { title: "View Loan Book History", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: () => ViewRecord("LoanBook"), icon: <SearchIcon /> },
                 { title: "Loan Book", syntax: { "&:hover": { backgroundColor: 'lightGray' } }, clickEvent: openLoanBookModal, icon: <EventAvailableIcon />, 
-                    disable: StatusDetection((Information as LoanBookInterface).status, "Loaned") },
+                    disable: StatusDetection((Information as LoanBookInterface).status, "OnLoan") },
                 { title: isFavourite ? "Unfavourite" : "Favourite", syntax: FavouriteIconSyntax, clickEvent: FavouriteHandler, icon: isFavourite ? <StarIcon /> : <StarBorderIcon /> }
             ],
             1: 
