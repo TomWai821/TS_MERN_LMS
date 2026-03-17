@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByID, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
-import { AuthRequest, externalDataInterface } from '../model/requestInterface';
+import { AuthRequest, EditImageInterface, externalDataInterface } from '../model/requestInterface';
 import { deleteImage } from '../storage';
 import { BookInterface } from '../model/bookSchemaInterface';
 import { FindBookLoanedAndDelete } from '../schema/book/bookLoaned';
 import { FindBookFavouriteAndDeleteMany } from '../schema/book/bookFavourite';
 
-import fs from "fs";
+import fs from "fs/promises";
+import path from 'path';
 
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL as string;
 
@@ -24,32 +25,31 @@ export const GetBookRecord = async (req: AuthRequest, res: Response) =>
     }
 };
 
-export const GetBookImage = async(req:Request, res:Response) => 
+
+export const GetBookImage = async (req: Request, res: Response) => 
 {
-    const { filename } = req.params; 
-    const filePath = `./src/upload/${filename}`;
+    const { filename } = req.params;
+    const filePath = path.resolve(__dirname, '../upload', filename as string);
 
-    fs.access(filePath, fs.constants.F_OK, (err) => 
+    res.sendFile(filePath, (error) => 
     {
-        if (err) 
+        if (error && !res.headersSent) 
         {
-            return res.status(404).json({ error: "File not found" });
+            return res.status(404).json({ error: "Image not found" });
         }
-
-        res.sendFile(filePath, { root: "." });
     });
-}
+};
 
 export const CreateBookRecord = async (req:Request, res:Response) => 
 {
     const { bookname, languageID, genreID, authorID, publisherID, description, publishDate } = req.body;
     let success = false;
-    console.log(req.body);
+    let createdBookId;
 
     try
     {
-        const imageName = req.file?.filename;
-        const imageUrl = imageName ? `http://${BACKEND_BASE_URL}/api/book/uploads/${imageName}`: null;
+        const imageName = req.file ? `${Date.now()}-${req.file.originalname}` : null;
+        const imageUrl = imageName ? `${BACKEND_BASE_URL}/api/book/uploads/${imageName}`: null;
         const mongoDate = new Date(publishDate);
 
         // Add imageUrl to each book
@@ -60,56 +60,56 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
             return res.status(400).json({success, error: "Failed to create book record"});
         }
 
+        createdBookId = createBook._id;
+
+        if(req.file && imageName)
+        {
+            const uploadPath = path.join(__dirname, '../upload', imageName);
+            await fs.writeFile(uploadPath, req.file.buffer);
+        }
+
         success = true;
         res.json({success, message: "Book Record Create Successfully!"});
     }
     catch(error)
     {
+        if(createdBookId)
+        {
+            await FindBookByIDAndDelete(createdBookId as unknown as string);
+            console.log(`Failed to upload Image!`);
+        }
         console.log(error);
         res.status(500).json({ success, error: 'Internal Server Error!' });
     }
 }
 
-export const EditBookRecord = async (req: Request, res: Response) => 
+export const EditBookRecord = async (req: AuthRequest, res: Response) => 
 {
     const bookID = req.params.id;
-    const { bookname, imageName, languageID, genreID, authorID, publisherID, description, publishDate } = req.body;
+    const { isImageChanged, oldImageName, newImageName, newImageUrl} = req.editImageData as EditImageInterface;
+    const { bookname, languageID, genreID, authorID, publisherID, description, publishDate } = req.body;
     let success = false;
 
     try 
     {
-        const bookData = await FindBookByID(bookID as string) as BookInterface;
-        const ImageName = bookData.image.filename;
-        const ImageUrl = bookData.image.url;
-
-        const newImageName = ImageName === imageName ? ImageName : req.file?.filename ?? ImageName;
-        const imageUrl = ImageName === imageName ? ImageUrl : `${BACKEND_BASE_URL}/api/book/uploads/${newImageName}`;
-
-        if (ImageName !== imageName) 
-        {
-            try 
-            {
-                await deleteImage(imageName);
-            } 
-            catch (error) 
-            {
-                if (error instanceof Error) 
-                {
-                    return res.status(400).json({ success: false, error: error.message });
-                } 
-                else 
-                {
-                    return res.status(400).json({ success: false, error: 'An unknown error occurred during image deletion' });
-                }
-            }
-        }
-    
-        const updateBookRecord = await FindBookByIDAndUpdate(bookID as string, {$set: {image: { url: imageUrl, filename: newImageName }, bookname, languageID, 
+        const updateBookRecord = await FindBookByIDAndUpdate(bookID as string, {$set: {image: { url: newImageUrl, filename: newImageName }, bookname, languageID, 
             genreID, authorID, publisherID, description, publishDate:new Date(publishDate) }});
 
         if (!updateBookRecord) 
         {
             return res.status(400).json({ success, error: 'Failed to Update Book Record' });
+        }
+
+        if (isImageChanged && req.file) 
+        {
+            const newPath = path.join(__dirname, '../upload', newImageName);
+            
+            await fs.writeFile(newPath, req.file.buffer);
+
+            if (oldImageName) 
+            {
+                await deleteImage(oldImageName);
+            }
         }
 
         success = true;

@@ -13,6 +13,7 @@ import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '.
 import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../controller/middleware/Book/bookValidationMiddleware';
 import { FetchUserFromHeader } from '../controller/middleware/User/authMiddleware';
 import { CreateFavouriteBookRecord, DeleteFavouriteBookRecord, GetFavouriteBookRecord } from '../controller/favouriteBookController';
+import { HandleEditImage } from '../controller/middleware/Book/bookEditImageMiddleware';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.delete('/definition/type=:type', ...LoginAndFindUser, DefinitionTypeValid
 // For book records
 router.get('/BookData', BuildBookQueryAndGetData, GetBookRecord);
 router.post('/BookData', upload.single("image"), BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
-router.put('/BookData/id=:id', upload.single("image"), ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, EditBookRecord);
+router.put('/BookData/id=:id', upload.single("image"), ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, HandleEditImage, EditBookRecord);
 router.delete('/BookData/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
 
 // For Loan book records

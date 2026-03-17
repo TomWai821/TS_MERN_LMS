@@ -40,6 +40,15 @@ export interface AuthRequest extends Request
     foundPublisher?: PublisherInterface | PublisherInterface[] | null;
     foundLoanedRecord?: BookLoanedInterface | BookLoanedInterface[] | null;
     foundFavouriteBook?: BookFavouriteInterface | BookFavouriteInterface[] | null;
+    editImageData?: EditImageInterface | null;
+}
+
+export interface EditImageInterface
+{
+    isImageChanged: boolean;
+    newImageName: string;
+    newImageUrl: string;
+    oldImageName: string;
 }
 
 export interface Book 
