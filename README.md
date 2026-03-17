@@ -20,7 +20,6 @@ A full-stack application that streamlines library operations, built as an Inform
 | Admin (Librarian) | test@gmail.com      | test123   | Loan Book, Book Recommendation, User Suspension, CRUD operations (User, Book, Contact data, Definition Data) |
 
 
-###Demonstration Guide
 - For a structured walkthrough, please refer to: `./doc/DemonstrationMaterial/*` (Includes sample data and test scenarios)
 - First load may take 10-15s due to free tier hosting (Railway)
 
