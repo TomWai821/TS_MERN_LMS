@@ -47,34 +47,36 @@ Developed as an Information Technology Project (ITP) to modernise traditional li
 After graduation, I dedicated myself to deep-diving into Software Engineering best practices, specifically focusing on maintainability and scalability, key enhancements include:
 - **Architectural Overhaul**
     - Migrated to a Layered Architecture (Router-Middleware-Controller-Model) to ensure code decoupling and maintainability
+      
 - **Logic Refactoring**
     - Shifted core business logic (e.g., Recommendation Engine) from frontend-side processing to the Backend Service Layer to improve data reliability and system performance
+      
 - **DevOps Integration**
     - Implemented Docker containerisation and GitHub Actions (CI) for automated linting and integration testing
 
 
 ### Technical Learns 
-- System Architecture: **Layered Design (Router-Middleware-Controller-Model)**
+- System Architecture - **Layered Design (Router-Middleware-Controller-Model)**
     - Designed a modular Express.js backend to achieve a clean Separation of Concerns
     - **Benefit**: Facilitates high code maintainability and allows independent testing of business logic and data access layers
   
-- Atomic Data Management: **Reliable Image Persistence (Multer & fs/promises)**
+- Atomic Data Management - **Reliable Image Persistence (Multer & fs/promises)**
     - Developed a custom upload workflow using memoryStorage to ensure Atomicity between DB records and physical files
     - **Action**: Implemented a Rollback mechanism and used Regex sanitisation to prevent redundant filename timestamps during consecutive edits
   
-- Type-Safe Development: **End-to-End TypeScript Integration**
+- Type-Safe Development - **End-to-End TypeScript Integration**
     - Leveraged TypeScript across the full stack to enforce rigorous data structures and interface contracts
     - **Result**: Significantly reduced runtime TypeErrors and improved developer productivity through IDE intelligent code completion
   
-- Security Logic: **Dual-Token Authorisation & Identity Management**
+- Security Logic - **Dual-Token Authorisation & Identity Management**
     - Implemented stateless JWT authentication and a specialised Dual-Token verification workflow for high-risk transactions
     - **Usage**: Enforces a "Four-Eyes Principle" for book loaning, requiring concurrent valid tokens from both the Borrower and the Authorised Personnel
   
-- State Orchestration: **Performance-Oriented Frontend Architecture**
+- State Orchestration - **Performance-Oriented Frontend Architecture**
     - Optimised React performance by centralising global state with Context API and encapsulated logic within Custom Hooks
     - **Benefit**: Minimised unnecessary component re-renders and established a predictable, one-way data flow
       
-- Automated QA & DevOps: **CI/CD Pipeline & Containerisation**
+- Automated QA & DevOps - **CI/CD Pipeline & Containerisation**
     - Built a robust DevOps pipeline using Docker and GitHub Actions to automate the development lifecycle
     - **Standard**: Enforces strict Linting and Integration Testing via Supertest/Jest before any code is deployed to the repository
 
@@ -355,11 +357,20 @@ Remarks:
 
 
 ## Features 
-- **Intelligent Recommendation**: Developed a custom TF-IDF engine to provide data-driven book recommendations based on user history, enhancing personalised content discovery
-- **External Data Enrichment**: Integrated Google Books API on the client side to fetch and display extended metadata, providing a rich user experience without bloating the backend database
-- **Automated Loan Tracking**: Built an automated tracking system for loaned books and return statuses, ensuring real-time data consistency and operational visibility
-- **QR-based Operations**: Streamlined book loaning via QR Code integration, implementing a multi-token exchange protocol to facilitate identity verification and transaction authorization between the borrower and the librarian
-- **Security Architecture**: Implemented JWT-based Authentication with Bcrypt hashing, utilizing Frontend Route Guards and Role-aware UI rendering for access control
+- **Intelligent Recommendation**
+    - Developed a custom TF-IDF engine to provide data-driven book recommendations based on user history, enhancing personalised content discovery
+      
+- **External Data Enrichment**
+    - Integrated Google Books API on the client side to fetch and display extended metadata, providing a rich user experience without bloating the backend database
+      
+- **Automated Loan Tracking**
+    - Built an automated tracking system for loaned books and return statuses, ensuring real-time data consistency and operational visibility
+      
+- **QR-based Operations**
+    - Streamlined book loaning via QR Code integration, implementing a multi-token exchange protocol to facilitate identity verification and transaction authorization between the borrower and the librarian
+      
+- **Security Architecture**
+    - Implemented JWT-based Authentication with Bcrypt hashing, utilizing Frontend Route Guards and Role-aware UI rendering for access control
 
 
 
