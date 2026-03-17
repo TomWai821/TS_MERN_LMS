@@ -8,6 +8,27 @@
 <br>
 A full-stack application that streamlines library operations, built as an Information Technology Project (ITP)
 
+
+## Live Demo
+### URL (Vercel)
+[Explore the Library System (Vercel)](https://ts-mern-lms.vercel.app)
+
+### Test Credentials
+| Role              | Email               | Password  | Key Feature To Test                                                                                          |
+| ----------------- | ------------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| User              | IamTester@gmail.com | IamTester | Book Search, Book Favourite, Self Record (Loan History + favourite list)                                     |
+| Admin (Librarian) | test@gmail.com      | test123   | Loan Book, Book Recommendation, User Suspension, CRUD operations (User, Book, Contact data, Definition Data) |
+
+
+###Demonstration Guide
+- For a structured walkthrough, please refer to: `./doc/DemonstrationMaterial/*` (Includes sample data and test scenarios)
+- First load may take 10-15s due to free tier hosting (Railway)
+
+- **Pro-Tip (Recommendation Test)**: To see the **TF-IDF Recommendation Engine** in action:
+    1. Open the **User** account in one browser and the **Librarian** account in another
+    2. Use the Librarian account to process a loan for a specific book category
+    3. Refresh the User's main page to see the dynamically updated **Personalised Recommendations**
+
 ## Video for presentation and demonstration
 ### SpeedRun version
 - **[Features Speedrun Video](https://youtu.be/GU08EtdHS4I) (12 min):** A quick showcase of the system's core features for fast-paced viewing
