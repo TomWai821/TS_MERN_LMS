@@ -116,9 +116,9 @@ describe("User API Test", () =>
 // Get Loan Data (Should be empty, because it is new account)
 describe("Book API Test (with AuthToken)", () => 
 {
-    it("GET /api/book/loanRecord, should get empty", async () => 
+    it("GET /api/book/loanRecord/type=Self, should get empty", async () => 
     {
-        const res = await request(app).get("/api/book/loanRecord")
+        const res = await request(app).get("/api/book/loanRecord/type=Self")
             .set("authToken", authToken)
 
         expect(res.statusCode).toBe(200);
