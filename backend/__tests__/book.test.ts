@@ -31,7 +31,7 @@ describe("Book API Test", () =>
 // Get All Book Data with filter data (bookname)
 describe("Book API Test (with filter data)", () => 
 {
-    it("GET /api/book/BookrecordData, should get all book data with filter data", async () => 
+    it("GET /api/book/record, should get all book data with filter data", async () => 
     {
         const res = await request(app).get("/api/book/record?bookname=Harry")
 
