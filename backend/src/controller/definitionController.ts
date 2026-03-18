@@ -1,147 +1,150 @@
 import { Request, Response } from "express"
-import { CreateGenre, FindGenreByIDAndDelete, FindGenreByIDAndUpdate, GetGenre } from "../schema/book/genre";
-import { CreateLanguage, FindLanguageByIDAndDelete, FindLanguageByIDAndUpdate, GetLanguage } from "../schema/book/language";
+import { DefinitionConfig, DefinitionType } from "../config/definitionConfig";
 
-export const GetDefinition = async (req: Request, res: Response) => 
+export const GetDefinitionRecord = async (req: Request, res: Response) => 
 {
-    const definitionType = req.params.type as keyof typeof definitionHandlers;
-    const {name} = req.query;
-    let success = false;
-    let getData;
+    const definitionType = req.params.type as DefinitionType;
+    const config = DefinitionConfig[definitionType];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
 
     try 
     {
-        if(!name)
-        {
-            getData = await definitionHandlers[definitionType].getAll();
-        }
-        else
-        {
-            switch(definitionType)
-            {
-                case "Genre":
-                    getData = await GetGenre({ "genre": { $regex: name, $options: "i" } });
-                    break;
+        const nameKey = config.field;
+        const searchValue = req.query.name as string;
 
-                case "Language":
-                    getData = await GetLanguage({ "language": { $regex: name, $options: "i" } });
-                    break;
-            }
+        let query = {};
+        if (searchValue)
+        {
+            query = { [nameKey]: { $regex: searchValue, $options: "i" } };
         }
+        
+        const getData = await config.get(query);
 
         if (!getData) 
         {
-            return res.status(400).json({ success, error: `Failed to get ${definitionType} data` });
+            return res.status(400).json({ success: false, error: "Failed to fetch data" });
         }
+
+        return res.json({ success: true, foundDefinition: getData });
+    } 
+    catch (error) 
+    {
+        console.error(`Get Error: ${error}`);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+};
+
+export const CreateDefinitionRecord = async (req: Request, res: Response) => 
+{
+    const definitionType = req.params.type as DefinitionType;
+    const config = DefinitionConfig[definitionType];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
+
+    const nameKey = config.field;
+    const { [nameKey]: name, shortName } = req.body;
+
+    try 
+    {
+        if (await config.find({ [nameKey]: name })) 
+        {
+            return res.status(400).json({ success: false, error: `${definitionType} "${name}" already exists!` });
+        }
+
+        if (shortName && await config.find({ shortName })) 
+        {
+            return res.status(400).json({ success: false, error: `Short Name "${shortName}" is already taken!` });
+        }
+
+        const record = await config.create({ [nameKey]: name, shortName });
         
-
-        success = true;
-        return res.json({ success, foundDefinition: getData });
-    } 
-    catch (error) 
-    {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
-    }
-};
-
-export const CreateDefinitionData = async (req: Request, res: Response) => 
-{
-    const definitionType = req.params.type as keyof typeof definitionHandlers;
-    const { genre, language, shortName } = req.body;
-    let success = false;
-   
-    try 
-    {
-        const createData = await definitionHandlers[definitionType].create({ genre, language, shortName });
-
-        if (!createData) 
+        if (!record) 
         {
-            return res.status(400).json({ success, error: `Failed to create ${definitionType}` });
+            return res.status(400).json({ success: false, error: `Failed to create ${definitionType}` });
         }
 
-        success = true;
-        return res.json({ success, message: `Create ${definitionType} successfully!` });
+        return res.json({ success: true, message: `Created ${definitionType} successfully!` });
     } 
-    catch (error) 
+    catch(error) 
     {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
+        console.error(`Create Error: ${error}`);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
 
-export const EditDefinitionData = async (req: Request, res: Response) => 
+export const UpdateDefinitionRecord = async (req: Request, res: Response) =>
 {
-    const definitionType = req.params.type as keyof typeof definitionHandlers;
-    const { id, genre, language, shortName } = req.body;
-    let success = false;
-    let editData:any;
+    const definitionType = req.params.type as DefinitionType;
+    const config = DefinitionConfig[definitionType];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
+
+    const nameKey = config.field;
+
+    const { id, [nameKey]: name, shortName } = req.body;
 
     try 
     {
-        switch(definitionType)
+        if (name && await config.find({ [nameKey]: name, _id: { $ne: id } })) 
         {
-            case "Genre":
-                editData = await FindGenreByIDAndUpdate(id, {genre, shortName});
-                break;
-
-            case "Language":
-                editData = await FindLanguageByIDAndUpdate(id, {language, shortName});
-                break;
+            return res.status(400).json({ success: false, error: `${definitionType} name already exists!` });
         }
 
-        if (!editData) 
+        if (shortName && await config.find({ shortName, _id: { $ne: id } })) 
         {
-            return res.status(400).json({ success, error: `Failed to Edit ${definitionType} data!` });
+            return res.status(400).json({ success: false, error: `Short Name is already taken!` });
         }
 
-        success = true;
-        return res.json({ success, message: `Update ${definitionType} data successfully!` });
+        const record = await config.update(id, { [nameKey]: name, shortName });
+        
+        if (!record) 
+        {
+            return res.status(404).json({ success: false, error: `Record not found` });
+        }
+
+        return res.json({ success: true, message: `Update ${definitionType} successfully!`, data: record });
     } 
-    catch (error) 
+    catch(error) 
     {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
-    }
-};
-    
-export const DeleteDefinitionData = async (req: Request, res: Response) => 
-{
-    const definitionType = req.params.type as keyof typeof definitionHandlers;
-    const { id } = req.body;
-    let success = false;
-
-    try 
-    {
-        const deleteData = await definitionHandlers[definitionType].delete(id);
-
-        if (!deleteData) 
-        {
-            return res.status(400).json({ success, error: `Failed to Delete ${definitionType} data!` });
-        }
-
-        success = true;
-        return res.json({ success, message: `Delete ${definitionType} data successfully!` });
-    } 
-    catch (error) 
-    {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
-    }
-};
-
-export const definitionHandlers = 
-{
-    Genre:
-    {
-        getAll:GetGenre,
-        create:CreateGenre,
-        delete:FindGenreByIDAndDelete
-    },
-    Language:
-    {
-        getAll:GetLanguage,
-        create:CreateLanguage,
-        delete:FindLanguageByIDAndDelete
+        console.error(`Update Error: ${error}`);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 }
+
+export const DeleteDefinitionRecord = async (req: Request, res: Response) => {
+    const { id } = req.body;
+    const definitionType = req.params.type as DefinitionType;
+    const config = DefinitionConfig[definitionType];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
+
+    try 
+    {
+        const deleteData = await config.delete(id);
+        
+        if (!deleteData) 
+        {
+            return res.status(400).json({ success: false, error: `Failed to delete ${definitionType} data` });
+        }
+
+        return res.json({ success: true, message: `Delete ${definitionType} Data successfully!` });
+    } 
+    catch (error) 
+    {
+        console.error(`Delete Error: ${error}`);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+};

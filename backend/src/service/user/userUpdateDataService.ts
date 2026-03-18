@@ -1,11 +1,11 @@
 import { NextFunction, Response } from "express";
-import { AuthRequest } from "../../../model/requestInterface";
-import { FindUser } from "../../../schema/user/user";
-import { CreateSuspendList, FindSuspendList } from "../../../schema/user/suspendList";
-import { UserInterface } from "../../../model/userSchemaInterface";
+import { FindUser } from "../../schema/user/user";
+import { CreateSuspendList, FindSuspendList } from "../../schema/user/suspendList";
+import { UserInterface } from "../../model/userSchemaInterface";
+import { AuthRequest } from "../../model/requestInterface";
 
 // For user update(Require login)
-export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextFunction) => 
+export const BuildUserUpdateDataService = async (req: AuthRequest, res:Response, next:NextFunction) => 
 {
     const { username, email, gender, role } = req.body;
     const foundUser = req.foundUser as UserInterface;
@@ -51,37 +51,30 @@ export const BuildUpdateData = async (req: AuthRequest, res:Response, next:NextF
     next();
 }
 
-export const CreateStatusList = async (statusForUserList:string, userId:string, description: string, startDate: Date, dueDate: Date) => 
+export const CreateStatusListService = async (statusForUserList: string,  userId: string, description: string, startDate: Date, dueDate: Date) => 
 {
-    const ListHandlers:Record<string, { find: () => Promise<any>; actions: () => Promise<any>; }> = 
+    try 
     {
-        "Suspend":
+        switch (statusForUserList) 
         {
-            find: () => FindSuspendList({ userId }), actions: () => CreateSuspendList({ userID: userId, description, startDate, dueDate }) 
+            case "Suspend":
+                const existingSuspend = await FindSuspendList({ userId: userId });
+                
+                if (existingSuspend) return existingSuspend;
+
+                const newSuspendList = await CreateSuspendList({  userID: userId,  description: description, startDate: startDate, dueDate: dueDate });
+                
+                return newSuspendList;
+
+            default:
+                console.warn(`Invalid status provided: ${statusForUserList}`);
+                return null;
         }
-    }
 
-    const { find, actions } = ListHandlers[statusForUserList];
-
-    if (!ListHandlers[statusForUserList]) 
+    } 
+    catch (error) 
     {
-        console.log(`Invalid status: ${statusForUserList}`);
+        console.error("CreateStatusListService Error:", error);
+        throw new Error("Internal Service Error: Failed to process status list.");
     }
-
-    const existingList = await find();
-
-    if (!existingList) 
-    {
-        try
-        {
-            return await actions();
-        } 
-        catch (error) 
-        {
-            console.error(`Unhandled error: ${error}`);
-            throw new Error("Failed to create list");
-        }
-    }
-
-    return false;
-}
+};

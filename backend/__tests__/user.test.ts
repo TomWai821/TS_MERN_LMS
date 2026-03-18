@@ -118,7 +118,7 @@ describe("Book API Test (with AuthToken)", () =>
 {
     it("GET /api/book/LoanBook, should get empty", async () => 
     {
-        const res = await request(app).get("/api/book/LoanBook")
+        const res = await request(app).get("/api/book/laonRecord")
             .set("authToken", authToken)
 
         expect(res.statusCode).toBe(200);
@@ -131,7 +131,7 @@ describe("Book API Test (with AuthToken)", () =>
 {
     it("GET /api/book/FavouriteBook, should get empty", async () => 
     {
-        const res = await request(app).get("/api/book/FavouriteBook")
+        const res = await request(app).get("/api/book/favourite")
             .set("authToken", authToken)
 
         expect(res.statusCode).toBe(200);

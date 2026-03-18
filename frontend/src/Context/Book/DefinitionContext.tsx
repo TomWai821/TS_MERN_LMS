@@ -1,7 +1,9 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
-import { CreateDefinitionData, DeleteDefinitionData, EditDefinitionData, GetDefinition } from "../../Controller/BookController/DefinitionController";
 import { ChildProps, DefinatonProps } from "../../Model/ContextAndProviderModel";
+
 import { DefinitionInterface, DefinitionState, GetResultInterface } from "../../Model/ResultModel";
+import { CreateDefinitionData, DeleteDefinitionData, EditDefinitionData, GetDefinition } from "../../Controller/BookController/DefinitionController";
+
 import { useAuthContext } from "../User/AuthContext";
 
 const DefinitionContext = createContext<DefinatonProps | undefined>(undefined);

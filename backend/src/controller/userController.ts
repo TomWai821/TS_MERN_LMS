@@ -5,7 +5,7 @@ import { UserInterface } from '../model/userSchemaInterface';
 import { CreateUser, FindUser, FindUserByIDAndDelete, FindUserByIDAndUpdate } from '../schema/user/user';
 
 import { ObjectId } from 'mongoose';
-import { CreateStatusList } from './middleware/User/userUpdateDataMiddleware';
+import { CreateStatusListService } from '../service/user/userUpdateDataService';
 import { FindSuspendListByIDAndUpdate } from '../schema/user/suspendList';
 
 export const UserRegister = async(req: Request, res: Response) =>
@@ -189,7 +189,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
     {
         if(statusForUserList !== "Normal" && foundUser.status === "Normal")
         {
-            const createStatusData = await CreateStatusList(statusForUserList, userId as unknown as string, description, startDate, dueDate);
+            const createStatusData = await CreateStatusListService(statusForUserList, userId as unknown as string, description, startDate, dueDate);
 
             if(!createStatusData)
             {
@@ -199,7 +199,7 @@ export const ChangeStatus = async (req:AuthRequest, res:Response) =>
 
         const changeStatusInUsertable = await FindUserByIDAndUpdate(userId as unknown as string, {status: statusForUserList});
 
-        if(!changeStatusInUsertable)
+        if(!changeStatusInUsertable) 
         {
             return res.status(400).json({success, message:"Failed to update status in User Table"});
         }
@@ -234,7 +234,7 @@ export const ModifySuspendListData = async (req: AuthRequest, res:Response) =>
     {
         const modifySuspendList = await FindSuspendListByIDAndUpdate(banListID as unknown as string, {dueDate, description});
 
-        if(!modifySuspendList)
+        if(!modifySuspendList) 
         {
             return res.status(400).json({ success, error: "Failed to update Suspend List record!"});
         }

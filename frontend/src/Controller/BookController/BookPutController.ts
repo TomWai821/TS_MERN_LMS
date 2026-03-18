@@ -1,11 +1,12 @@
 const localhost = process.env.REACT_APP_API_URL;
+const url:string = `${localhost}/book`;
 const contentType:string = "application/json";
 
 export const updateBookRecord = async (authToken:string, bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description: string) => 
 {
     const data = createFormData(newFile, imageName, bookname, genreID, languageID, publisherID, publishDate, authorID, description);
 
-    const response = await fetch(`${localhost}/book/bookData/id=${bookID}`,
+    const response = await fetch(`${url}/record/id=${bookID}`,
         {
             method: 'PUT',
             headers: { 'authToken': authToken },
@@ -18,8 +19,7 @@ export const updateBookRecord = async (authToken:string, bookID:string, imageNam
 
 export const returnBookAndChangeStatus = async (authToken:string, loanBookRecord:string, finesPaid?:string) => 
 {
-
-    const response = await fetch(`${localhost}/book/LoanBook/id=${loanBookRecord}`,
+    const response = await fetch(`${url}/loanRecord/id=${loanBookRecord}`,
         {
             method: 'PUT',
             headers: { 'content-type': contentType, 'authToken': authToken },

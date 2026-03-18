@@ -168,6 +168,6 @@ const LoanBookStatusOption = ["Loaned", "Returned", "Returned(Late)", "All"];
 
 const FinesPaidStatusOption = ["Not Fine Needed", "Paid", "Not Paid", "All"]
 
-const AllBookStatusOption = ["OnShelf", "Loaned", "All"];
+const AllBookStatusOption = ["OnShelf", "OnLoan", "All"];
 
 export {BookRecordTableHeader, AllUserTableHeader, SuspendUserTableHeader, DeleteUserTableHeader, AllBookTableHeader, LoanBookTableHeader, SelfLoanBookTableHeader, PublisherTableHeader, AuthorTableHeader, BookTabLabel, BookDataTabLabel, UserTabLabel, LoanBookModalTabLabel, BookRecordTabLabel, ContactTabLabel, DefinitionTabLabel, UserDataTableName, PaginationOption, EmptyOption, RoleOption, StatusOption, GenderOption, RoleFilterOption, StatusFilterOption, GenderFilterOption, LoanBookStatusOption, FinesPaidStatusOption, AllBookStatusOption}

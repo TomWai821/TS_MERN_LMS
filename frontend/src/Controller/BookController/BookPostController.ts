@@ -6,7 +6,7 @@ export const createBookRecord = async (authToken:string, image:File, bookname:st
 {
     const formData = createFormData(image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
     
-    const response = await fetch(`${url}/bookData`,
+    const response = await fetch(`${url}/record`,
         {
             method: 'POST',
             headers: { 'authToken': authToken },
@@ -27,7 +27,7 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
         ...(dueDate && {dueDate})
     }
 
-    const response = await fetch(`${url}/LoanBook`,
+    const response = await fetch(`${url}/loanRecord`,
         {
             method: 'POST',
             headers: { 'Content-Type': contentType, 'authToken': authToken },
@@ -41,7 +41,7 @@ export const createLoanBookRecord = async (authToken:string, bookID:string, loan
 export const createFavouriteBookRecord = async (authToken:string, bookID:string) => 
 {
     
-    const response = await fetch(`${url}/FavouriteBook`,
+    const response = await fetch(`${url}/favourite`,
         {
             method: 'POST',
             headers: { 'Content-Type': contentType, 'authToken': authToken },

@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { FindBookByID } from "../../../schema/book/book";
-import { BookInterface } from '../../../model/bookSchemaInterface';
-import { AuthRequest } from '../../../model/requestInterface';
+import { FindBookByID } from "../../schema/book/book";
+import { BookInterface } from '../../model/bookSchemaInterface';
+import { AuthRequest } from '../../model/requestInterface';
 
 const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL as string;
 

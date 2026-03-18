@@ -1,200 +1,182 @@
-import { Request, Response } from 'express'
-import { AuthRequest } from '../model/requestInterface';
-import { CreateAuthor, FindAuthorByIDAndDelete, FindAuthorByIDAndUpdate, GetAuthor } from '../schema/book/author';
-import { CreatePublisher, FindPublisherByIDAndDelete, FindPublisherByIDAndUpdate, GetPublisher } from '../schema/book/publisher';
+import { Request, Response } from "express"
+import { ContactConfig, ContactType } from "../config/contactConfig";
 
-export const GetContactRecord = async (req: AuthRequest, res: Response) => 
+export const GetContactRecord = async (req: Request, res: Response) => 
 {
-    const contactType = req.params.type as keyof typeof contactHandler;
-    const { author, publisher } = req.query;
-    let success = false;
+    const type = req.params.type as ContactType;
+    const config = ContactConfig[type];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
 
     try 
     {
-        let getData: any;
+        const nameKey = config.field;
+        const searchValue = req.query[nameKey] as string;
 
-        switch(contactType)
+        let query = {};
+        if (searchValue) 
         {
-            case "Author":
-                getData = author ? await GetAuthor({"author": { $regex: author, $options: "i" }}) : await GetAuthor();
-                break;
+            query = { [nameKey]: { $regex: searchValue, $options: "i" } };
+        }
+        
+        const getData = await config.get(query);
 
-            case "Publisher":
-                getData = publisher ? await GetPublisher({"publisher": { $regex: publisher, $options: "i" }}) : await GetPublisher();
-                break;
+        if (!getData)  
+        {
+            return res.status(400).json({ success: false, error: "Failed to fetch data" });
         }
 
-        if (!getData) 
-        {
-            return res.status(400).json({ success, error: `Failed to get ${contactType} data` });
-        }
-
-        success = true;
-        return res.json({ success, foundContact: getData });
+        return res.json({ success: true, foundContact: getData });
     } 
     catch (error) 
     {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
+        console.error("Get Error:", error);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
 
-export const CreateContactRecord = async (req: AuthRequest, res: Response) => 
+export const CreateContactRecord = async (req: Request, res: Response) => 
 {
-    const contactType = req.params.type as keyof typeof contactHandler;
+    const { author, publisher, email, phoneNumber } = req.body;
+    const type = req.params.type as ContactType;
+    const config = ContactConfig[type];
 
-    switch(contactType)
+    if (!config)
     {
-        case "Author":
-            CreateAuthorRecord(req, res);
-            break;
-
-        case "Publisher":
-            CreatePublisherRecord(req, res);
-            break;
+        return res.status(400).json({ success: false, error: "Invalid Type" });
     }
-
-    res.json({ success: true, message: `Create ${contactType} successfully!` });
-}
-
-const CreateAuthorRecord = async (req: AuthRequest, res: Response) => 
-{
-    const { author, phoneNumber, email } = req.body;
-    const contactType = req.params.type as keyof typeof contactHandler;
 
     try 
     {
-        const createAuthor = await CreateAuthor({author: author, phoneNumber: phoneNumber, email: email});
+        let finalData: any = { email: email, phoneNumber: phoneNumber };
+        let checkName = "";
 
-        if(!createAuthor)
+        if (type === "Author") 
         {
-            return res.status(400).json({ success: false, error: `Failed to create ${contactType}` });
+            finalData.author = author;
+            checkName = author;
+        } 
+        else 
+        {
+            finalData.publisher = publisher;
+            checkName = publisher;
         }
+
+        const nameKey = config.field;
+        const nameExists = await config.find({ [nameKey]: checkName });
+        if (nameExists) 
+        {
+            return res.status(400).json({ success: false, error: `${type} already exists!` });
+        }
+
+        if (email) 
+        {
+            const emailExists = await config.find({ email: email });
+            if (emailExists) 
+            {
+                return res.status(400).json({ success: false, error: "Email is already taken!" });
+            }
+        }
+
+        const record = await config.create(finalData);
+        if (!record) 
+        {
+            return res.status(400).json({ success: false, error: "Create failed" });
+        }
+
+        return res.json({ success: true, message: `Created ${type} successfully!` });
     } 
     catch (error) 
     {
-        console.error(`Unhandled error: ${error}`);
+        console.error("Create Error:", error);
         return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
-}
+};
 
-const CreatePublisherRecord = async (req: AuthRequest, res: Response) => 
+export const UpdateContactRecord = async (req: Request, res: Response) => 
 {
-    const { publisher, phoneNumber, email } = req.body;
-    const contactType = req.params.type as keyof typeof contactHandler;
+    const { id, author, publisher, email, phoneNumber } = req.body;
+    const type = req.params.type as ContactType;
+    const config = ContactConfig[type];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
 
     try 
     {
-        const createPublisher = await CreatePublisher({publisher: publisher, phoneNumber: phoneNumber, email: email});
-
-        if(!createPublisher)
+        const nameKey = config.field;
+        const newName = type === "Author" ? author : publisher;
+        
+        if (newName) 
         {
-            return res.status(400).json({ success: false, error: `Failed to create ${contactType}` });
+            const duplicate = await config.find({ [nameKey]: newName, _id: { $ne: id } });
+
+            if (duplicate) 
+            {
+                return res.status(400).json({ success: false, error: `${type} with this name already exists!` });
+            }
         }
-    } 
-    catch (error) 
-    {
-        console.error(`Unhandled error: ${error}`);
+
+        if (email) 
+        {
+            const duplicateEmail = await config.find({ email: email, _id: { $ne: id } });
+
+            if (duplicateEmail) 
+            {
+                return res.status(400).json({ success: false, error: `${type} with this email arleady exists!` });
+            }
+        }
+
+        let updateBody: any = { email: email, phoneNumber: phoneNumber };
+
+        type === "Author" ? updateBody.author = author : updateBody.publisher = publisher;
+
+        const record = await config.update(id, updateBody);
+
+        if (!record)
+        {
+            return res.status(404).json({ success: false, error: "Record not found!" });
+        }
+
+        return res.json({ success: true, message: "Updated!", data: record });
+    } catch (error) {
+        console.error("Update Error:", error);
         return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
-}
+};
 
-export const UpdateContactRecord = async (req: AuthRequest, res: Response) => 
-{
-    const contactType = req.params.type as keyof typeof contactHandler;
 
-    switch(contactType)
-    {
-        case "Author":
-            UpdateAuthorRecord(req, res);
-            break;
-
-        case "Publisher":
-            UpdatePublisherRecord(req, res);
-            break;
-    }
-
-    res.json({ success: true, message: `Update ${contactType} successfully!` });
-}
-
-const UpdateAuthorRecord = async (req: AuthRequest, res: Response) => 
-{
-    const { id, author, phoneNumber, email } = req.body;
-
-    try 
-    {
-        console.log({author: author, phoneNumber: phoneNumber, email: email});
-        const updateAuthor = await FindAuthorByIDAndUpdate(id, {author: author, phoneNumber: phoneNumber, email: email});
-
-        if(!updateAuthor)
-        {
-            return res.status(400).json({ success: false, error: `Failed to update Author Record` });
-        }
-    } 
-    catch (error) 
-    {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success: false, error: "Internal Server Error" });
-    }
-}
-
-const UpdatePublisherRecord = async (req: AuthRequest, res: Response) => 
-{
-    const { id, publisher, phoneNumber, email } = req.body;
-
-    try 
-    {
-        const updatePublisher = await FindPublisherByIDAndUpdate(id, {publisher: publisher, phoneNumber: phoneNumber, email: email});
-
-        if(!updatePublisher)
-        {
-            return res.status(400).json({ success: false, error: `Failed to update Publisher Record` });
-        }
-    } 
-    catch (error) 
-    {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success: false, error: "Internal Server Error" });
-    }
-}
 
 export const DeleteContactRecord = async (req: Request, res: Response) => 
 {
     const { id } = req.body;
-    const contactType = req.params.type as keyof typeof contactHandler;
-    let success = false;
+    const definitionType = req.params.type as ContactType;
+    const config = ContactConfig[definitionType];
+
+    if (!config)
+    {
+        return res.status(400).json({ success: false, error: "Invalid Type" });
+    }
 
     try 
     {
-        const deleteData = await contactHandler[contactType].Delete(id);
+        const deleteData = await config.delete(id);
         
         if (!deleteData) 
         {
-            return res.status(400).json({ success, error: `Failed to get ${contactType} data` });
+            return res.status(400).json({ success: false, error: `Failed to delete ${definitionType} data` });
         }
 
-        success = true;
-        return res.json({ success, message: `Delete ${contactType} Data successfully!` });
+        return res.json({ success: true, message: `Delete ${definitionType} Data successfully!` });
     } 
     catch (error) 
     {
-        console.error(`Unhandled error: ${error}`);
-        return res.status(500).json({ success, error: "Internal Server Error" });
+        console.error(`Delete Error: ${error}`);
+        return res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 };
-    
-
-export const contactHandler = 
-{
-    Author:
-    {
-        Get:GetAuthor,
-        Delete:FindAuthorByIDAndDelete
-    },
-    Publisher:
-    {
-        Get:GetPublisher,
-        Delete:FindPublisherByIDAndDelete
-    }
-
-}

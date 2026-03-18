@@ -1,12 +1,13 @@
 const localhost = process.env.REACT_APP_API_URL;
-const url = `${localhost}/book/definition/`;
 const contentType = "application/json";
+
+const baseUrl = `${localhost}/definition`
 
 export const GetDefinition = async (type:string, data?:string) => 
 {
     try
     {
-        const actualUrl = data ? url+`type=${type}?name=${data}` : url+`type=${type}`;
+        const actualUrl = data ? `${baseUrl}/type=${type}?name=${data}` : `${baseUrl}/type=${type}`;
 
         const response = await fetch(actualUrl,
             {
@@ -29,7 +30,7 @@ export const CreateDefinitionData = async (type:string, authToken:string, shortN
     {
         const data = BuildBodyData(type, shortName, detailsName, undefined);
 
-        const response = await fetch(url+`type=${type}`,
+        const response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType, 'authToken': authToken },
@@ -54,7 +55,7 @@ export const EditDefinitionData = async (type:string, authToken:string, id:strin
 
     try
     {
-        const response = await fetch(url+`type=${type}`,
+        const response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'PUT',
                 headers: { 'content-type': contentType, 'authToken': authToken  },
@@ -77,7 +78,7 @@ export const DeleteDefinitionData = async (type:string, authToken:string, id:str
 {
     try
     {
-        const response = await fetch(url+`type=${type}`,
+        const response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'DELETE',
                 headers: { 'content-type': contentType, 'authToken': authToken  },

@@ -1,9 +1,10 @@
 import { NextFunction, Response, Request } from "express";
-import { AuthRequest, LoginInterface } from "../../../model/requestInterface";
-import { FindUser, FindUserByID } from "../../../schema/user/user";
-import { comparePassword } from "../../hashing";
-import { UserInterface } from "../../../model/userSchemaInterface";
-import { FindSuspendListByID } from "../../../schema/user/suspendList";
+import { FindUser, FindUserByID } from "../../schema/user/user";
+import { AuthRequest, LoginInterface } from "../../model/requestInterface";
+import { comparePassword } from "../../controller/hashing";
+import { UserInterface } from "../../model/userSchemaInterface";
+import { FindSuspendListByID } from "../../schema/user/suspendList";
+
 
 // For user register (not require login)
 export const UserRegisterDataValidation = async (req: Request, res: Response, next: NextFunction) => 

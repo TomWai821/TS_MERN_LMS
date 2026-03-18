@@ -131,7 +131,7 @@
   "publisherID": {
     "$oid": "67e5199887a4e9cdfe68e32a"
   },
-  "status": "OnLoan",
+  "status": "Loaned",
   "description": "N/A",
   "publishDate": {
     "$date": "2025-03-27T00:00:00.000Z"

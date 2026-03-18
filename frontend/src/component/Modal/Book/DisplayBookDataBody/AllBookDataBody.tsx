@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import { Avatar, Box, Tab, Tabs } from "@mui/material";
 
 import { DisplayDataModalBody } from "../../../../Model/ModelForModal"
@@ -35,21 +35,6 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
 
     const [loading, setLoading] = useState(true);
 
-    const changeTabValue = (event: React.SyntheticEvent, newValue: number) =>
-    {
-        setTabValue(newValue);
-    }
-
-    const getBookDataFromExternal = async () => 
-    {
-        if(IsLoggedIn())
-        {
-            const result = await getExternalData(Data.bookname || LoanData.bookDetails?.bookname as string, Data.authorDetails?.author || LoanData.authorDetails?.author);
-            setExternalBookData(result?.foundExternalBook as ExternalBookDataInterface);
-            setLoading(false);
-        }
-    }
-
     const BookData:Record<string, {label:string, value:any}> =
     {
         "bookname": { label: "Bookname", value: Data.bookname || LoanData.bookDetails?.bookname},
@@ -60,10 +45,28 @@ const AllBookDataBody:FC<DisplayDataModalBody> = (AllUserData) =>
         "publishDate": { label: "Publish Date", value: Data.publishDate ? TransferDateToISOString(Data.publishDate as Date) : TransferDateToISOString(LoanData.bookDetails?.publishDate as string) },     
     };
 
+    const bookname = BookData["bookname"].value;
+    const author = BookData["author"].value;
+
+    const changeTabValue = (event: React.SyntheticEvent, newValue: number) =>
+    {
+        setTabValue(newValue);
+    }
+
+    const getBookDataFromExternal = useCallback(async () => 
+    {
+        if(IsLoggedIn()) 
+        {
+            const result = await getExternalData(bookname, author);
+            setExternalBookData(result?.foundExternalBook as ExternalBookDataInterface);
+            setLoading(false);
+        }
+    }, [IsLoggedIn, getExternalData, bookname, author]);
+
     useEffect(() => 
     {
         getBookDataFromExternal()
-    })
+    },[getBookDataFromExternal])
 
     return(
         <Box>

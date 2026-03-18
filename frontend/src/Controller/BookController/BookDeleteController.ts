@@ -1,17 +1,18 @@
 const localhost = process.env.REACT_APP_API_URL;
+const url:string = `${localhost}/book`;
 const contentType:string = "application/json";
 
 export const deleteBookRecord = async (type:string ,authToken:string, ID:string) => 
 {
     try
     {
-        const url:Record<string, string> = 
+        const finalUrl:Record<string, string> = 
         {
-            "Book": `${localhost}/book/bookData/id=${ID}`,
-            "Favourite": `${localhost}/book/FavouriteBook/id=${ID}`
+            "Book": `${url}/record/id=${ID}`,
+            "Favourite": `${url}/favourite/id=${ID}`
         }
 
-        const response = await fetch(url[type],
+        const response = await fetch(finalUrl[type],
             {
                 method: 'DELETE',
                 headers: {'content-type': contentType, 'authToken': authToken}

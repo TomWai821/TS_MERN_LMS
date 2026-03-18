@@ -13,7 +13,7 @@ password: IamTester
 
 ---For book page
 # book creation data
-Book Name:Designing Distributed Systems: Patterns and paradigms for scalable service
+Book Name:Designing Distributed Systems - Patterns and paradigms for scalable service
 Genre: Computer Science
 Language: English
 Author: Brendan Burns

@@ -1,13 +1,14 @@
 import { GetResultInterface } from "../../Model/ResultModel";
 
 const localhost = process.env.REACT_APP_API_URL;
+const url:string = `${localhost}/book`;
 const contentType:string = "application/json";
 
 export const fetchBook = async (bookname?:string, status?:string, genreID?:string, languageID?:string, authorID?:string, publisherID?:string) => 
 {
     const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
-    const response = await fetch(`${localhost}/book/bookData${queryString ? `?${queryString}` : ``}`,
+    const response = await fetch(`${url}/record${queryString ? `?${queryString}` : ``}`,
         {
             method: 'GET',
             headers: { 'content-type': contentType },
@@ -31,48 +32,6 @@ export const fetchBook = async (bookname?:string, status?:string, genreID?:strin
     }
 }
 
-export const fetchSuggestBook = async (type:string, authToken?:string) => 
-{
-    const headers: Record<string, string> = 
-    {
-        'content-type': contentType
-    }
-
-    if(authToken)
-    {
-        headers['authToken'] = authToken;
-    }
-
-    let response: Response;
-
-    if(type === "forUser")
-    {
-        response = await fetch(`${localhost}/book/bookData/type=${type}`, 
-        {
-            method: 'POST',
-            headers: headers,
-        });
-    }
-    else
-    {
-        const url = type === "mostPopular" ? `${localhost}/book/loanBook/type=${type}` : `${localhost}/book/bookData/type=${type}`
-    
-        response = await fetch(url,
-            {
-                method: 'GET',
-                headers: headers,
-            }
-        );
-    }
-
-    if(response.ok)
-    {
-        const result: GetResultInterface = await response.json();
-        console.log(result);
-        return result;
-    }
-}
-
 export const fetchLoanBook = async(authToken?:string, type?:string, bookname?:string, username?:string, status?:string, finesPaid?:string) => 
 {
     const data = {bookname, username, status, finesPaid};
@@ -88,22 +47,12 @@ export const fetchLoanBook = async(authToken?:string, type?:string, bookname?:st
     }
 
     const queryParams =  BuildQuery(data);
-    const baseUrl = `${localhost}/book/LoanBook`;
-    let url = '';
+    const baseUrl = `${url}/loanRecord`;
+    let finalUrl = '';
 
-    switch(type)
-    {
-        case "AllUser":
-            url = queryParams ? `${baseUrl}/type=${type}?${queryParams}` : `${baseUrl}/type=${type}`;
-            break;
+    finalUrl = queryParams ? `${baseUrl}/type=${type}?${queryParams}` : `${baseUrl}/type=${type}`;
 
-        case "Self":
-            url = queryParams ? `${baseUrl}/?${queryParams}` : `${baseUrl}`;
-            break;
-
-    }
-
-    const response = await fetch(url,
+    const response = await fetch(finalUrl,
         {
             method: 'GET',
             headers: headers
@@ -121,7 +70,7 @@ export const fetchFavouriteBook = async(authToken:string, bookname?:string, stat
 {
     const queryString = BuildQuery({bookname, languageID, status, genreID, publisherID, authorID});
 
-    const response = await fetch(`${localhost}/book/FavouriteBook${queryString ? `?${queryString}` : ``}`,
+    const response = await fetch(`${url}/favourite${queryString ? `?${queryString}` : ``}`,
         {
             method: 'GET',
             headers: {'content-type':contentType, 'authToken': authToken}

@@ -1,6 +1,8 @@
 const localhost = process.env.REACT_APP_API_URL;
 const contentType = "application/json";
 
+const baseUrl = `${localhost}/contact`
+
 export const GetContact = async (type:string, filterData?:string) => 
 {
     try
@@ -24,7 +26,7 @@ export const GetContact = async (type:string, filterData?:string) =>
                 break;
         }
 
-        const url = `${localhost}/book/contact/type=${type}${query}`;
+        const url = `${baseUrl}/type=${type}${query}`;
         
         const response = await fetch(url,
             {
@@ -47,7 +49,7 @@ export const CreateContact = async (authToken:string, type:string, contactName:s
 
     try
     {
-        const response: Response = await fetch(`${localhost}/book/contact/type=${type}`,
+        const response: Response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'POST',
                 headers: { 'content-type': contentType, 'authToken': authToken },
@@ -72,7 +74,7 @@ export const EditContact = async (authToken:string, type:string, contactName:str
 
     try
     {
-        const response: Response = await fetch(`${localhost}/book/contact/type=${type}`,
+        const response: Response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'PUT',
                 headers: { 'content-type': contentType, 'authToken': authToken },
@@ -95,7 +97,7 @@ export const DeleteContact= async (authToken:string, type:string, id:string) =>
 {
     try
     {
-        const response: Response = await fetch(`${localhost}/book/contact/type=${type}`,
+        const response: Response = await fetch(`${baseUrl}/type=${type}`,
             {
                 method: 'DELETE',
                 headers: { 'content-type': contentType, 'authToken': authToken },

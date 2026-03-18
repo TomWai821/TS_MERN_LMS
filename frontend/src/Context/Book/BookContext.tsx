@@ -1,11 +1,14 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from "react";
+
 import { BookContextProps, ChildProps } from "../../Model/ContextAndProviderModel";
+
 import { CalculateDueDate, GetCurrentDate } from "../../Controller/OtherController";
 import { BookDataInterface, GetResultInterface, LoanBookInterface } from "../../Model/ResultModel";
 import { fetchBook, fetchLoanBook, GetExternalData } from "../../Controller/BookController/BookGetController";
 import { createBookRecord, createLoanBookRecord } from "../../Controller/BookController/BookPostController";
 import { returnBookAndChangeStatus, updateBookRecord } from "../../Controller/BookController/BookPutController";
 import { deleteBookRecord } from "../../Controller/BookController/BookDeleteController";
+
 import { useAuthContext } from "../User/AuthContext";
 import { useRecommendBookContext } from "./RecommendBookContext";
 
@@ -58,17 +61,23 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         }
     },[authToken])
 
+    const fetchAllRecord = useCallback(async () => 
+    {
+        const task = [fetchAllBook(), fetchNewPublishBook(), fetchMostPopularBook()];
+        await Promise.allSettled(task);
+    },[fetchAllBook, fetchNewPublishBook, fetchMostPopularBook])
+
     const createBook = useCallback(async (image:File, bookname:string, genreID:string, languageID:string, publisherID:string, authorID:string, description:string, publishDate:string) => 
     {
         const result: Response = await createBookRecord(authToken, image, bookname, genreID, languageID, publisherID, authorID, description, publishDate);
 
         if(result)
         {
-            fetchAllBook();
+            fetchAllRecord();
         }
         return result;
 
-    },[fetchAllBook, authToken])
+    },[fetchAllRecord, authToken])
 
     const editBook = useCallback(async (bookID:string, imageName:string, newFile:File, bookname:string, genreID:string, languageID:string, publisherID:string, publishDate:string, authorID:string, description:string) => 
     {
@@ -76,11 +85,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook();
+            fetchAllRecord();
         }
         return result;
         
-    },[fetchAllBook, authToken])
+    },[fetchAllRecord, authToken])
 
     const loanBook = useCallback(async(bookID:string, userID?:string) => 
     {
@@ -90,11 +99,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook();
+            fetchAllRecord();
         }
         return result;
 
-    },[fetchAllBook, authToken])
+    },[fetchAllRecord, authToken])
 
     const returnBook = useCallback(async(loanRecordID:string, finesPaid?:string) =>
     {
@@ -102,11 +111,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook();
+            fetchAllRecord();
         }
         return result;
 
-    },[fetchAllBook, authToken])
+    },[fetchAllRecord, authToken])
 
     const deleteBook = useCallback(async (bookID:string) => 
     {
@@ -114,11 +123,11 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
 
         if(result)
         {
-            fetchAllBook();
+            fetchAllRecord();
         }
         return result;
 
-    },[fetchAllBook, authToken])
+    },[fetchAllRecord, authToken])
 
     const getExternalData = useCallback(async(bookname:string, author:string) => 
     {
@@ -127,16 +136,10 @@ export const BookProvider:FC<ChildProps> = ({children}) =>
         
     },[authToken])
 
-    const fetchAllRecord = useCallback(async () => 
-    {
-        const task = [fetchAllBook(), fetchNewPublishBook(), fetchMostPopularBook()];
-        await Promise.allSettled(task);
-    },[fetchAllBook, fetchNewPublishBook, fetchMostPopularBook])
-
     useEffect(() => 
     {
-        fetchAllRecord();
-    },[fetchAllRecord])
+        fetchAllBook();
+    },[fetchAllBook])
 
     return (
         <BookContext.Provider value={{ bookData, fetchAllRecord, fetchAllBook, fetchBookWithFliterData, fetchLoanBookWithFliterData, createBook, editBook, loanBook, returnBook, deleteBook, getExternalData }}>

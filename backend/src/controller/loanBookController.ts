@@ -4,14 +4,14 @@ import { AuthRequest } from '../model/requestInterface';
 import { FindBookByIDAndUpdate } from '../schema/book/book';
 import { BookLoanedInterface } from '../model/bookSchemaInterface';
 import { ObjectId } from 'mongodb';
-import { buildLoanedQuery } from './middleware/Book/bookValidationMiddleware';
+import { buildLoanedQuery } from '../middleware/Book/bookValidationMiddleware';
 import { jwtVerify } from './hashing';
 import { UserInterface } from '../model/userSchemaInterface';
 import { FindUser } from '../schema/user/user';
 
 export const GetLoanBookRecord = async (req: AuthRequest, res:Response) => 
 {
-    const suggestType = req.params.type;
+    const recordType = req.params.type;
     const {bookname, username, status, finesPaid} = req.query;
     const userId = req.user?._id;
     let success = false;
@@ -21,25 +21,20 @@ export const GetLoanBookRecord = async (req: AuthRequest, res:Response) =>
         let getLoanRecord:any[] | undefined;
         let query = {};
 
-        switch(suggestType)
+        if (req.query && Object.keys(req.query).length > 0) 
         {
-            case "mostPopular": 
-                getLoanRecord = await GetBookLoaned(undefined, 8);
-                break;
+            query = buildLoanedQuery({ bookname, username, status, finesPaid });
+        }
 
+        switch(recordType)
+        {
             case "AllUser":
-                if(req.query && Object.keys(req.query).length > 0)
-                {  
-                    query = buildLoanedQuery({bookname, username, status, finesPaid});
-                }
+                // Get the whole user record
                 getLoanRecord = await GetBookLoaned({...query});
                 break;
 
-            default:
-                if(req.query && Object.keys(req.query).length > 0)
-                {  
-                    query = buildLoanedQuery({bookname, username, status, finesPaid});
-                }
+            case "Self":
+                // Get the own record only
                 let userObjectId = new ObjectId(userId as unknown as ObjectId);
                 getLoanRecord = await GetBookLoaned({userID: userObjectId, ...query});
                 break;

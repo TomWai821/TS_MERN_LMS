@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
-import { UserInterface } from "../../../model/userSchemaInterface";
-import { FindUserByID, FindUserWithData, GetUser } from "../../../schema/user/user";
-import { AuthRequest } from "../../../model/requestInterface";
+import { UserInterface } from "../../model/userSchemaInterface";
+import { FindUserByID, FindUserWithData, GetUser } from "../../schema/user/user";
+import { AuthRequest } from "../../model/requestInterface";
 
 // for build query (GET method in user, which require login)
 export const BuildUserQueryAndGetData = async (req: AuthRequest, res: Response, next: NextFunction) => 
