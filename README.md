@@ -208,27 +208,29 @@ docker-compose -f compose.yaml up --build -d
 ***Architecture Diagram - Development***
 <img src="doc/Image/Diagrams/ArchitectureDiagram_Development.png" style="width:90%;"/><br>
 1. **Development & Deployment Environment**
-- In the development phase, the system is fully containerised to ensure "it works on my machine" consistency
-    - **Infrastructure**: Orchestrated via Docker Compose
-    - **Networking**: Services communicate within a Docker Virtual Network
-    - **Persistence**: Local MongoDB container with Docker Volumes for data retention
-    - **Configuration**: Managed via local .env files
+    - **Environment Parity**: Leveraging Docker Compose to mirror the production environment locally (Reducing "works on my machine" bugs via consistent container orchestration)
+    - **Networking**: Internal services communicate securely within a Docker Virtual Network
+    - **Persistence**: Utilises a local MongoDB container with Docker Volumes for persistent data retention during development
+    - **Configuration**: Decoupled environment-specific settings managed via localised .env files
           
 2. **Backend Layered Architecture**
 - The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability
 
-| Layer            | Responsibility	                                                   | Key Practice                                 |
-| ---------------- | ----------------------------------------------------------------- | -------------------------------------------- |
-| Routing          | Resource-based dispatching (e.g., /books, /users)                 | Decoupled Modules using express.Router       |
-| Middleware       | Handles Auth (JWT), Validation, and Integrity checks              | The Quality Gate for incoming data           |
-| Controller       | Orchestrates business logic and service interactions              | Hybrid Layer (Integrated Service Logic)      |
-| Service Logic    | Core Algorithms (TF-IDF) and Business Operations                  | Encapsulated Functions called by Controller  |
-| Model (DB)	   | Schema definitions and Persistent Storage logic	               | Data Integrity via Mongoose static methods   |
+| Layer            | Responsibility	                                                                 | Key Practice                                              |
+| ---------------- | --------------------------------------------------------------------------------| --------------------------------------------------------- |
+| Routing          | Resource-based dispatching (e.g., /books, /users)                               | Decoupled Modules using express.Router                    |
+| Middleware       | Handles Auth (JWT), Validation, and Integrity checks                            | The Quality Gate for incoming data                        |
+| Controller       | Orchestrates request lifecycle and core CRUD operations                         | Action-oriented and delegated Query Building to Services  |
+| Service          | Core Algorithms (TF-IDF), External API (Google Books)	                         | Logic Isolation; strictly return-value driven             |
+| Model (DB)	   | Schema definitions and Persistent Storage logic	                             | Data Integrity via Mongoose static methods                |
 
-***View Architectural Decision (Service Logic Integration)***
-- To maintain high development velocity and facilitate rapid iteration during the initial MVP phase, the business logic is currently encapsulated within the Controller Layer as a Hybrid Patter
-- However, as illustrated in the Request Lifecycle Diagram, the core logic (such as the TF-IDF Recommendation Engine and Data Validation) is designed with modularity in mind
-- These functions are logically separated and ready to be fully decoupled into a dedicated Service Layer to enhance Unit Testability and Separation of Concerns (SoC) as the system scales
+**Architectural Decision: Service Logic Integration**
+- **Pragmatic Approach**
+    - To maintain high development velocity during the initial MVP phase, certain business logic is currently encapsulated within the Controller Layer as a Hybrid Pattern
+- **Future-Proof Design**
+    - As illustrated in the Request Lifecycle Diagram, core logic—such as the TF-IDF Recommendation Engine and Query Construction—is designed with high modularity
+- **Scalability**
+    - These functions are logically separated and ready to be fully decoupled into a dedicated Service Layer to enhance Unit Testability and SoC as the system scales
 
 
 ***Architecture Diagram - CD (Continuous Deployment)***<br>
@@ -317,19 +319,20 @@ docker-compose -f compose.yaml up --build -d
 ***Backend Process Flow Diagram and another function***<br>
 <img src="doc/Image/Diagrams/ProcessFlowDiagram.png" style="width:90%;"/><br>
 Backend side using modular API design, therefore using backend process flow diagram is better than using a class diagram to explain the backend architecture
-| Component           | Usage                                                                                                  | Example Path (Backend - Book data)                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| Client / Request    | Initiates API calls via Fetch from the frontend	                                                       | frontend/src/Controller/bookController.ts                                                       |
-| Entry Point         | Initialises the Express server and mounts core middleware                                              | backend/src/index.ts                                                                            |
-| Router              | Orchestrates resource-based routing modules                                                            | backend/src/routes/book.ts                                                                      |
-| Validator           | Enforces Schema Validation (Request Body) before processing                                            | backend/src/validator/expressBodyValidator.ts                                                   |
-| Auth Middleware     | Handles Identity & Access Control (JWT)                                                                | backend/src/controller/middleware/authMiddleware.ts                                             |
-| Business Middleware | Performs Integrity Checks (e.g. verifying DB record existence)                                         | backend/src/controller/middleware/Book/bookValidationMiddleware.ts                              |
-| Controller          | Orchestrates request parsing, service logic, and DB interactions                                       | backend/src/controller/bookController.ts                                                        |
-| TF-IDF Engine	      | Core Algorithm Service for search and recommendations                                                  | backend/src/controller/TF-IDF_Logic.ts                                                          |
-| Image Handler       | Manages atomic file storage (memoryStorage), filename sanitization (Regex), and disk I/O (fs/promises) | backend/src/controller/middleware/HandleEditImage.ts, backend/src/controller/bookController.ts  |
-| Data Access (Model) | Defines Mongoose Schemas and manages Persistent Storage	                                               | backend/src/schema/book/book.ts                                                                 |
-| API Response	      | Standardises and returns the final JSON response to the client	                                       | backend/src/controller/bookController.ts                                                        |
+| Component               | Usage                                                                                                  | Example Path (Backend - Book data)                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| Client / Request        | Initiates API calls via Fetch from the frontend	                                                       | frontend/src/Controller/bookController.ts                                                       |
+| Entry Point             | Initialises the Express server and mounts core middleware                                              | backend/src/index.ts                                                                            |
+| Router                  | Orchestrates resource-based routing modules                                                            | backend/src/routes/book.ts                                                                      |
+| Validator               | Enforces Schema Validation (Request Body) before processing                                            | backend/src/validator/expressBodyValidator.ts                                                   |
+| Auth Middleware         | Handles Identity & Access Control (JWT)                                                                | backend/src/middleware/User/authMiddleware.ts                                                   |
+| Business Middleware     | Performs Integrity Checks (e.g. verifying DB record existence)                                         | backend/src/middleware/Book/bookValidationMiddleware.ts                                         |
+| Controller              | Orchestrates request parsing, service logic, and core DB interactions (CRUD without query building)    | backend/src/controller/bookController.ts                                                        |
+| TF-IDF Engine	(Service) | Core Algorithm Service for search and recommendations                                                  | backend/src/controller/TF-IDF_Logic.ts, backend/src/service/bookRecommendationService.ts        |
+| Image Handler (Service) | Manages atomic file storage (memoryStorage), filename sanitisation (Regex), and disk I/O (fs/promises) | backend/src/controller/bookController.ts, backend/src/service/book/HandleEditImageService.ts    |
+| Query Builder (Service) | Implements dynamic filter pre-processing and data sanitisation before DB execution                     | backend/src/service/book/*.ts                                                                   |
+| Data Access (Model)     | Defines Mongoose Schemas and manages Persistent Storage	                                               | backend/src/schema/book/book.ts                                                                 |
+| API Response	          | Standardises and returns the final JSON response to the client	                                       | backend/src/controller/bookController.ts                                                        |
 
 **Remarks**
 - Controllers in this repo perform business logic (act like the service) and send the final HTTP response at the end of the handler using res.status(...).json(...)
@@ -339,7 +342,7 @@ Other functions (grouped, not on main synchronous path)
 | Function                   | Usage                                                                                                       | Example Path                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | CI Pipeline (Quality Gate) | Automated Linting and Unit/Integration Testing on every mon-documentation Push/PR                           | .github/workflows/ci.yml,  .github/workflows/cd.yml          |
-| Infrastructure/Init        | Container orchestration and automated DB Schema initialization / Seeding for environment parity             | docker-compose.yml/compose.yaml, backend/MongoDBSchema/*     |
+| Infrastructure/Init        | Container orchestration and automated DB Schema initialisation / Seeding for environment parity             | docker-compose.yml/compose.yaml, backend/MongoDBSchema/*     |
 | Scheduled Jobs             | Background services for critical business logic (e.g., overdue detection and automated fine calculation)    | backend/detectRecord.ts                                      |
 
 
@@ -1624,13 +1627,13 @@ Image 8.2 - Chip set
 ### For Book Data (Require authToken in header)
    1. Get book data
       ```
-      - Endpoint:`GET /api/book/BookData` (For all books)
-      - Endpoint:`GET /api/book/BookData?bookname=a` (For all books with bookname filtering)
-      - Endpoint:`GET /api/book/BookData?status=OnShelf` (For all books with status filter)
-      - Endpoint:`GET /api/book/BookData?authorID=""` (For all books with authorID filtering)
-      - Endpoint:`GET /api/book/BookData?publisherID=""` (For all books with publisherID filtering)
-      - Endpoint:`GET /api/book/BookData?genreID=""` (For all books with genreID filtering)
-      - Endpoint:`GET /api/book/BookData?languageID=""` (For all books with languageID filtering)
+      - Endpoint:`GET /api/book/record` (For all books)
+      - Endpoint:`GET /api/book/record?bookname=a` (For all books with bookname filtering)
+      - Endpoint:`GET /api/book/record?status=OnShelf` (For all books with status filter)
+      - Endpoint:`GET /api/book/record?authorID=""` (For all books with authorID filtering)
+      - Endpoint:`GET /api/book/record?publisherID=""` (For all books with publisherID filtering)
+      - Endpoint:`GET /api/book/record?genreID=""` (For all books with genreID filtering)
+      - Endpoint:`GET /api/book/record?languageID=""` (For all books with languageID filtering)
 
       Remarks:
       1. authorID = MongoDB ObjectID in author collection
@@ -1641,7 +1644,7 @@ Image 8.2 - Chip set
       
    2. Create book record
       ```
-      Endpoint:`POST /api/book/BookData`
+      Endpoint:`POST /api/book/record`
 
       Request Body Example:
       {
@@ -1663,7 +1666,7 @@ Image 8.2 - Chip set
       
    3. Modify book record
       ```
-      Endpoint:`PUT /api/book/BookData/id=:id`
+      Endpoint:`PUT /api/book/record/id=:id`
 
       Request Body Example:
       {
@@ -1686,7 +1689,7 @@ Image 8.2 - Chip set
       
    4. Delete book record
       ```
-      Endpoint:`DELETE /api/book/BookData/id=:id``
+      Endpoint:`DELETE /api/book/record/id=:id``
 
       1. id = MongoDB ObjectID in book collection
       ```
@@ -1694,16 +1697,16 @@ Image 8.2 - Chip set
 ### For Loan Books Data (Require authToken in header)
 1. Get Loan Book record
    ```
-   - Endpoint: `GET /api/book/LoanBook` (For all loan book record)
-   - Endpoint: `GET /api/book/LoanBook?status=Returned` (For loan book record with status filtering)
-   - Endpoint: `GET /api/book/LoanBook?bookname=Harry` (For loan book record with bookname filtering)
-   - Endpoint: `GET /api/book/LoanBook?username=a` (For loan book record with username filtering)
-   - Endpoint: `GET /api/book/LoanBook?finesPaid=Paid` (For loan book record with finesPaid status filtering)
+   - Endpoint: `GET /api/book/loanRecord` (For all loan book record)
+   - Endpoint: `GET /api/book/loanRecord?status=Returned` (For loan book record with status filtering)
+   - Endpoint: `GET /api/book/loanRecord?bookname=Harry` (For loan book record with bookname filtering)
+   - Endpoint: `GET /api/book/loanRecord?username=a` (For loan book record with username filtering)
+   - Endpoint: `GET /api/book/loanRecord?finesPaid=Paid` (For loan book record with finesPaid status filtering)
    ```
    
 2. Create Loan Book record (Dual-Token Requirement)
    ```
-   Endpoint: `POST /api/book/LoanBook`
+   Endpoint: `POST /api/book/loanRecord`
 
    Request Body Example:
    {
@@ -1721,7 +1724,7 @@ Image 8.2 - Chip set
    
 3. Modify Loan Book record
    ```
-   Endpoint: `PUT /api/book/LoanBook/id=:id`
+   Endpoint: `PUT /api/book/loanRecord/id=:id`
 
    Request Body Example:
    {
@@ -1736,7 +1739,7 @@ Image 8.2 - Chip set
 
 4. DELETE Loan Book record
    ```
-   Endpoint: `DELETE /api/book/LoanBook/id=:id`
+   Endpoint: `DELETE /api/book/loanRecord/id=:id`
 
    Remarks:
    1. id = MongoDB ObjectID in bookloaned collection
@@ -1745,12 +1748,12 @@ Image 8.2 - Chip set
 ### For Favourite Book (Require authToken in header)
 1. Get favourite book record
    ```
-   Endpoint:`GET /api/book/FavouriteBook`
+   Endpoint:`GET /api/book/favourite`
    ```
    
 2. Create a favourite book record
    ```
-   Endpoint:`POST /api/book/FavouriteBook`
+   Endpoint:`POST /api/book/favourite`
 
    Request body Example:
    {
@@ -1764,7 +1767,7 @@ Image 8.2 - Chip set
    
 3. Delete a favourite book record
    ```
-   Endpoint:`DELETE /api/book/FavouriteBook/id=:id`
+   Endpoint:`DELETE /api/book/favourite/id=:id`
 
    Remarks:
    1. id = MongoDB ObjectID in favourite book collection
@@ -1773,9 +1776,9 @@ Image 8.2 - Chip set
 ### For Book data definition (Require authToken in header)
 1. Create a new definition data:
    ```
-   - Endpoint: `GET /api/book/definition/type=:type`
-   - Endpoint: `GET /api/book/definition/type=:Genre?genre=N` (Search genre with filter data)
-   - Endpoint: `GET /api/book/definition/type=:Language?language=En` (Search language with filter data)
+   - Endpoint: `GET /api/definition/type=:type`
+   - Endpoint: `GET /api/definition/type=:Genre?genre=N` (Search genre with filter data)
+   - Endpoint: `GET /api/definition/type=:Language?language=En` (Search language with filter data)
 
    Remarks:
    1. type = Genre/Language
@@ -1783,7 +1786,7 @@ Image 8.2 - Chip set
    
 2. Get the whole definition data:
    ```
-   Endpoint: `POST /api/book/definition/type=:type`
+   Endpoint: `POST /api/definition/type=:type`
 
    Request Body Example(For Genre):
    {
@@ -1825,7 +1828,7 @@ Image 8.2 - Chip set
    
 4. Delete the definition data:
    ```
-   Endpoint: `DELETE /api/book/definition/type=:type?id=""`
+   Endpoint: `DELETE /api/definition/type=:type?id=""`
 
    Remarks:
    1. type = Genre/Language
@@ -1835,7 +1838,7 @@ Image 8.2 - Chip set
 ### For contact data (Require authToken in header)
 1. Creating a new contact:
    ```
-   Endpoint: `GET /api/book/contact/type=:type`
+   Endpoint: `GET /api/contact/type=:type`
    
    Request Body Example(Author):
    {
@@ -1854,14 +1857,14 @@ Image 8.2 - Chip set
    
 2. Get the whole contact data:
    ```
-   -Endpoint: `POST /api/book/contact/type=:type`
-   -Endpoint(For author filtering): `POST /api/book/contact/type=Author?author=a`
-   -Endpoint(For publisher filtering): `POST /api/book/contact/type=Publisher?publisher=a`
+   -Endpoint: `POST /api/contact/type=:type`
+   -Endpoint(For author filtering): `POST /api/contact/type=Author?author=a`
+   -Endpoint(For publisher filtering): `POST /api/contact/type=Publisher?publisher=a`
    ```
    
 3. Update the contact data:
    ```
-   Endpoint: `PUT /api/book/contact/type=:type`
+   Endpoint: `PUT /api/contact/type=:type`
    
    Request Body Example(Author):
    {
@@ -1885,7 +1888,7 @@ Image 8.2 - Chip set
    
 4. Delete the contact data:
    ```
-   Endpoint: `DELETE /api/book/contact/type=:type`
+   Endpoint: `DELETE /api/contact/type=:type`
    
    Request Body Example:
    {
