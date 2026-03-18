@@ -54,9 +54,9 @@ describe("Book API Test (with invalid filter data)", () =>
 // Get Recommend Book (New Publish)
 describe("Book API Test (Get Recommend Book which new publish)", () => 
 {
-    it("GET /api/book/record, should get new Publish book", async () => 
+    it("GET /api/recommend/type=newPublish, should get new Publish book", async () => 
     {
-        const res = await request(app).get("/api/book/record/type=newPublish")
+        const res = await request(app).get("/api/recommend/type=newPublish")
 
         expect(res.statusCode).toBe(200);
         expect(res.body.foundBook).toHaveLength(8);
@@ -66,9 +66,9 @@ describe("Book API Test (Get Recommend Book which new publish)", () =>
 // Get Recommend Book (Most Loaned)
 describe("Book API Test (Get Recommend Book which most loaned)", () => 
 {
-    it("GET /api/book/loanRecord, should get most loaned book", async () => 
+    it("GET /api/recommend/type=mostPopular, should get most loaned book", async () => 
     {
-        const res = await request(app).get("/api/book/loanRecord/type=mostPopular")
+        const res = await request(app).get("/api/recommend/type=mostPopular")
 
         expect(res.statusCode).toBe(200);
         expect(res.body.foundLoanBook)
