@@ -115,10 +115,11 @@ Demonstrating administrative transparency and data-driven intelligence. (Login a
 - [Testing Strategy](#testing-strategy)
 - [Automated Logic Overview](#automated-logic-overview)
 - [TF-IDF Logic Overview](#tf-idf-logic-overview)
+- [External Metadata Integration Overview](#external-metadata-integration-overview)
 - [UI Layout](#ui-layout)
 - [QR Code Handling (Frontend Only)](#qr-code-handling-frontend-only)
 - [Installation](#installation)
-- [API endpoints](#api-endpoints)
+- [API Endpoints](#api-endpoints)
 - [Product Limitation](#product-limitation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -1277,93 +1278,67 @@ The core execution logic is designed to balance recommendation accuracy with sys
 
 
 
-## Installation
-1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/TomWai821/TS_MERN_LMS
-    cd TS_MERN_LMS
+## External Metadata Integration Overview
 
-2. **Set up environment variable:**
-    `.example` templates are included at `./frontend/.env.example` and `./backend/.env.example`. Copy the appropriate file, fill required values, then remove the `.example` suffix to run.
-    ### Frontend
-    1. Copy template:
-       ```bash
-       cp frontend/.env.example frontend/.env
-      REACT_APP_API_URL
-      
-    2. Required variables (fill with real values):
-       - REACT_APP_API_URL               —> Backend API endpoint, e.g. http://localhost:5000/api
-       - REACT_APP_MAIN_PAGE             —> Frontend URL, e.g. http://localhost:3000
-      
-    ### Backend
-    1. Copy template:
-       ```bash
-       cp backend/.env.example backend/.env
-       ```
-      
-    2. Required variables (fill with real values):
-       - PORT       —> backend port (default 5000)
-       - MONGO_URI  —> MongoDB connection string
-           - Docker: mongodb://mongo:27017
-           - Local:  mongodb://localhost:27017
-           - If connection issues, append /test (e.g. mongodb://localhost:27017/test)
-       - JWT_SECRET —> secret for JWT authentication
-       - ORIGIN_URI —> frontend URL, e.g. http://localhost:3000
-       - GOOGLE_BOOKS_API_KEY  —> Google Books API key
-       - GOOGLE_BOOKS_BASE_URL —> e.g. https://www.googleapis.com/books/v1/volumes
-       - BACKEND_BASE_URL -> the backend base url for image, e.g. http://localhost:5000
+**1. Server Side Response Handling**<br>
+<img src="doc/Image/Functions/GoogleBookResponse.png" style="width:60%;"/><br>
+- This Controller serves as an Orchestration Layer that mediates between Client Requests and External Service logic
+- It extracts query parameters (bookname, author) from the client side and delegates the complex data-fetching operations to the externalBookService
 
+**2. Default Data**<br>
+<img src="doc/Image/Functions/DefaultGoogleBookData.png" style="width:60%;"/><br>
+- The DEFAULT_BOOK_DATA constant serves as a standardised Data Template to enforce strict schema consistency across the metadata pipeline
+- By merging this baseline with raw API responses, the system implements a 'Graceful Degradation' strategy<br>
+  (This defensive mechanism effectively prevents Frontend Runtime Errors (e.g., 'Cannot read property of undefined') and maintains a predictable UI state, even when external metadata is incomplete or fragmented)<br>
+
+**3. External API Orchestration and Fail-safe Logic**<br>
+<img src="doc/Image/Functions/GoogleBookService.png" style="width:60%;"/><br>
+- **Core Responsibility**
+    - The externalBookService functions as a dedicated Data Fetching Layer, encapsulating the complexities of third-party API communication
+    - It transforms raw search parameters into structured metadata while maintaining system stability through multi-layered error handling
+
+- **Technical Highlights**
+    - **Environment Configuration**
+        - Leverages server-side environment variables (process.env) to secure sensitive API credentials<br>
+          (Ensure the API keys are never exposed to the client side)<br>
+          
+    - **Defensive Guard Clauses**
+        - Implements early-return patterns to detect missing configurations
+        - prevent unnecessary network requests and ensure the system fails gracefully with a DEFAULT_BOOK_DATA fallback
+  
+    - **Resilient Error Handling**
+        - Utilises a try-catch block and response.ok checks to manage network timeouts or external service disruptions
+        - The service guarantees a consistent return type in any failure scenario<br>
+          (It prevents upstream (Controller) crashes)<br>
+          
+    - **Data Parsing & Normalisation**
+        - Seamlessly integrates with the parseGoogleBook utility to transform raw JSON items into the application's standardised schema<br>
+          (Ensure the rest of the system receives clean, predictable data)<br>
+
+**4. Google Book Data Transfer Object (DTO)**<br>
+<img src="doc/Image/Functions/GoogleBookDTO.png" style="width:60%;"/><br>
+- **Core Responsibility**
+    - The parseGoogleBook utility acts as a Data Transformer (DTO Pattern) that sanitises raw JSON payloads from the Google Books API
+      (It ensures the rest of the application interacts with a predictable, flattened schema, shielding internal logic from the volatility of external data structures)
+
+- **Technical Highlights**
+    - **Defensive Destructuring**
+        - Utilises Nested Destructuring with Default Values (e.g., volumeInfo = {}) to prevent "Cannot destructure property of undefined" errors, providing immediate resilience against unexpected API response shapes
+      
+    - **Immutability-Driven Merging**
+        - Implements the Spread Operator (...DEFAULT_BOOK_DATA) to maintain immutability<br>
+          (This ensures every parsed object starts with a reliable baseline, effectively preventing "Undefined" fields from propagating downstream)<br>
+          
+    - **Safe Property Access**
+        - Leverages Optional Chaining (?.) and Nullish Coalescing (??) to handle deeply nested fields (like ratingsCount or industryIdentifiers)<br>
+          (It ensures the missing data is consistently normalised to a standard "N/A" string, rather than causing UI-breaking null values)<br>
     
-3. **Import data into MongoDB (Local only):**
-    - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
-    - This JSON file contains the complete data schema required for the application
-  
-4. **Run the application:**
-    ### Using Docker
-    ```bash
-    # Start the project (use --detach to run in background)
-    docker compose -f compose.yaml up --build --detach
-
-    # If you need to reset the demo database and re-run initialisation scripts, stop containers and remove volumes
-    # WARNING: this will permanently delete all persisted DB data
-    docker compose down -v
-    docker compose up --build --detach
-    ```
-
-    **Remarks**
-    - The `./backend/MongoDBSchema` folder is mounted to `/docker-entrypoint-initdb.d` in the MongoDB container
-    - These initialization scripts run **only when the `db-data` volume is created for the first time**; if the `db-data` volume already contains data, the scripts will be skipped
-    - To re-run initialization and restore the demo data, remove the volume and restart the stack:
-      1. `docker compose -f compose.yaml down -v`  # WARNING: permanently deletes all persisted DB data
-      2. `docker compose -f compose.yaml up --build`
-    - The backend requires this demo data for proper functionality; if you run MongoDB locally instead of via Docker, import the JSON files in `./backend/MongoDBSchema` (e.g., via MongoDB Compass)
-    - Changing `JWT_SECRET` will invalidate existing JWTs and require users to re-login
-
-
-    ### Using local environment
-    #### Backend
-    ```bash
-    cd backend
-    npm install
-    nodemon backend/index.ts  
-    ```
-    #### Frontend
-    ```bash
-    cd frontend
-    npm install
-    npm start
-    ```
-
-6. **Expected URLs:**
-    - Backend API → http://localhost:5000/api
-    - Frontend    → http://localhost:3000
-  
-### Notes
-- Express backend default port: 5000. React frontend default port: 3000.
-- MongoDB default DB: test
-    - If DB init scripts are used in Docker, they run only when the volume is created for the first time
-    - To re-run init scripts, remove the volume and restart
-- Demo data location (if needed): 'doc\DemonstrationMaterial\DemonStrationData.txt'
+    - **Conditional Business Logic**
+        - Includes a specialised block for financial data (pricing and currency)
+          (Ensure that currency codes and amounts are formatted as a unified string only when the item is explicitly marked for sale)
+          
+    - **Data Type Castings**
+        - Performs explicit transformations (e.g., .toString() and Array.join()) to ensure the final DTO consists of strictly defined primitive types, simplifying the rendering logic in the Frontend
 
 
 
@@ -1503,6 +1478,95 @@ Image 8.2 - Chip set
   }
 - No backend API endpoint is required for QR code generation
 - The QR code is used within the frontend modal for loan verification
+
+## Installation
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/TomWai821/TS_MERN_LMS
+    cd TS_MERN_LMS
+
+2. **Set up environment variable:**
+    `.example` templates are included at `./frontend/.env.example` and `./backend/.env.example`. Copy the appropriate file, fill required values, then remove the `.example` suffix to run.
+    ### Frontend
+    1. Copy template:
+       ```bash
+       cp frontend/.env.example frontend/.env
+      REACT_APP_API_URL
+      
+    2. Required variables (fill with real values):
+       - REACT_APP_API_URL               —> Backend API endpoint, e.g. http://localhost:5000/api
+       - REACT_APP_MAIN_PAGE             —> Frontend URL, e.g. http://localhost:3000
+      
+    ### Backend
+    1. Copy template:
+       ```bash
+       cp backend/.env.example backend/.env
+       ```
+      
+    2. Required variables (fill with real values):
+       - PORT       —> backend port (default 5000)
+       - MONGO_URI  —> MongoDB connection string
+           - Docker: mongodb://mongo:27017
+           - Local:  mongodb://localhost:27017
+           - If connection issues, append /test (e.g. mongodb://localhost:27017/test)
+       - JWT_SECRET —> secret for JWT authentication
+       - ORIGIN_URI —> frontend URL, e.g. http://localhost:3000
+       - GOOGLE_BOOKS_API_KEY  —> Google Books API key
+       - GOOGLE_BOOKS_BASE_URL —> e.g. https://www.googleapis.com/books/v1/volumes
+       - BACKEND_BASE_URL -> the backend base url for image, e.g. http://localhost:5000
+
+    
+3. **Import data into MongoDB (Local only):**
+    - Open MongoDB Compass and import the JSON file located in the MongoDBSchema folder
+    - This JSON file contains the complete data schema required for the application
+  
+4. **Run the application:**
+    ### Using Docker
+    ```bash
+    # Start the project (use --detach to run in background)
+    docker compose -f compose.yaml up --build --detach
+
+    # If you need to reset the demo database and re-run initialisation scripts, stop containers and remove volumes
+    # WARNING: this will permanently delete all persisted DB data
+    docker compose down -v
+    docker compose up --build --detach
+    ```
+
+    **Remarks**
+    - The `./backend/MongoDBSchema` folder is mounted to `/docker-entrypoint-initdb.d` in the MongoDB container
+    - These initialization scripts run **only when the `db-data` volume is created for the first time**; if the `db-data` volume already contains data, the scripts will be skipped
+    - To re-run initialization and restore the demo data, remove the volume and restart the stack:
+      1. `docker compose -f compose.yaml down -v`  # WARNING: permanently deletes all persisted DB data
+      2. `docker compose -f compose.yaml up --build`
+    - The backend requires this demo data for proper functionality; if you run MongoDB locally instead of via Docker, import the JSON files in `./backend/MongoDBSchema` (e.g., via MongoDB Compass)
+    - Changing `JWT_SECRET` will invalidate existing JWTs and require users to re-login
+
+
+    ### Using local environment
+    #### Backend
+    ```bash
+    cd backend
+    npm install
+    nodemon backend/index.ts  
+    ```
+    #### Frontend
+    ```bash
+    cd frontend
+    npm install
+    npm start
+    ```
+
+6. **Expected URLs:**
+    - Backend API → http://localhost:5000/api
+    - Frontend    → http://localhost:3000
+  
+### Notes
+- Express backend default port: 5000. React frontend default port: 3000.
+- MongoDB default DB: test
+    - If DB init scripts are used in Docker, they run only when the volume is created for the first time
+    - To re-run init scripts, remove the volume and restart
+- Demo data location (if needed): 'doc\DemonstrationMaterial\DemonStrationData.txt'
+
 
 
 
