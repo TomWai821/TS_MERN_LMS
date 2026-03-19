@@ -207,38 +207,46 @@ export const modifyFinesAmount = async() =>
     {
         const expiresLoanRecords = await GetBookLoaned({finesPaid: 'Not Paid'}) as BookLoanedInterface[];
 
-        console.log(`Totally has ${expiresLoanRecords.length} loan records does not paid the fines`);
-        if(expiresLoanRecords.length === 0) return;
-
-        for(const bookLoaned of expiresLoanRecords)
+        if(expiresLoanRecords.length === 0) 
         {
-            /*
-                Date-only comparison(Ignore the hr/seconds, only compare the date)
-                e.g. dueDate = 24/12/2025 -> Union to 24/12/2025 00:00:00
-                       today = 25/12/2025 -> Union to 25/12/2025 00:00:00
-                       Result: 25 - 24 = 1 (the expireDay)
-            */
-            const dueDate = setToMidnight(new Date(bookLoaned.dueDate as Date));
-            const today = setToMidnight(new Date())
-
-            // Calculate the timeDiff after transfer to date only
-            const diffTime = today.getTime() - dueDate.getTime();
-            const expireDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
-
-            // Calculate the final amount (based on the expiresDays)
-            const finalAmount = Math.min(expireDays * 1.5, 130);
-
-            if(bookLoaned.fineAmount !== finalAmount)
-            {
-                const updateRecord = await FindBookLoanedByIDAndUpdate(bookLoaned._id as unknown as string, {fineAmount: finalAmount});
-                if(!updateRecord)
-                {
-                    console.log(`Failed to modify ${bookLoaned._id} loan record finesAmount!`);
-                    continue;
-                }
-            }
-            console.log(`Loan Record ${bookLoaned._id} fine Amount ($${finalAmount}) modify successfully!`);
+            console.log("No Unpaid loan records found");
+            return;
         }
+
+        const today = setToMidnight(new Date()).getTime();
+        const ONE_DAY_MS = 1000 * 60 *60 *24;
+
+        // flatMap will filter out not require update record to avoid null data
+        const updateTasks = expiresLoanRecords.flatMap(record => 
+        {
+            const dueDate = setToMidnight(new Date(record.dueDate as Date)).getTime(); 
+            const expireDays = Math.max(0, Math.floor((today - dueDate) / ONE_DAY_MS));  // Calculate the expire Day
+
+            const finalAmount = Math.min(expireDays * 1.5, 130); // Calculate the final amount (based on the expiresDays)
+
+            if(record.fineAmount !== finalAmount) 
+            { 
+                return [{id: record._id.toString(), finalAmount}]; 
+            }
+
+            return []
+        })
+
+        if(updateTasks.length === 0)
+        {
+            console.log("All fine amounts are up to date");
+            return;
+        }
+
+        console.log(`Updating ${updateTasks.length} records...`);
+
+        const results = await Promise.allSettled(updateTasks.map(
+            task => FindBookLoanedByIDAndUpdate(task.id, {fineAmount: task?.finalAmount}))
+        );
+
+        const failedCount = results.filter(result => result.status === "rejected" || (result.status === 'fulfilled' && !result.value)).length;
+
+        console.log(`Update complete. Success: ${updateTasks.length - failedCount}, Failed: ${failedCount}`);
         
     }
     catch(error)
