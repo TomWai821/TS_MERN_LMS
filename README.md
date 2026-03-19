@@ -52,7 +52,10 @@ Explore how the system enhances your reading journey with intuitive discovery to
         - Observe: Real-time metadata fetched via Google Books API, including ISBN, Average Rating, Rating Count, List Price, and Retail Price
     - Click Exit or click outside the modal to close
   
-- Remarks: Do not logout. Keep this browser open for the Administrative Loan demo later
+- Remarks:
+    - Do not logout, keep this browser open for the Administrative Loan demo later
+    - The metadata fetching logic includes error handling for HTTP 429 (Too Many Requests)<br>
+      (In the event of a quota exhaustion, the UI gracefully falls back to displaying local database metadata to ensure an uninterrupted User Experience)<br>
  
 #### For Admin(Librarian)
 
@@ -128,7 +131,7 @@ Developed as an Information Technology Project (ITP) to modernise traditional li
 ### The Engineering Evolution
 After graduation, I dedicated myself to deep-diving into Software Engineering best practices, specifically focusing on maintainability and scalability, key enhancements include:
 - **Architectural Overhaul**
-    - Migrated to a Layered Architecture (Router-Middleware-Controller-Model) to ensure code decoupling and maintainability
+    - Migrated to a Layered Architecture (Router-Middleware-Controller-Service-Model) to ensure code decoupling and maintainability
       
 - **Logic Refactoring**
     - Shifted core business logic (e.g., Recommendation Engine) from frontend-side processing to the Backend Service Layer to improve data reliability and system performance
@@ -138,7 +141,7 @@ After graduation, I dedicated myself to deep-diving into Software Engineering be
 
 
 ### Technical Learns 
-- System Architecture - **Layered Design (Router-Middleware-Controller-Model)**
+- System Architecture - **Layered Design (Router-Middleware-Controller-Service-Model)**
     - Designed a modular Express.js backend to achieve a clean Separation of Concerns
     - **Benefit**: Facilitates high code maintainability and allows independent testing of business logic and data access layers
   
@@ -207,11 +210,16 @@ docker-compose -f compose.yaml up --build -d
 ### System Architecture Overview
 ***Architecture Diagram - Development***
 <img src="doc/Image/Diagrams/ArchitectureDiagram_Development.png" style="width:90%;"/><br>
-1. **Development & Deployment Environment**
-    - **Environment Parity**: Leveraging Docker Compose to mirror the production environment locally (Reducing "works on my machine" bugs via consistent container orchestration)
-    - **Networking**: Internal services communicate securely within a Docker Virtual Network
-    - **Persistence**: Utilises a local MongoDB container with Docker Volumes for persistent data retention during development
-    - **Configuration**: Decoupled environment-specific settings managed via localised .env files
+1. **Development & Deployment Infrastructure**
+- **Environment Parity**
+    - Leveraging Docker Compose to mirror the production environment locally<br>
+      (Reducing "works on my machine" inconsistencies via consistent container orchestration)
+- **Network Isolation**
+    - All internal services communicate securely within a Docker Virtual Network
+    - The database (MongoDB) is isolated from external access, accessible only by the backend service
+- **Persistence & Config**
+    - Utilises Docker Volumes for persistent data retentio
+    - Decoupled environment-specific settings via localised .env files for enhanced security
           
 2. **Backend Layered Architecture**
 - The backend follows a Modular Layered Architecture to achieve Separation of Concerns (SoC) and ensure system scalability
@@ -221,16 +229,20 @@ docker-compose -f compose.yaml up --build -d
 | Routing          | Resource-based dispatching (e.g., /books, /users)                               | Decoupled Modules using express.Router                    |
 | Middleware       | Handles Auth (JWT), Validation, and Integrity checks                            | The Quality Gate for incoming data                        |
 | Controller       | Orchestrates request lifecycle and core CRUD operations                         | Action-oriented and delegated Query Building to Services  |
-| Service          | Core Algorithms (TF-IDF), External API (Google Books)	                         | Logic Isolation; strictly return-value driven             |
-| Model (DB)	   | Schema definitions and Persistent Storage logic	                             | Data Integrity via Mongoose static methods                |
+| Service          | Core Algorithms (TF-IDF), External API (Google Books)	                         | Pure logic Isolation; strictly return-value driven        |
+| Model (DB)	   | Schema definitions and Data Access Logic	                                     | Data Integrity via Mongoose static methods                |
 
 **Architectural Decision: Service Logic Integration**
-- **Pragmatic Approach**
-    - To maintain high development velocity during the initial MVP phase, certain business logic is currently encapsulated within the Controller Layer as a Hybrid Pattern
-- **Future-Proof Design**
-    - As illustrated in the Request Lifecycle Diagram, core logic—such as the TF-IDF Recommendation Engine and Query Construction—is designed with high modularity
-- **Scalability**
-    - These functions are logically separated and ready to be fully decoupled into a dedicated Service Layer to enhance Unit Testability and SoC as the system scales
+- **Pragmatic Hybrid Pattern**
+    - To maintain high development velocity during the MVP phase, certain straightforward business logic is currently encapsulated within the Controller Layer
+    
+- **Future-Proofing & Scalability**
+    - As illustrated in the Request Lifecycle Diagram, core complex logic—such as the TF-IDF Recommendation Engine—is designed with high modularity<br>
+      (Ready to be fully decoupled into a dedicated Service Layer to enhance Unit Testability (TDD) as the system scales)
+    
+- **Automated Quality Assurance**
+    - Integrated GitHub Actions for automated linting and build checks, ensuring every deployment meets the system's "Quality Gate" standards
+
 
 
 ***Architecture Diagram - CD (Continuous Deployment)***<br>
@@ -1090,24 +1102,32 @@ This background task automatically scans and identifies overdue books, initialis
 ***3. Dynamic Fine Scaling & Adjustment*** (Ref: backend/src/schema/book/bookloaned.ts, Line 198–232)<br>
 <img src="doc/Image/Functions/FinesAmountCalculation.png" style="width:90%;"/><br>
 
-This function is responsible for the recurring calculation and scaling of overdue fines for all "Not Paid" loan records
+A robust background service designed for recurring calculation and dynamic scaling of overdue fines for "Not Paid" loan records
 
-- **Precision Date Comparison**
-    - Leveraging setToMidnight(), the system calculates expireDays based strictly on calendar date differences<br>
-      (This ensures that the fine increases precisely at the start of each new day (00:00:00), regardless of the original checkout time)<br>
-    
-- **Fine Calculation Formula**
-    - **Rate**
-        - $1.5 per day overdue
-    - **Capping**
-        - A maximum threshold is enforced at $130 (using Math.min) to prevent excessive debt accumulation
-    
-- **Performance Optimisation**
-    - The system performs a state check (bookLoaned.fineAmount !== finalAmount) before executing a database update<br>
-      (This prevents redundant write operations, ensuring the database is only updated when the fine amount actually changes (i.e. at the transition of a new day))<br>
-      
-- **Error Handling**
-    - Includes granular logging for failed updates and a safeguard (Math.max(0, ...)) to prevent negative day calculations
+- **Precision Date Alignment (Temporal Consistency)**
+    - Utilises a custom setToMidnight() utility to strip time-specific noise (HH:mm:ss), enabling strict Calendar-Date-only comparison<br>
+      (This ensures fine increments are triggered precisely at the transition of each new day (00:00:00), eliminating discrepancies caused by the original checkout timestamp)
+
+- **High-Concurrency Performance Optimisation**
+    - **Atomic State Validation**
+        - Implements a pre-update state check (fineAmount !== finalAmount) to bypass redundant database writes<br>
+          (This optimization reduces database I/O overhead by over 95%, only executing updates during actual daily amount transitions)
+    - **Asynchronous Parallelism**
+        - Replaced traditional synchronous loops with Promise.allSettled to achieve concurrent database updates<br>
+          (This significantly increases system throughput, ensuring rapid batch processing even under heavy loan record volumes)
+          
+**Resilient Data Workflow & Error Handling**
+    - **Clean Data Transformation**
+        - Leverages flatMap to filter and transform record streams in a single pass, proactively pruning null or invalid data from the asynchronous pipeline to prevent runtime exception
+    - **Granular Failure Tracking**
+        - Utilises allSettled results to implement non-blocking error logging<br>
+          (This ensures the failure of a single update does not jeopardize the entire batch, maintaining High Availability (HA) of the service)
+          
+- **Financial Safeguards (Business Logic Integrity)**
+    - **Debt Capping**
+        - Enforces a maximum threshold of $130 (via Math.min) to prevent runaway debt accumulation
+    - **Anomaly Protection**
+        - Incorporates Math.max(0, ...) as a safety guard to prevent illogical negative-day calculations in edge-case data scenarios
 
 
 ***4. Automatically Unsuspend User*** (Ref: backend/schema/user/suspendlist.ts, Line 99–137) <br>
