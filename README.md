@@ -33,23 +33,23 @@ Explore how the system enhances your reading journey with intuitive discovery to
     - Select any book and click the Favourite Book button
     - Click the sidebar icon and navigate to Records
     - Select the Favourite Book Record tab
-        - Observe: The favourited book is listed with full details, including Cover Image, Title, Genre, Language, and Author
+        - **Observe**: The favourited book is listed with full details, including Cover Image, Title, Genre, Language, and Author
 
 2. Advanced Book Filtering
     - Navigate to View > Books
     - Set Status to OnShelf
     - Expand the filter (Down arrow), set Genre to Novel
     - Click Search
-        - Observe: Results are narrowed down to Available Novels only
+        - **Observe*: Results are narrowed down to Available Novels only
     - Click Reset Filter
-        - Observe: The filter clears, restoring the full book list instantly
+        - **Observe**: The filter clears, restoring the full book list instantly
 
 3. Rich Metadata Modal (Main Page)
     - Click on "Harry Potter and the Half-Blood Prince" on the home page
     - Click the Expand button near the description
-        - Observe: The full book synopsis is revealed
+        - **Observe**: The full book synopsis is revealed
     - Switch to the Google Books tab
-        - Observe: Real-time metadata fetched via Google Books API, including ISBN, Average Rating, Rating Count, List Price, and Retail Price
+        - **Observe**: Real-time metadata fetched via Google Books API, including ISBN, Average Rating, Rating Count, List Price, and Retail Price
     - Click Exit or click outside the modal to close
   
 - Remarks:
@@ -59,38 +59,38 @@ Explore how the system enhances your reading journey with intuitive discovery to
  
 #### For Admin(Librarian)
 
-Demonstrating administrative transparency and data-driven intelligence. (Login as Librarian required)
+Demonstrating administrative transparency and data-driven intelligence (Login as Librarian required)
 
 1. TF-IDF Recommendation Engine (Real-time Personalisation)
     - Navigate to Management > Book Management
     - Select an OnShelf book (Best with Non-Novel/Academic Textbook) and click Loan Book
     - Choose Self Loan and confirm
     - Return to the Library (Home) page
-        - Observe: The "Recommended for You" section updates instantly, prioritising new books based on the TF-IDF Engine's analysis of your latest loan
+        - **Observe**: The "Recommended for You" section updates instantly, prioritising new books based on the TF-IDF Engine's analysis of your latest loan
 
 2. Asset Lifecycle Tracking (Book History)
     - Navigate to Management > Book Management.
     - Select any OnLoan book and click View Loan Book History
-        - Observe: Automatically redirects to the Loan History tab, displaying the book's full history, including Loaned Date, Return Date, Borrower, and Record Status
+        - **Observe**: Automatically redirects to the Loan History tab, displaying the book's full history, including Loaned Date, Return Date, Borrower, and Record Status
 
 3. Administrative Loan (Requires 2 Browsers)
     - (Librarian Browser): Navigate to Management > Book Management
     - (Librarian Browser): Select an OnShelf book and click Loan Book
-    - (Librarian Browser): Choose User Loaned, then input/scan the QR Code data (from DemonstrationData.txt) and confirm
-        - Observe: The book status instantly changes to OnLoan
+    - (Librarian Browser): Choose User Loaned, then input/scan the QR Code data (From `doc/DemonstrationMaterial/DemonStrationData.txt` in the repository) and confirm
+        - **Observe**: The book status instantly changes to OnLoan
     - (User Browser): Switch to the User's browser window
     - (User Browser): Navigate to Records > Loan Book Record
-        - Observe: The newly loaned book appears at the bottom of the list, confirming the record has been successfully appended in real-time
+        - **Observe**: The newly loaned book appears at the bottom of the list, confirming the record has been successfully appended in real-time
 
 4. Administrative Book Return
     - (Librarian Browser): Navigate to Management > Book Management
     - (Librarian Browser): Select **the book used in the previous step** and click View Loan Book History
     - (Librarian Browser): Select the latest loan record (bottom of the list) and click Return Book
     - (Librarian Browser): Confirm the return
-        - Observe: The status instantly reverts to OnShelf (Book Data Tab) and updates to Return (Loan Record Tab)
+        - **Observe**: The status instantly reverts to OnShelf (Book Data Tab) and updates to Return (Loan Record Tab)
     - (User Browser): Switch to the User's browser window
     - (User Browser): Navigate to Records > Loan Book Record.
-        - Observe: The loan record status for the specific book has been instantly updated to "Return", confirming seamless end-to-end synchronisation
+        - **Observe**: The loan record status for the specific book has been instantly updated to "Return", confirming seamless end-to-end synchronisation
     
 
 ## Video for presentation and demonstration
