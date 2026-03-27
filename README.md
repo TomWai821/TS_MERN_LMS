@@ -495,9 +495,10 @@ Remarks:
     - Optimised multi-field database validations by refactoring sequential lookups into concurrent operations via Promise.all<br>
       (This significantly reduced API response latency by processing independent I/O tasks in parallel)
 
-4. **Pipeline Filtering** (Ref: ./backend/src/middleware/Book/ContactValidation.ts, DefinitionValidation.ts)
+4. **Pipeline Filtering**
    - Engineered a multi-stage Middleware Pipeline for granular request filtering
-   - Decoupled Type Validation, Data Integrity checks, and Query Sanitisation into discrete, reusable stages to enforce strict Domain Logic before reaching the controller layer
+   - Decoupled Type Validation, Data Integrity checks, and Query Sanitisation into discrete, reusable stages to enforce strict Domain Logic before reaching the controller layer<Br>
+     (Ref: ./backend/src/middleware/Book/ContactValidation.ts, DefinitionValidation.ts)
 
 #### Infrastructure and Security
 1. **Multi-Environment Containerization (Docker)**
