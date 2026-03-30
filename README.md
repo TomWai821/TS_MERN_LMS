@@ -154,9 +154,9 @@ After graduation, I dedicated myself to deep-diving into Software Engineering be
     - Leveraged TypeScript across the full stack to enforce rigorous data structures and interface contracts
     - **Result**: Significantly reduced runtime TypeErrors and improved developer productivity through IDE intelligent code completion
   
-- Security Logic - **Dual-Token Authorisation & Identity Management**
-    - Implemented stateless JWT authentication and a specialised Dual-Token verification workflow for high-risk transactions
-    - **Usage**: Enforces a "Four-Eyes Principle" for book loaning, requiring concurrent valid tokens from both the Borrower and the Authorised Personnel
+- Security Logic - **Multi-Party Authorization (MPA) Framework**
+    - Engineered a synchronised JWT handshake protocol to enforce Multi-Factor Authorisation for high-risk loaning operations
+    - **Impact**: Ensures critical state transitions are only executed when cryptographically verified by both the Borrower and Librarian simultaneously, effectively mitigating unauthorised access and insider threats
   
 - State Orchestration - **Performance-Oriented Frontend Architecture**
     - Optimised React performance by centralising global state with Context API and encapsulated logic within Custom Hooks
@@ -1819,7 +1819,7 @@ Image 8.2 - Chip set
    - Endpoint: `GET /api/book/loanRecord?finesPaid=Paid` (For loan book record with finesPaid status filtering)
    ```
    
-2. Create Loan Book record (Dual-Token Requirement)
+2. Create Loan Record (Enforced Dual-Token Mutual Verification)
    ```
    Endpoint: `POST /api/book/loanRecord`
 
