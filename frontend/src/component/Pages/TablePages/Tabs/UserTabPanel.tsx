@@ -13,16 +13,23 @@ import { UserDataTableInterface } from "../../../../Model/UserTableModel"
 const UserTabPanel:FC<UserDataTableInterface> = (userTableData) =>
 {
     const {value, userData, paginationValue, changeValue, setSearchUserData, searchUserData} = userTableData
-    
+
+    const UserRecordTables = 
+    [
+        <AllUserTable userData={userData} value={value} paginationValue={paginationValue} changeValue={changeValue} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/>, 
+        <BannedUserTable userData={userData} value={value} paginationValue={paginationValue}/>
+    ];
+
     return(
         <Fragment>
-            <CustomTabPanel index={0} value={value}>
-                <AllUserTable userData={userData} value={value} paginationValue={paginationValue} changeValue={changeValue} setSearchUserData={setSearchUserData} searchUserData={searchUserData}/>
-            </CustomTabPanel>
-
-            <CustomTabPanel index={1} value={value}>
-                <BannedUserTable userData={userData} value={value} paginationValue={paginationValue}/>
-            </CustomTabPanel>
+            {
+                UserRecordTables.map((table, index) => 
+                (
+                    <CustomTabPanel index={index} value={value}>
+                        {table}
+                    </CustomTabPanel>
+                ))
+            }
         </Fragment>
     )
 }

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 
 // Context
@@ -14,62 +14,23 @@ import { useAuthContext } from "../../../Context/User/AuthContext";
 
 import { TabProps } from "../../../Controller/OtherUsefulController";
 import { DefinitionTabLabel } from "../../../Data/TableData";
+
 import TableTitle from "../../UIFragment/TableTitle";
 import DefinitionFilter from "./Filter/DefinitionFilter";
 import ChipBody from "../../Templates/ChipBodyTemplate";
 import CustomTabPanel from "../../UIFragment/CustomTabPanel";
 
+// Custom Hook in services (Page Data and Filter)
+import { usePageData } from "../../../services/pages/pageService";
+import { useDefinitionFilter } from "../../../services/filters/definitionFilter";
+
 const DefinitionPage  = () => 
 {
-    const {IsAdmin} = useAuthContext();
-    const {definition, fetchDefinitionDataWithFilterData} = useDefinitionContext();
-
-    const [searchData, setSearchData] = useState({genre:"", language: ""});
-    const [tabValue, setTabValue] = useState(0);
-
-    const defaultValue = {genre:"", language: ""};
-
+    const { IsAdmin } = useAuthContext();
+    const { definition } = useDefinitionContext();
+    const { title, tabValue, ChangeTabValue } = usePageData("Definition", IsAdmin);
+    const { searchData, onChange, SearchDefinition, resetFilter } = useDefinitionFilter(tabValue);
     const Title = tabValue === 0 ? "Genre" : "Language";
-
-    const changeValue = useCallback((event: React.SyntheticEvent, newValue: number) =>
-    {
-        setTabValue(newValue);
-    },[])
-
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        const {name, value} = event.target;
-        setSearchData({...searchData, [name]: value});
-    }
-
-    const SearchDefinition = () => 
-    {
-        switch(tabValue)
-        {
-            case 0:
-                fetchDefinitionDataWithFilterData("Genre", searchData.genre);
-                break;
-            
-            case 1:
-                fetchDefinitionDataWithFilterData("Language", searchData.language);
-                break;
-        }
-    }
-
-    const resetFilter = () => 
-    {
-        switch(tabValue)
-        {
-            case 0:
-                fetchDefinitionDataWithFilterData("Genre", "");
-                break;
-            
-            case 1:
-                fetchDefinitionDataWithFilterData("Language", "");
-                break;
-        }
-        setSearchData(defaultValue);
-    }
 
     useEffect(() => 
     {
@@ -82,11 +43,11 @@ const DefinitionPage  = () =>
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
 
-            <TableTitle title={`Manage ${Title} Record`} dataLength={definition[Title].length}/>
+            <TableTitle title={title} dataLength={definition[Title].length}/>
 
             <DefinitionFilter searchData={searchData} value={tabValue} onChange={onChange} Search={SearchDefinition} resetFilter={resetFilter}/>
 
-            <Tabs value={tabValue} onChange={changeValue} sx={{paddingBottom: '50px', width: '500px'}}>
+            <Tabs value={tabValue} onChange={ChangeTabValue} sx={{paddingBottom: '50px', width: '500px'}}>
                 {
                     DefinitionTabLabel.map((tab, index) => 
                     (
@@ -96,11 +57,11 @@ const DefinitionPage  = () =>
             </Tabs>
             
             <CustomTabPanel index={tabValue} value={0}>
-                <ChipBody value={tabValue} title={Title} data={definition.Genre}/>
+                <ChipBody value={tabValue} title={title} data={definition.Genre}/>
             </CustomTabPanel>
 
             <CustomTabPanel index={tabValue} value={1}>
-                <ChipBody value={tabValue} title={Title} data={definition.Language}/>
+                <ChipBody value={tabValue} title={title} data={definition.Language}/>
             </CustomTabPanel>
         </Box>
     );

@@ -11,6 +11,8 @@
     "test": "jest --coverage --verbose"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1019.0",
+    "@aws-sdk/lib-storage": "^3.1019.0",
     "@types/jest": "^30.0.0",
     "@types/supertest": "^7.2.0",
     "bcrypt": "^6.0.0",
@@ -22,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
+    "multer-s3": "^3.0.1",
     "nodemon": "^3.1.11",
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2"
@@ -37,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
     "eslint": "^8.57.1",
+    "serverless-http": "^4.0.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.56.1"

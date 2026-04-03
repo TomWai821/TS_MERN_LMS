@@ -4,7 +4,7 @@ import { FC, Fragment } from "react"
 import CustomTabPanel from "../../../UIFragment/CustomTabPanel"
 
 // 
-import LoanBookTable from "../Tables/Book/OnLoanBookTable"
+import LoanBookTable from "../Tables/Book/LoanBookTable"
 import AllBookTable from "../Tables/Book/AllBookTable"
 
 // Model

@@ -18,4 +18,4 @@ app.use(express.urlencoded({ extended: true }));
 
 routerHandler(app);
 
-export default app;
+export default app

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, TableContainer, Paper } from "@mui/material";
 
 // Another Component
@@ -6,78 +6,26 @@ import ContactFilter from "./Filter/ContactFilter";
 import CustomTab from "../../UIFragment/CustomTab";
 import TableTitle from "../../UIFragment/TableTitle";
 
-// Data (CSS SYntax and dropdown)
+// Data (CSS Syntax and dropdown)
 import { PageItemToCenter } from "../../../Data/Style";
 import { ContactTabLabel, PaginationOption } from "../../../Data/TableData";
 import { useContactContext } from "../../../Context/Book/ContactContext";
+
 import ContactTabPanel from "./Tabs/ContactTabPanel";
+
 import { ChangePage } from "../../../Controller/OtherController";
 import { useAuthContext } from "../../../Context/User/AuthContext";
 
+// Custom Hook in services
+import { usePageData } from "../../../services/pages/pageService";
+import { useContactFilter } from "../../../services/filters/contactFilter";
+
 const ContactPage = () =>
 {
-    const { contact, fetchContactDataWithFilterData } = useContactContext();
-    const {IsAdmin} = useAuthContext();
-    
-    const [searchContact, setSearchContact] = useState({author: "", publisher: ""});
-    const [paginationValue, setPaginationValue] = useState(10);
-    const [tabValue, setTabValue] = useState(0);
-
-    const defaultValue = {author: "", publisher: ""};
-    const Title = ["Manage Author Record", "Manager Publisher Record"];
-
-    const countLength = ()=> 
-    {
-        const dataLength = [contact.Author.length, contact.Publisher.length];
-        return dataLength[tabValue];
-    }
-
-    const changeValue = useCallback((type:string, newValue: number) =>
-    {
-        switch(type)
-        {
-            case "Tab":
-                setTabValue(newValue);
-                break;
-
-            case "Pagination":
-                setPaginationValue(newValue);
-                break;
-            
-            default:
-                break;
-        }
-    },[])
-
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => 
-    {
-        const {name, value} = event.target;
-        setSearchContact({...searchContact, [name]: value});
-    }
-
-    const SearchContact = () => 
-    {
-        const title = ["Author", "Publisher"];
-        switch(tabValue)
-        {
-            case 0:
-                fetchContactDataWithFilterData(title[tabValue], searchContact.author);
-                break;
-
-            case 1:
-                fetchContactDataWithFilterData(title[tabValue], searchContact.publisher);
-                break;
-
-        }
-        
-    }
-
-    const resetFilter = () => 
-    {
-        const title = ["Author", "Publisher"];
-        fetchContactDataWithFilterData(title[tabValue], "");
-        setSearchContact(defaultValue);
-    }
+    const { IsAdmin } = useAuthContext();
+    const { contact } = useContactContext();
+    const { title, tabValue, paginationValue, changeValue } = usePageData("Contact", IsAdmin);
+    const { searchContact, onChange, SearchContact, resetFilter, countLength } = useContactFilter(tabValue);
 
     useEffect(() => 
     {
@@ -89,7 +37,7 @@ const ContactPage = () =>
     
     return( 
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
-            <TableTitle title={Title[tabValue]} dataLength={countLength() as number}/>
+            <TableTitle title={title} dataLength={countLength() as number}/>
 
             <ContactFilter value={tabValue} onChange={onChange} searchData={searchContact} Search={SearchContact} resetFilter={resetFilter}/>
 

@@ -18,3 +18,9 @@ app.listen(PORT, () =>
 })
 
 scheduleDailyMidnightTasks();
+
+/*
+Prepare upload to aws s3 
+
+export const handler = serverless(app); 
+*/
