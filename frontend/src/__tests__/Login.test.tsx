@@ -42,11 +42,16 @@ test('register successfully', async () =>
 
     renderWithProviders(<App />, { route: '/register' } );
     
-    await user.type(screen.getByPlaceholderText(/email/i), "TestUser1@example.com");
+    const emailInput = await screen.findByPlaceholderText(/email/i);
+    await user.type(emailInput, "TestUser1@example.com");
+
     await user.type(screen.getByPlaceholderText(/username/i), "TestUser1");
     await user.type(screen.getByPlaceholderText(/password/i), "TestUser1Password");
-    await user.clear(screen.getByPlaceholderText(/birthDay/i));
-    await user.type(screen.getByPlaceholderText(/birthDay/i), "2000-01-01");
+
+    const birthDayInput = screen.getByPlaceholderText(/birthDay/i);
+    await user.clear(birthDayInput);
+    await user.type(birthDayInput, "2000-01-01");
+
 
     await user.click(screen.getByRole('button', { name: /Register/i }));
 
@@ -124,7 +129,9 @@ test('login successfully', async () =>
 
     renderWithProviders(<App />, { route: '/login' });
 
-    await user.type(screen.getByPlaceholderText(/email/i), "IamTester@gmail.com");
+    const emailInput = await screen.findByPlaceholderText(/email/i);
+    await user.type(emailInput, "IamTester@gmail.com");
+    
     await user.type(screen.getByPlaceholderText(/password/i), "IamTester");
     await user.click(screen.getByRole('button', { name: /Login/i }));
 
