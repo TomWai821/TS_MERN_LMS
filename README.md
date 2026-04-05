@@ -219,27 +219,38 @@ docker-compose -f compose.yaml up --build -d
 
 ## Technical Documentation
 For a detailed look at the system's engineering standards and design patterns, please refer to:
-- [Architecture](./doc/technical/architecture.md): System diagrams, database schema, and design patterns
-- [UI Layout](./doc/technical/ui-design.md): Component architecture and Role-Based UI rendering
-- [API Endpoints](./doc/technical/api.md): Full RESTful API documentation and endpoint details
-- [Testing Strategy](./doc/technical/testing.md): Unit/Integration test strategy and coverage reports
-- [CI/CD Workflow](./doc/technical/ci-cd.md): Automation pipeline for testing and deployment
+- [Architecture](./doc/technical/architecture.md)
+    - System diagrams, database schema, and design patterns
+- [UI Layout](./doc/technical/ui-design.md)
+    - Component architecture and Role-Based UI rendering
+- [API Endpoints](./doc/technical/api.md)
+    - Full RESTful API documentation and endpoint details
+- [Testing Strategy](./doc/technical/testing.md)
+    - Unit/Integration test strategy and coverage reports
+- [CI/CD Workflow](./doc/technical/ci-cd.md)
+    - Automation pipeline for testing and deployment
 
 
 
 ## Core Business Logic Overview
 This document outlines the implementation of the system's background automation, focusing on task scheduling and asynchronous execution stability
-- [Automated Logic](./doc/businessLogic//automated-logic.md): Managed background tasks using setTimeout, setInterval, and Promise.allSettled to ensure resilient, non-blocking process execution
-- [TF-IDF Logic](./doc/businessLogic/tf-idf-logic.md): Implemented a custom text-mining algorithm to calculate term weights for an intelligent book recommendation system
-- [External Metadata Integration](./doc/businessLogic/external-metadata.md): Integrated Google Books API to automate book data retrieval and synchronize high-quality catalog metadata
-- [QR Code Handling (Frontend Only)](./doc/businessLogic/qr-code-handling.md): Implemented entirely on the frontend using a JSON-encoded object (username, userID) to facilitate real-time loan verification via interactive modals, eliminating unnecessary backend API overhead
+- [Automated Logic](./doc/businessLogic//automated-logic.md)
+    - Managed background tasks using setTimeout, setInterval, and Promise.allSettled to ensure resilient, non-blocking process execution
+- [TF-IDF Logic](./doc/businessLogic/tf-idf-logic.md)
+    - Implemented a custom text-mining algorithm to calculate term weights for an intelligent book recommendation system
+- [External Metadata Integration](./doc/businessLogic/external-metadata.md)
+    - Integrated Google Books API to automate book data retrieval and synchronize high-quality catalog metadata
+- [QR Code Handling (Frontend Only)](./doc/businessLogic/qr-code-handling.md)
+    - Implemented entirely on the frontend using a JSON-encoded object (username, userID) to facilitate real-time loan verification via interactive modals, eliminating unnecessary backend API overhead
 
 
 
 ## Product Evolution And Roadmap
 This project focuses on high-standard engineering practices. Key highlights include:
-- [Improvements](./doc/product/improvements.md): Implemented I/O Concurrency (Promise.allSettled), Multi-stage Dockerisation, and FinOps-driven CI/CD (GitHub Actions + Railway GraphQL) to optimise resource consumption
-- [Product Limitation](./doc/product/limitations.md): Strategic Limitations - A transparent analysis of current architectural trade-offs (3NF vs Performance), security considerations (XSS/JWT), and the future engineering roadmap
+- [Improvements](./doc/product/improvements.md)
+    - Implemented I/O Concurrency (Promise.allSettled), Multi-stage Dockerisation, and FinOps-driven CI/CD (GitHub Actions + Railway GraphQL) to optimise resource consumption
+- [Product Limitation](./doc/product/limitations.md)
+    - Strategic Limitations: A transparent analysis of current architectural trade-offs (3NF vs Performance), security considerations (XSS/JWT), and the future engineering roadmap
 
 
 
