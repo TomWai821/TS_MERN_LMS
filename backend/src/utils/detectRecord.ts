@@ -1,5 +1,5 @@
-import { detectExpiredLoanRecord, modifyFinesAmount } from "./schema/book/bookLoaned";
-import { detectExpiredSuspendRecord } from "./schema/user/suspendList";
+import { detectExpiredLoanRecord, modifyFinesAmount } from "../schema/book/bookLoaned";
+import { detectExpiredSuspendRecord } from "../schema/user/suspendList";
 
 type Task = () => Promise<void>;
 

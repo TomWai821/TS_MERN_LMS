@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { GenreInterface } from '../../model/bookSchemaInterface';
-import { printError } from '../../Utils';
+import { printError } from '../../utils/Utils';
 
 const GenreSchema = new mongoose.Schema<GenreInterface>
 (

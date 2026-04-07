@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import dotenv from "dotenv";
 
 import { AuthRequest } from '../model/requestInterface';
+import { config } from '../config/config';
 
-dotenv.config({ debug: false });
-const JWT_SECRET:string = process.env.JWT_SECRET as string;
+const JWT_SECRET:string = config.JWT_SECRET as string;
 
 export const bcryptHash = async(password:string) => 
 {

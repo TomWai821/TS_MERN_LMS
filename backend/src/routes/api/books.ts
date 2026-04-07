@@ -1,16 +1,17 @@
 import express from 'express';
-import { upload } from '../storage';
-import { LoginAndFindUser } from '../data/middlewareGroup';
-import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookImage, GetBookRecord, GetDataFromGoogleBook } from '../controller/bookController';
+import { upload } from '../../storage/multerConfig';
+import { LoginAndFindUser } from '../../data/middlewareGroup';
+import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookRecord, GetDataFromGoogleBook, GetImageController } from '../../controller/bookController';
 
-import { BookCreateRules } from '../validator/expressBodyValidator';
-import { GetBookDataService, GetFavouriteBookDataService } from '../service/book/bookGetDataService';
+import { BookCreateRules } from '../../validator/expressBodyValidator';
+import { GetBookDataService, GetFavouriteBookDataService } from '../../service/book/bookGetDataService';
 
-import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../controller/loanBookController';
-import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../middleware/Book/bookValidationMiddleware';
-import { FetchUserFromHeader } from '../middleware/User/authMiddleware';
-import { CreateFavouriteBookRecord, DeleteFavouriteBookRecord, GetFavouriteBookRecord } from '../controller/favouriteBookController';
-import { HandleEditImage } from '../service/book/bookEditImageService';
+import { CreateLoanBookRecord, GetLoanBookRecord, UpdateLoanBookRecord } from '../../controller/loanBookController';
+import { BookGenreIDAndLanguageIDValidation, BookNameValidation, BookRecordIDValidation, FoundBookLoanRecord } from '../../middleware/Book/bookValidationMiddleware';
+import { FetchUserFromHeader } from '../../middleware/User/authMiddleware';
+import { CreateFavouriteBookRecord, DeleteFavouriteBookRecord, GetFavouriteBookRecord } from '../../controller/favouriteBookController';
+import { HandleEditImage } from '../../service/image/bookEditImageService';
+
 
 const router = express.Router();
 
@@ -31,7 +32,7 @@ router.post('/favourite', ...LoginAndFindUser, CreateFavouriteBookRecord);
 router.delete('/favourite/id=:id', ...LoginAndFindUser, DeleteFavouriteBookRecord);
 
 // For image
-router.get("/uploads/:filename", GetBookImage);
+router.get("/uploads/:imageName", GetImageController);
 router.get("/external", ...LoginAndFindUser, GetDataFromGoogleBook)
 
 export default router;

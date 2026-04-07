@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { LanguageInterface } from '../../model/bookSchemaInterface';
-import { printError } from '../../Utils';
+import { printError } from '../../utils/Utils';
 
 const languageSchema = new mongoose.Schema<LanguageInterface>
 (

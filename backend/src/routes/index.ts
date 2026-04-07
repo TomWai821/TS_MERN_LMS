@@ -1,12 +1,12 @@
 import { Router, Express } from 'express'
 
 // routes
-import userRoutes from './routes/user';
-import bookRoutes from './routes/books';
-import definitionRoutes from './routes/definition'
-import contactRoutes from './routes/contact'
-import recommendRoutes from './routes/recommend'
-import healthRoutes from './routes/health'
+import userRoutes from './api/user';
+import bookRoutes from './api/books';
+import definitionRoutes from './api/definition'
+import contactRoutes from './api/contact'
+import recommendRoutes from './api/recommend'
+import healthRoutes from './health'
 
 const routerList:Record<string, Router> = 
 {

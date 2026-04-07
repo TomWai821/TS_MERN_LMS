@@ -1,16 +1,14 @@
 import { Request, Response } from 'express'
 import { CreateBook, FindBookByID, FindBookByIDAndDelete, FindBookByIDAndUpdate } from '../schema/book/book';
 import { AuthRequest, EditImageInterface } from '../model/requestInterface';
-import { deleteImage } from '../storage';
 import { BookInterface } from '../model/bookSchemaInterface';
 import { FindBookLoanedAndDelete } from '../schema/book/bookLoaned';
 import { FindBookFavouriteAndDeleteMany } from '../schema/book/bookFavourite';
 
-import fs from "fs/promises";
-import path from 'path';
 import { externalBookService } from '../service/book/externalBookService';
-
-const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL as string;
+import { ImageDataBuilder, UploadImage } from '../service/image/bookCreateImageService';
+import { HandleDeleteImage } from '../service/image/bookDeleteImageService';
+import { getStorageStrategy } from '../storage/StorageFactory';
 
 export const GetBookRecord = async (req: AuthRequest, res: Response) => 
 {
@@ -26,19 +24,22 @@ export const GetBookRecord = async (req: AuthRequest, res: Response) =>
     }
 };
 
-
-export const GetBookImage = async (req: Request, res: Response) => 
+export const GetImageController = (req: Request, res: Response) =>
 {
-    const { filename } = req.params;
-    const filePath = path.resolve(__dirname, '../upload', filename as string);
+    const { imageName } = req.params;
 
-    res.sendFile(filePath, (error) => 
+    console.log(imageName);
+
+    if (!imageName) 
     {
-        if (error && !res.headersSent) 
-        {
-            return res.status(404).json({ error: "Image not found" });
-        }
-    });
+        return res.status(400).send("No filename");
+    }
+
+    console.log(imageName);
+
+    const storage = getStorageStrategy();
+    
+    return storage.handleResponse(imageName as string, res);
 };
 
 export const CreateBookRecord = async (req:Request, res:Response) => 
@@ -49,12 +50,10 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
 
     try
     {
-        const imageName = req.file ? `${Date.now()}-${req.file.originalname}` : null;
-        const imageUrl = imageName ? `${BACKEND_BASE_URL}/api/book/uploads/${imageName}`: null;
-        const mongoDate = new Date(publishDate);
+       const imageData = await ImageDataBuilder(req.file as Express.Multer.File, publishDate);
 
         // Add imageUrl to each book
-        const createBook = await CreateBook({ image: {url:imageUrl, filename:imageName}, bookname, languageID, genreID, authorID, publisherID, description, publishDate:mongoDate });
+        const createBook = await CreateBook({ image: {url:imageData.image.url, filename:imageData.image.filename}, bookname, languageID, genreID, authorID, publisherID, description, publishDate:imageData.publishDate });
 
         if(!createBook)
         {
@@ -63,10 +62,9 @@ export const CreateBookRecord = async (req:Request, res:Response) =>
 
         createdBookId = createBook._id;
 
-        if(req.file && imageName)
+        if(req.file && imageData.image.filename)
         {
-            const uploadPath = path.join(__dirname, '../upload', imageName);
-            await fs.writeFile(uploadPath, req.file.buffer);
+            await UploadImage(req.file as Express.Multer.File, imageData.image.filename);
         }
 
         success = true;
@@ -103,13 +101,11 @@ export const EditBookRecord = async (req: AuthRequest, res: Response) =>
 
         if (isImageChanged && req.file) 
         {
-            const newPath = path.join(__dirname, '../upload', newImageName);
-            
-            await fs.writeFile(newPath, req.file.buffer);
+            await UploadImage(req.file as Express.Multer.File, newImageName);
 
             if (oldImageName) 
             {
-                await deleteImage(oldImageName);
+                await HandleDeleteImage(oldImageName);
             }
         }
 
@@ -157,7 +153,7 @@ export const DeleteBookRecord = async(req:Request, res:Response) =>
 
         if (bookResult.status === 'fulfilled') 
         {
-            deleteImage(bookRecord.image.filename);
+            await HandleDeleteImage(bookRecord.image.filename);
         }
 
         success = true;

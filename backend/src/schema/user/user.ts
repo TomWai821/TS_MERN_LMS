@@ -1,6 +1,6 @@
 import mongoose, { PipelineStage } from 'mongoose';
 import { UserInterface } from '../../model/userSchemaInterface';
-import { printError } from '../../Utils';
+import { printError } from '../../utils/Utils';
 import { userRole, userStatus } from '../../data/enums';
 
 const UserSchema = new mongoose.Schema<UserInterface>

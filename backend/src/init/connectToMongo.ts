@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { config } from "../config/config";
 
-dotenv.config({ debug: false });
-const MONGO_URI = process.env.MONGO_URI as string;
+const MONGO_URI = config.MONGO_URI as string;
 
 export const connectToMongoDB = async () => 
 {

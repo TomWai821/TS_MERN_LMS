@@ -39,6 +39,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
+    stdin_open: true
+    tty: true
 
   mongo: 
     image: mongo:6.0 

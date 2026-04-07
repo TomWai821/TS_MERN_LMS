@@ -1,6 +1,6 @@
 import mongoose, { PipelineStage } from "mongoose";
 import { BookLoanedInterface } from "../../model/bookSchemaInterface";
-import { lookupAndUnwind, printError, setToMidnight } from "../../Utils";
+import { lookupAndUnwind, printError, setToMidnight } from "../../utils/Utils";
 import { bookReturnStatus, finesPaidStatus } from "../../data/enums";
 
 const BookLoanedSchema = new mongoose.Schema<BookLoanedInterface>

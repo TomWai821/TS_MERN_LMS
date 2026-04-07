@@ -4,7 +4,7 @@ import path from 'path';
 
 export const deleteImage = async (imageName: string): Promise<void> => 
 {
-    try 
+    try
     {
         const imagePath = path.join(__dirname, 'upload', imageName);
         await fs.unlink(imagePath); 

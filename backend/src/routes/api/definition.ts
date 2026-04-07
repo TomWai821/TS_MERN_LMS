@@ -1,7 +1,7 @@
 import express from 'express';
-import { LoginAndFindUser } from '../data/middlewareGroup';
-import { DefinitionDataValidation, DefinitionTypeValidation } from '../middleware/Book/DefinitonValidationMiddleware';
-import { GetDefinitionRecord, CreateDefinitionRecord, UpdateDefinitionRecord, DeleteDefinitionRecord } from '../controller/definitionController';
+import { LoginAndFindUser } from '../../data/middlewareGroup';
+import { DefinitionDataValidation, DefinitionTypeValidation } from '../../middleware/Book/DefinitonValidationMiddleware';
+import { GetDefinitionRecord, CreateDefinitionRecord, UpdateDefinitionRecord, DeleteDefinitionRecord } from '../../controller/definitionController';
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { PublisherInterface } from '../../model/bookSchemaInterface';
-import { printError } from '../../Utils';
+import { printError } from '../../utils/Utils';
 
 const publisherSchema = new mongoose.Schema<PublisherInterface>
 (

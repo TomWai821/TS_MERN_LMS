@@ -1,11 +1,11 @@
 import express from 'express';
-import { UserRegisterRules, UserLoginRules, UserModifyDataRules, UserModifySelfDataRules } from '../validator/expressBodyValidator'
-import { DeleteUser, GetUserData, ChangeUserData, UserLogin, UserRegister, ChangeStatus, ModifySuspendListData, UpdateUserData, GetSelfUserData } from '../controller/userController';
-import { FetchUserFromHeader } from '../middleware/User/authMiddleware';
-import { SuspendListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../middleware/User/userValidationMiddleware';
-import { GetUserDataService } from '../service/user/GetUserDataService';
-import { BuildUserUpdateDataService } from '../service/user/userUpdateDataService';
-import { LoginAndFindUser, ValidationForModifyStatus } from '../data/middlewareGroup';
+import { UserRegisterRules, UserLoginRules, UserModifyDataRules, UserModifySelfDataRules } from '../../validator/expressBodyValidator'
+import { DeleteUser, GetUserData, ChangeUserData, UserLogin, UserRegister, ChangeStatus, ModifySuspendListData, UpdateUserData, GetSelfUserData } from '../../controller/userController';
+import { FetchUserFromHeader } from '../../middleware/User/authMiddleware';
+import { SuspendListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../../middleware/User/userValidationMiddleware';
+import { GetUserDataService } from '../../service/user/GetUserDataService';
+import { BuildUserUpdateDataService } from '../../service/user/userUpdateDataService';
+import { LoginAndFindUser, ValidationForModifyStatus } from '../../data/middlewareGroup';
 
 const router = express.Router();
 

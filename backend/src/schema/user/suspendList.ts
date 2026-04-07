@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { SuspendListInterface } from "../../model/userSchemaInterface";
-import { printError } from "../../Utils";
+import { printError } from "../../utils/Utils";
 import { FindUserByIDAndUpdate } from "./user";
 import { suspendListStatus } from "../../data/enums";
 

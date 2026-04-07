@@ -1,20 +1,17 @@
 import request from 'supertest'
 import app from '../src/app'
-import mongoose from "mongoose";
+import { connectTestDB, closeTestDB } from './utils/dbHandler'
 
 jest.setTimeout(30000);
 
 beforeAll(async () => 
 {
-    await mongoose.connect(process.env.MONGO_URI!, 
-    {
-        serverSelectionTimeoutMS: 20000,
-    });
+    await connectTestDB();
 });
 
 afterAll(async () => 
 {
-    await mongoose.connection.close();
+    await closeTestDB();
 });
 
 // Get All Book Data

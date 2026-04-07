@@ -1,22 +1,19 @@
 import request from 'supertest'
 import app from '../src/app'
-import mongoose from "mongoose";
 import { FindUserAndDelete } from '../src/schema/user/user'
+import { connectTestDB, closeTestDB } from './utils/dbHandler'
 
 jest.setTimeout(30000);
 
 beforeAll(async () => 
 {
-    await mongoose.connect(process.env.MONGO_URI!, 
-    {
-        serverSelectionTimeoutMS: 20000,
-    });
+    await connectTestDB();
 });
 
 afterAll(async () => 
 {
     FindUserAndDelete("TheTestUser", "tester@gmail.com");
-    await mongoose.connection.close();
+    await closeTestDB();
 });
 
 let authToken:string;

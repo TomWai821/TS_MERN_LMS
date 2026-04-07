@@ -1,0 +1,53 @@
+service: book-management-system
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1 
+  stage: dev
+  memorySize: 512
+  timeout: 15
+  environment:
+    AWS_S3_BUCKET_NAME: ${self:custom.bucketName}
+    MONGO_URI: ${env:MONGO_URI} 
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:DeleteObject
+          Resource: "arn:aws:s3:::${self:custom.bucketName}/*"
+
+custom:
+  bucketName: my-book-system-uploads-${self:provider.stage}
+  apigwBinary:
+    types:
+      - 'multipart/form-data'
+
+functions:
+  api:
+    handler: index.handler 
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: '{proxy+}'
+          method: ANY
+          cors: true
+
+resources:
+  Resources:
+    BookUploadsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          IgnorePublicAcls: false
+          RestrictPublicBuckets: false

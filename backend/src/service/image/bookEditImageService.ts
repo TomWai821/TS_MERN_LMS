@@ -2,8 +2,8 @@ import { Response } from 'express';
 import { FindBookByID } from "../../schema/book/book";
 import { BookInterface } from '../../model/bookSchemaInterface';
 import { AuthRequest } from '../../model/requestInterface';
-
-const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL as string;
+import { config } from '../../config/config';
+import { BUCKET_NAME, AWS_REGION } from '../../init/connectToS3';
 
 export const HandleEditImage = async (req: AuthRequest, res: Response, next: Function) => 
 {
@@ -30,7 +30,16 @@ export const HandleEditImage = async (req: AuthRequest, res: Response, next: Fun
             const cleanFileName = rawName.replace(/^\d+-/, '');
 
             newImageName = `${Date.now()}-${cleanFileName}`;
-            newImageUrl = `${BACKEND_BASE_URL}/api/book/uploads/${newImageName}`;
+            switch (process.env.STORAGE_TYPE)
+            {
+                case 's3':
+                    newImageUrl = `https://${BUCKET_NAME}.s3.${AWS_REGION}://${newImageName}`;
+                    break;
+
+                case 'LOCAL':
+                    newImageUrl = `${config.BACKEND_BASE_URL}/upload/${newImageName}`;
+                    break;
+            }
         }
 
         req.editImageData = {isImageChanged, newImageName, newImageUrl, oldImageName};

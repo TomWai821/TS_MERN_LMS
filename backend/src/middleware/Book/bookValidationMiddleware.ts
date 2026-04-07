@@ -14,6 +14,7 @@ export const BookNameValidation = async (req:Request, res:Response, next: NextFu
         const findBookname = await FindBook({ bookname: bookname });
 
         if(findBookname) return res.status(400).json({success: false, error: "Book with this name are already exist!"});
+
         next();
     }
     catch(error)
@@ -74,6 +75,7 @@ export const FoundBookLoanRecord = async (req:AuthRequest, res:Response, next: N
         if(!foundLoanRecord) return res.status(404).json({success: false, error: `Could not found Loan Record!`});
 
         req.foundLoanedRecord = foundLoanRecord;
+        
         next();
     }
     catch(error)
