@@ -14,13 +14,18 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# For Production
+# For Production 
 FROM node:22-alpine
 WORKDIR /app
+
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.1 /lambda-adapter /opt/extensions/lambda-adapter
+
 COPY package*.json ./
 RUN npm ci --omit=dev --silent
+
 COPY --from=builder /app/dist ./dist
+
 ENV NODE_ENV=production
 ENV PORT=3000
+
 CMD ["node", "dist/entry/lambda.js"]
