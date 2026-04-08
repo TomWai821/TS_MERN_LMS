@@ -138,27 +138,39 @@ After graduation, I dedicated myself to deep-diving into Software Engineering be
 ### Technical Learns 
 - System Architecture - **Layered Design (Router-Middleware-Controller-Service-Model)**
     - Designed a modular Express.js backend to achieve a clean Separation of Concerns
-    - **Benefit**: Facilitates high code maintainability and allows independent testing of business logic and data access layers
+    - **Benefit**
+        - Facilitates high code maintainability and allows independent testing of business logic and data access layers
   
-- Atomic Data Management - **Reliable Image Persistence (Multer & fs/promises)**
-    - Developed a custom upload workflow using memoryStorage to ensure Atomicity between DB records and physical files
-    - **Action**: Implemented a Rollback mechanism and used Regex sanitisation to prevent redundant filename timestamps during consecutive edits
+- Data Integrity & Consistency Management - **Reliable Image Persistence (Multer & fs/promises)**
+    - Developed a custom workflow utilising memoryStorage to simulate atomicity<br>
+      (Ensured that file system mutations (e.g. HandleDeleteImage) only execute after verifying primary database operations)
+    - **Action**
+        - Coordinated Deletion & Logical Rollback
+            - Leveraged Promise.allSettled to manage multi-document cleanup (Loans, Favourites, Book records)<br>
+              (Ensure the physical image is only purged if the core record is successfully removed)
+        - Redundancy Control
+            - Implemented Regex sanitisation and strict execution order to prevent "orphaned" files and redundant filename timestamps during consecutive edits
+
   
 - Type-Safe Development - **End-to-End TypeScript Integration**
     - Leveraged TypeScript across the full stack to enforce rigorous data structures and interface contracts
-    - **Result**: Significantly reduced runtime TypeErrors and improved developer productivity through IDE intelligent code completion
+    - **Result**
+        - Significantly reduced runtime TypeErrors and improved developer productivity through IDE intelligent code completion
   
-- Security Logic - **Multi-Party Authorization (MPA) Framework**
+- Security Logic - **Multi-Party Authorisation (MPA) Framework**
     - Engineered a synchronised JWT handshake protocol to enforce Multi-Factor Authorisation for high-risk loaning operations
-    - **Impact**: Ensures critical state transitions are only executed when cryptographically verified by both the Borrower and Librarian simultaneously, effectively mitigating unauthorised access and insider threats
+    - **Impact**
+        - Ensures critical state transitions are only executed when cryptographically verified by both the Borrower and Librarian simultaneously, effectively mitigating unauthorised access and insider threats
   
 - State Orchestration - **Performance-Oriented Frontend Architecture**
     - Optimised React performance by centralising global state with Context API and encapsulated logic within Custom Hooks
-    - **Benefit**: Minimised unnecessary component re-renders and established a predictable, one-way data flow
+    - **Benefit**
+        - Minimised unnecessary component re-renders and established a predictable, one-way data flow
       
 - Automated QA & DevOps - **CI/CD Pipeline & Containerisation**
     - Built a robust DevOps pipeline using Docker and GitHub Actions to automate the development lifecycle
-    - **Standard**: Enforces strict Linting and Integration Testing via Supertest/Jest before any code is deployed to the repository
+    - **Standard**
+        - Enforces strict Linting and Integration Testing via Supertest/Jest before any code is deployed to the repository
 
 
 ### Disclaimer
