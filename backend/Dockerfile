@@ -15,6 +15,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
+RUN ls -R dist/entry/lambda.js
 
 # For Production 
 FROM node:22.14-alpine3.20
