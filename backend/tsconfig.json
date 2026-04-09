@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     },
   },
-  "include": ["src", "tests", "**/*.test.ts", "node", "storage/multerConfig.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "tests/**/*", "**/*.test.ts"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -3,7 +3,20 @@
   "compilerOptions": 
   {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "sourceMap": false,
+    "declaration": false,
+    "paths": 
+    {
+      "@/*": ["./*"]
+    }
   },
-  "exclude": ["node_modules", "dist", "tests", "**/*.test.ts"]
+  "exclude": 
+  [
+    "node_modules", 
+    "dist", 
+    "tests", 
+    "**/*.test.ts",
+    "src/**/*.test.ts"
+  ]
 }

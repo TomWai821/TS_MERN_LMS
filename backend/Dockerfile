@@ -32,5 +32,5 @@ COPY --from=builder /app/dist ./dist
 ENV NODE_ENV=production
 ENV PORT=3000
 
-CMD ["node", "dist/entry/lambda.js"]
+CMD ["node", "dist/server.js"]
 RUN ls -R dist
