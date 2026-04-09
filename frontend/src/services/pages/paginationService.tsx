@@ -12,7 +12,7 @@ export const usePaginationService = <T extends unknown>(data: T[] = [], paginati
 
     const getCountPage = () : void | number => 
     {
-        return data.length > paginationValue ? count + 1 : count;
+        return count;
     }
 
     const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => 
