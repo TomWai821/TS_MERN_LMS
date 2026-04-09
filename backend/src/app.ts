@@ -17,26 +17,11 @@ app.use((req, res, next) =>
 
 app.use(cors(
 {
-    origin: (origin, callback) => 
-    {
-        if (!origin) return callback(null, true);
-
-        const isVercel = origin.endsWith(".vercel.app");
-        const isWhitelisted = avaliable_ORIGIN_URI.includes(origin);
-        
-        if (isVercel || isWhitelisted || origin === "http://localhost:3000") 
-        {
-            callback(null, true);
-        } 
-        else 
-        {
-            console.log(`CORS Blocked for: ${origin}`);
-            callback(null, false); 
-        }
-    },
+    origin: true,
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["content-type", "authToken"],
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200
 }
 ));
 
