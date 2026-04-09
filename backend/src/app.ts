@@ -10,15 +10,26 @@ const app = express();
 
 app.use((req, res, next) => 
 {
-    console.log(`Incoming Request: ${req.method} ${req.url}`);
-    console.log(`Headers: ${JSON.stringify(req.headers)}`);
+    const origin = req.headers.origin || "*";
+    
+    // 強制設定所有 CORS 相關 Header
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authToken, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    // 關鍵：如果請求是 OPTIONS (Preflight)，直接回傳 204，不要交給後面的 middleware
+    if (req.method === 'OPTIONS') 
+    {
+        return res.status(204).end();
+    }
     next();
 });
 
 app.use(cors(
 {
     origin: true,
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     allowedHeaders: ["content-type", "authToken"],
     credentials: true,
     optionsSuccessStatus: 200
