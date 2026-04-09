@@ -7,15 +7,15 @@ const avaliable_ORIGIN_URI = ORIGIN_URI ? ORIGIN_URI.split(",").map(url => url.t
 
 const app = express();
 
-/*app.use(cors(
+app.use(cors(
     {
         origin: avaliable_ORIGIN_URI,
         methods: ["GET", "POST", "DELETE", "PUT"],
-        allowedHeaders: ["content-type", "authToken"]
+        allowedHeaders: ["content-type", "authToken"],
+        credentials: true
     }
 ));
 
-*/
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
