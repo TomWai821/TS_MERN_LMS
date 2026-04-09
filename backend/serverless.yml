@@ -42,6 +42,17 @@ functions:
     events:
       - httpApi:
           path: '*'
+          cors:
+            allowedOrigins:
+              - https://vercel.app
+            allowedHeaders:
+              - Content-Type
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowCredentials: true
 
 
 resources:
