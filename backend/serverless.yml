@@ -41,24 +41,26 @@ functions:
   api:
     image:
       name: appimage
+    url:
+      authorizerType: none
+      cors:
+        allowedOrigins:
+          - https://ts-mern-lms.vercel.app
+        allowedHeaders:
+          - authToken
+          - Authorization
+          - content-type
+        allowedMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        allowCredentials: true
+        maxAge: 600
     events:
       - httpApi:
           path: '/{proxy+}'
-          cors:
-            allowedOrigins:
-              - https://ts-mern-lms.vercel.app
-            allowedHeaders:
-              - authToken
-              - Authorization
-              - content-type
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowCredentials: true
-            maxAge: 600
 
 
 resources:
