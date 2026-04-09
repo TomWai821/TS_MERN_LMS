@@ -42,13 +42,12 @@ functions:
   api:
     image:
       name: appimage
+    reservedConcurrency: 10
     url:
       authorizerType: none
       cors: false 
     events:
       - httpApi: '*'
-
-
 
 resources:
   Resources:

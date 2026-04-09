@@ -34,7 +34,7 @@ export const HandleEditImage = async (req: AuthRequest, res: Response, next: Fun
             switch (process.env.STORAGE_TYPE)
             {
                 case 's3':
-                    newImageUrl = `https://${BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${newImageName}`;
+                    newImageUrl = `https://${BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/upload/${newImageName}`;
                     break;
 
                 case 'LOCAL':
