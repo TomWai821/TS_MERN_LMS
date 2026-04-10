@@ -6,7 +6,7 @@
 ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?logo=jsonwebtokens&logoColor=white)
 <br>
-A full-stack application that streamlines library operations, built as an Information Technology Project (ITP)
+This Information Technology Project (ITP) is a library management system engineered to implement industry-standard software engineering best practices, transforming academic requirements into a scalable, production-grade cloud-native application
 
 
 ## Live Demo
@@ -131,7 +131,7 @@ After graduation, I refactored the entire system to align with industry-standard
     
     - **Impact**
         - Isolated business logic from transport and persistence layers<br>
-        (Enable independent scaling of services and reducing regression risks during feature iterations)
+          (Enable independent scaling of services and reducing regression risks during feature iterations)
 
 - Logic Refactoring: **Backend-Driven Computation**
     - Offloaded heavy business logic (such as the TF-IDF Recommendation Engine, from the client-side to the Backend Service Layer)
