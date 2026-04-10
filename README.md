@@ -57,7 +57,7 @@ Explore how the system enhances your reading journey with intuitive discovery to
     - The metadata fetching logic includes error handling for HTTP 429 (Too Many Requests)<br>
       (In the event of a quota exhaustion, the UI gracefully falls back to displaying local database metadata to ensure an uninterrupted User Experience)<br>
  
-#### For Admin(Librarian)
+#### For Admin (Librarian)
 
 Demonstrating administrative transparency and data-driven intelligence (Login as Librarian required)
 
@@ -200,15 +200,20 @@ After graduation, I refactored the entire system to align with industry-standard
     - Orchestrated a strategic migration from PaaS (Railway) to an AWS-based Serverless environment using Docker (ECR) and AWS Lambda
 
     - **Infrastructure Automation**
-        - Integrated Amazon EventBridge Scheduler to bypass Lambda’s stateless freezing, enabling precise daily business logic execution (Fines/Loans) without manual intervention
+        - **Environment-Agnostic Task Execution**
+            - Integrated Amazon EventBridge Scheduler to bypass Lambda’s stateless freezing<br>
+              (Enabling precise daily business logic execution (Fines/Loans))
+            - Decoupled Trigger Logic: Designed the backend to be "trigger-agnostic"<br>
+              (Allowing the same maintenance services to be invoked by Local Cron Jobs during development or Cloud Events in production)
 
-    - **CI/CD Reliability**
-        - Engineered a GitHub Actions pipeline that enforces strict linting, Jest/Supertest integration testing 
-        - Automated ECR image builds to guarantee 100% environment parity between Local and Cloud
-        
-    - **Benefit**
-        - Achieved zero-downtime deployments 
-        - Established a "Write Once, Run Anywhere" hybrid architecture that seamlessly handles both persistent API traffic and scheduled background tasks
+        - **CI/CD Reliability**
+            - Engineered a GitHub Actions pipeline that enforces strict linting and Jest/Supertest integration testing
+            - Automated ECR image builds to guarantee that the exact same container images verified in CI are deployed to production
+              (Effectively eliminating environment-specific bugs)
+
+        - **Benefit**
+            - Achieved Zero-Downtime Deployments and optimized operational costs through Serverless scaling
+            - Established a Hybrid Execution Model that seamlessly handles both persistent REST API traffic and scheduled background tasks across any environment
 
 
 ### Disclaimer
@@ -275,7 +280,7 @@ docker-compose -f compose.yaml up --build -d
     - Amazon ECR (Container registry) for storing and managing production-ready Docker images
     - IAM (Identity and Access Management) for secure cross-service communication (Implementing the principle of least privilege (PoLP))
     - Amazon API Gateway for handling RESTful API requests and enforcing CORS security policies
-    - EventBridge for cron job handling
+    - EventBridge Scheduler (Serverless cron job orchestrator) triggering periodic business logic (e.g. daily fine calculations)
 
 - **Other**
     - RESTful APIs with modular design

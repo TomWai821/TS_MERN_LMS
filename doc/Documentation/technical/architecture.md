@@ -8,9 +8,11 @@
 - **Environment Parity**
     - Leveraging Docker Compose to mirror the production environment locally<br>
       (Reducing "works on my machine" inconsistencies via consistent container orchestration)
+
 - **Network Isolation**
     - All internal services communicate securely within a Docker Virtual Network
     - The database (MongoDB) is isolated from external access, accessible only by the backend service
+    
 - **Persistence & Config**
     - Utilises Docker Volumes for persistent data retention
     - Decoupled environment-specific settings via localised .env files for enhanced security
@@ -46,6 +48,7 @@
   - **Frontend**: Hosted on Vercel for optimised edge delivery and seamless React integration
   - **Backend**: Deployed on AWS Lambda via Amazon ECR (Docker Container Image), providing a scalable, serverless execution environment
   - **API Management**: Managed by Amazon API Gateway to handle REST API requests and CORS validation
+  - **Automation**: Amazon EventBridge Scheduler triggers periodic maintenance (e.g., DB cleanup or S3 sync) by invoking the Lambda backend with specific payloads
   - **Storage**: Amazon S3 is utilised for persistent image storage and retrieval
   - **Database**: MongoDB Atlas (DBaaS) for managed security and global scaling
   - **Security**: Credentials are securely injected via Platform Secrets (Vercel/GitHub/AWS), ensuring zero-credential exposure in the source code
@@ -54,11 +57,22 @@
 - Regardless of the environment (Local or Production), the core application logic remains consistent and follows a unified quality standard:
   - **Modular Backend**: Follows the Route-Middleware-Controller pattern with Mongoose for data access
   
-  - **CI/CD Pipeline**: GitHub Actions serves as the central orchestrator:
-    - **Frontend Deployment**: Triggers Deploy Hooks to Vercel to initiate automated builds
-    - **Backend Deployment**: Automates the Docker Build & Push process to Amazon ECR and triggers Lambda function updates via AWS CLI
-    - **Stateless Architecture**: Ensures the backend remains stateless by offloading file management to Amazon S3 and data to MongoDB Atlas
-    - **Quality Gate**: Ensures code reliability through automated testing and linting before any deployment
+  - **CI/CD Pipeline (GitHub Actions)**
+    - **Frontend**
+      - Triggers Deploy Hooks to Vercel for automated builds
+
+    - **Backend**
+      - Automates Docker Build & Push to Amazon ECR and updates Lambda via AWS CLI
+
+    - **Automated Scheduling**
+      - Configures EventBridge to trigger cron jobs, with backend logic designed to distinguish between REST API requests and system tasks
+
+  - **Stateless Architecture**
+    - Ensures the backend remains stateless by offloading all file management to Amazon S3 and data to MongoDB Atlas<br>
+      (Allowing both API and Scheduler to scale independently)
+
+  - **Quality Gate**
+    - Ensures code reliability through automated testing and linting before any deployment
 
 ### Frontend
 ***Sequence Diagram (Authentication)***
