@@ -7,6 +7,7 @@ import definitionRoutes from './api/definition'
 import contactRoutes from './api/contact'
 import recommendRoutes from './api/recommend'
 import healthRoutes from './health'
+import taskRoutes from './task'
 
 const routerList:Record<string, Router> = 
 {
@@ -16,6 +17,7 @@ const routerList:Record<string, Router> =
     '/api/contact': contactRoutes,
     '/api/recommend': recommendRoutes,
     '/health': healthRoutes,
+    '/tasks': taskRoutes
 }
 
 export const routerHandler = (app: Express) => 

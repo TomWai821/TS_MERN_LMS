@@ -280,7 +280,7 @@ For a detailed look at the system's engineering standards and design patterns, p
 
 ## Core Business Logic Overview
 This document outlines the implementation of the system's background automation, focusing on task scheduling and asynchronous execution stability
-- [Automated Logic](./doc/Documentation/businessLogic//automated-logic.md)
+- [Automated Logic](./doc/Documentation/businessLogic/automated-logic.md)
     - Managed background tasks using setTimeout, setInterval, and Promise.allSettled to ensure resilient, non-blocking process execution
 - [TF-IDF Logic](./doc/Documentation/businessLogic/tf-idf-logic.md)
     - Implemented a custom text-mining algorithm to calculate term weights for an intelligent book recommendation system
@@ -362,6 +362,7 @@ This project focuses on high-standard engineering practices. Key highlights incl
       2. `docker compose -f compose.yaml up --build`
     - The backend requires this demo data for proper functionality; if you run MongoDB locally instead of via Docker, import the JSON files in `./backend/MongoDBSchema` (e.g., via MongoDB Compass)
     - Changing `JWT_SECRET` will invalidate existing JWTs and require users to re-login
+    - `STORAGE_TYPE` will affect the logic on image handling and it is require in the .env
 
 
     ### Using local environment
@@ -369,7 +370,7 @@ This project focuses on high-standard engineering practices. Key highlights incl
     ```bash
     cd backend
     npm install
-    nodemon backend/index.ts  
+    nodemon backend/src/server.ts  
     ```
     #### Frontend
     ```bash

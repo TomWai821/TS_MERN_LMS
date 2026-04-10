@@ -54,19 +54,28 @@ To ensure consistent daily execution within a distributed cloud environment:
     - **Immediate Reconciliation**
         - By triggering a synchronisation check upon server wake-up, the system ensures critical business logic is never missed and is processed immediately upon boot (Even if the server was "asleep" during the scheduled midnight slot)
 
+
 ### Scheduling Logic - AWS (EventBridge)
-<img src="../../Image/Functions/dailyCronHandler_AWS.png" style="width:75%;"/><br>
-To ensure consistent daily execution within a distributed cloud environment:
+<img src="../../Image/Functions/AWSTaskDetect_AWS.png" style="width:75%;"/><br>
+To ensure consistent daily execution within a Serverless cloud environment:
 
-- **Serverless Scheduling Strategy**
-    - **Precision via EventBridge**
-        - Leveraging AWS native EventBridge for exact-time invocation (no manual drift calculation needed)
+- Infrastructure-as-a-Trigger Strategy
+    - API-Based Invocation
+        - Leveraging Amazon EventBridge Scheduler to dispatch a persistent POST request with a custom JSON payload<br>
+          (This allows the system to reuse existing middleware and routing logic without maintaining a separate Lambda handler)
 
-    - **Stateless Execution**
-        - Each task run is a fresh, isolated invocation (Ensure zero cumulative time drift over months of operation)
+    - Stateless Resilience
+        - Bypasses AWS Lambda's execution freezing by using external infrastructure to "wake up" the service<br>
+          (Ensure tasks run reliably even if the instance was recently idle)
+    - Security & Validation
+        - Implemented a dedicated controller (AWSTaskDetect) that enforces payload integrity checks (source/task verification)<br>
+          (Prevent unauthorised external execution of sensitive administrative tasks)
 
-    - **Timezone Consistency** 
-        - Scheduling managed at the AWS Infrastructure level using UTC-based cron cron(0 16 * * ? *) to target Hong Kong Midnight
+- Cloud-Native Precision
+    - Managed Scheduling
+        - Offloads time-calculation logic to the AWS infrastructure level
+        - Using the native Asia/Hong_Kong timezone support in EventBridge Scheduler to eliminate UTC conversion errors and cumulative time drift
+
 
 
 ### Tasks

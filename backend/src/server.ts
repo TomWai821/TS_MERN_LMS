@@ -1,6 +1,6 @@
 // another file functions
 import { connectToMongoDB } from './init/connectToMongo';
-import { dailyCronHandler, scheduleDailyMidnightTasks } from './utils/detectRecord';
+import { scheduleDailyMidnightTasks } from './utils/detectRecord';
 import { config } from './config/config';
 import app from './app'
 
