@@ -337,7 +337,7 @@ This document outlines the implementation of the system's background automation,
 ## Product Evolution And Roadmap
 This project focuses on high-standard engineering practices. Key highlights include:
 - [Improvements](./doc/Documentation/product/improvements.md)
-    - Implemented I/O Concurrency (Promise.allSettled), Multi-stage Dockerisation, and FinOps-driven CI/CD (GitHub Actions + Railway GraphQL) to optimise resource consumption
+    - Optimised system performance and deployment efficiency through I/O Concurrency (Promise.allSettled), Multi-stage Dockerisation, and an Automated Serverless CI/CD Pipeline (GitHub Actions + AWS ECR/Lambda)
 - [Product Limitation](./doc/Documentation/product/limitations.md)
     - Strategic Limitations: A transparent analysis of current architectural trade-offs (3NF vs Performance), security considerations (XSS/JWT), and the future engineering roadmap
 

@@ -2,7 +2,7 @@
 
 ### System Architecture Overview
 ***Architecture Diagram - Development***
-<img src="../../../Image/Diagrams/ArchitectureDiagram_Development.png" style="width:90%;"/><br>
+<img src="../../Image/Diagrams/ArchitectureDiagram_Development.png" style="width:90%;"/><br>
 
 1. **Development & Deployment Infrastructure**
 - **Environment Parity**
@@ -125,7 +125,7 @@
     
     
 4. Data Deletion
-<img src="./Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:90%;"/><br>
+<img src="../../Image/Diagrams/DeleteDataSequenceDiagram.png" style="width:90%;"/><br>
 - This sequence diagram captures the user confirmation flow initiated via a frontend DELETE request
 - The process includes middleware-level data parsing, backend token validation, and MongoDB record deletion<br>
   (It ensures secure and reliable user operations through structured response handling and modular orchestration across services)<br>

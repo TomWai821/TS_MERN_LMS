@@ -84,7 +84,8 @@
 ### Remarks
 - **For CI/CD**
     - The entire CI/CD workflow is managed and automated via GitHub Actions workflows
-    - CI/CD workflow definitions are located in `.github/workflows/` (The whole process could be viewed in the actions tab -> All workflows, CD workflow = CD pipeline)
+    - CI/CD workflow definitions are located in `.github/workflows/`<br>
+      (The whole process could be viewed in the actions tab -> All workflows, CD workflow = CD pipeline)
 - **For CD (AWS Deployment)**
     - **Production Environment Realignment**
         - Migrated backend hosting from Railway to AWS Lambda (Container Image via ECR)
