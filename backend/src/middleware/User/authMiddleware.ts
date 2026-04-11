@@ -26,12 +26,31 @@ export const FetchUserFromHeader = async (req: AuthRequest, res: Response, next:
 
 export const AuthIdValidation = async (req: AuthRequest, res: Response, next: NextFunction) => 
 {
-    const userId = await FindUser({_id: req.user?._id});
+    const userId = req.user?._id;
+    
+    const user = await FindUser({_id: userId});
 
-    if (!userId) 
+    if (!user) 
     {
         return res.status(400).json({ success: false, error: "Invalid auth Token!" });
     }
 
     next();
+}
+
+export const AuthRoleValidation = (allowedRoles: string[]) => 
+{
+    return async (req: AuthRequest, res: Response, next: NextFunction) => 
+    {
+        const userId = req.user?._id;
+
+        const userRole = await FindUser({_id: userId, role: {$in: allowedRoles}});
+
+        if (!userRole) 
+        {
+            return res.status(403).json({ success: false, error: "Insufficient permissions!" });
+        }
+
+        next();
+    }
 }

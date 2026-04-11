@@ -5,7 +5,7 @@ import { FetchUserFromHeader } from '../../middleware/User/authMiddleware';
 import { SuspendListValidation, CompareUserStatus, FoundUserFromParams, UserLoginDataValidation, UserRegisterDataValidation } from '../../middleware/User/userValidationMiddleware';
 import { GetUserDataService } from '../../service/user/GetUserDataService';
 import { BuildUserUpdateDataService } from '../../service/user/userUpdateDataService';
-import { LoginAndFindUser, ValidationForModifyStatus } from '../../data/middlewareGroup';
+import { LoginAndFindUser, ValidateAuthTokenAsAdmin, ValidationForModifyStatus } from '../../data/middlewareGroup';
 
 const router = express.Router();
 
@@ -15,14 +15,15 @@ router.get('/UserData', UserModifySelfDataRules, FetchUserFromHeader, GetSelfUse
 router.post('/Register', UserRegisterRules, UserRegisterDataValidation, UserRegister);
 router.post('/Login', UserLoginRules, UserLoginDataValidation, UserLogin);
 
-// For another data
-router.put('/UserData/id=:id', UserModifyDataRules, ...LoginAndFindUser, FoundUserFromParams, BuildUserUpdateDataService, ChangeUserData);
+// For modify user data as admin (librarian)
+router.put('/UserData/id=:id', UserModifyDataRules, ...ValidateAuthTokenAsAdmin, FoundUserFromParams, BuildUserUpdateDataService, ChangeUserData);
+// For user modify self data (username/password)
 router.put('/UserData/type=:type', ...LoginAndFindUser, UpdateUserData);
 
 // For status only
-router.put('/Status/id=:id', UserModifyDataRules, ...LoginAndFindUser, ...ValidationForModifyStatus, FoundUserFromParams, CompareUserStatus, ChangeStatus);
-router.put('/SuspendListData/id=:id', UserModifyDataRules, ...LoginAndFindUser, FoundUserFromParams, SuspendListValidation, ModifySuspendListData);
+router.put('/Status/id=:id', UserModifyDataRules, ...ValidateAuthTokenAsAdmin, ...ValidationForModifyStatus, FoundUserFromParams, CompareUserStatus, ChangeStatus);
+router.put('/SuspendListData/id=:id', UserModifyDataRules, ...ValidateAuthTokenAsAdmin, FoundUserFromParams, SuspendListValidation, ModifySuspendListData);
 
-router.delete('/User/id=:id', ...LoginAndFindUser, FoundUserFromParams, DeleteUser);
+router.delete('/User/id=:id', ...ValidateAuthTokenAsAdmin, FoundUserFromParams, DeleteUser);
 
 export default router;

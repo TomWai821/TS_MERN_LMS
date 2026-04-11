@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../../storage/multerConfig';
-import { LoginAndFindUser } from '../../data/middlewareGroup';
+import { LoginAndFindUser, ValidateAuthTokenAsAdmin } from '../../data/middlewareGroup';
 import { CreateBookRecord, DeleteBookRecord, EditBookRecord, GetBookRecord, GetDataFromGoogleBook, GetImageController } from '../../controller/bookController';
 
 import { BookCreateRules } from '../../validator/expressBodyValidator';
@@ -17,16 +17,16 @@ const router = express.Router();
 
 // For book records
 router.get('/record', GetBookDataService, GetBookRecord);
-router.post('/record', upload.single("image"), BookCreateRules, ...LoginAndFindUser, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
-router.put('/record/id=:id', upload.single("image"), ...LoginAndFindUser, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, HandleEditImage, EditBookRecord);
-router.delete('/record/id=:id', ...LoginAndFindUser, BookRecordIDValidation, DeleteBookRecord);
+router.post('/record', upload.single("image"), BookCreateRules, ...ValidateAuthTokenAsAdmin, BookNameValidation, BookGenreIDAndLanguageIDValidation, CreateBookRecord);
+router.put('/record/id=:id', upload.single("image"), ...ValidateAuthTokenAsAdmin, BookRecordIDValidation, BookGenreIDAndLanguageIDValidation, HandleEditImage, EditBookRecord);
+router.delete('/record/id=:id', ...ValidateAuthTokenAsAdmin, BookRecordIDValidation, DeleteBookRecord);
 
 // For Loan book records
 router.get('/loanRecord/type=:type', FetchUserFromHeader, GetLoanBookRecord);
-router.post('/loanRecord', ...LoginAndFindUser, CreateLoanBookRecord);
-router.put('/loanRecord/id=:id', ...LoginAndFindUser, FoundBookLoanRecord, UpdateLoanBookRecord);
+router.post('/loanRecord', ...ValidateAuthTokenAsAdmin, CreateLoanBookRecord);
+router.put('/loanRecord/id=:id', ...ValidateAuthTokenAsAdmin, FoundBookLoanRecord, UpdateLoanBookRecord);
 
-// For Loan book records
+// For Favourite book records
 router.get('/favourite', ...LoginAndFindUser, FetchUserFromHeader, GetFavouriteBookDataService, GetFavouriteBookRecord);
 router.post('/favourite', ...LoginAndFindUser, CreateFavouriteBookRecord);
 router.delete('/favourite/id=:id', ...LoginAndFindUser, DeleteFavouriteBookRecord);
