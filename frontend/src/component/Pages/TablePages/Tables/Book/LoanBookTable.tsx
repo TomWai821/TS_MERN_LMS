@@ -29,7 +29,7 @@ interface LoanBookTableCellInterface
 
 const LoanBookTableCell = (propsData: LoanBookTableCellInterface) => 
 {
-    const {paginatedData, TableName, value, setSearchBook, searchBook, paginationPageVariable} = propsData;
+    const { paginatedData, TableName, value, setSearchBook, searchBook, paginationPageVariable } = propsData;
     const { IsAdmin } = useAuthContext();
 
     return(

@@ -30,7 +30,7 @@ const DefinitionPage  = () =>
     const { definition } = useDefinitionContext();
     const { title, tabValue, ChangeTabValue } = usePageData("Definition", IsAdmin);
     const { searchData, onChange, SearchDefinition, resetFilter } = useDefinitionFilter(tabValue);
-    const Title = tabValue === 0 ? "Genre" : "Language";
+    const definitionType = tabValue === 0 ? "Genre" : "Language";
 
     useEffect(() => 
     {
@@ -43,7 +43,7 @@ const DefinitionPage  = () =>
     return(
         <Box sx={{ ...PageItemToCenter, flexDirection: 'column', padding: '0 50px'}}>
 
-            <TableTitle title={title} dataLength={definition[Title].length}/>
+            <TableTitle title={title} dataLength={definition[definitionType].length}/>
 
             <DefinitionFilter searchData={searchData} value={tabValue} onChange={onChange} Search={SearchDefinition} resetFilter={resetFilter}/>
 
@@ -57,11 +57,11 @@ const DefinitionPage  = () =>
             </Tabs>
             
             <CustomTabPanel index={tabValue} value={0}>
-                <ChipBody value={tabValue} title={title} data={definition.Genre}/>
+                <ChipBody value={tabValue} definitionType={definitionType} data={definition.Genre}/>
             </CustomTabPanel>
 
             <CustomTabPanel index={tabValue} value={1}>
-                <ChipBody value={tabValue} title={title} data={definition.Language}/>
+                <ChipBody value={tabValue} definitionType={definitionType} data={definition.Language}/>
             </CustomTabPanel>
         </Box>
     );

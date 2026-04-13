@@ -29,18 +29,19 @@ const DeleteDefinitionConfirmModal:FC<DeleteModalInterface> = (deleteData) =>
 
     const setTitle = () => 
     {
-        let setTitle = {title:"", subTitle:""};
+        let setTitle = {title: "", subTitle: ""};
         
         setTitle.title = `Delete ${type} Definition`;
         setTitle.subTitle = "Do you want to delete this defination?"
+
         return setTitle;
     }
 
     const DeleteDefinitionAction = async () => 
     {
-        const response: Response  = await deleteDefinition(type as string, deleteData._id);
+        const response: Response = await deleteDefinition(type as string, deleteData._id);
 
-         const result: GetResultInterface = await response.json();
+        const result: GetResultInterface = await response.json();
                 
         if (alertContext && alertContext.setAlertConfig) 
         {

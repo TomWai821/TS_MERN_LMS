@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useCallback } from "react";
+import { useState, ChangeEvent, useCallback } from "react";
 import { useBookContext } from "../../Context/Book/BookContext";
 import { useContactContext } from "../../Context/Book/ContactContext";
 import { useDefinitionContext } from "../../Context/Book/DefinitionContext";
@@ -52,11 +52,6 @@ export const useBookFilter = (tabValue:number) =>
         }
         setSearchBook(defaultValue);
     }, [tabValue, fetchBookWithFliterData, fetchLoanBookWithFliterData]);
-
-    useEffect(() =>
-    {
-        resetFilter()
-    },[tabValue, resetFilter])
 
     return { searchBook, setSearchBook, onChange, SearchBook, resetFilter };
 }

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { useUserContext } from "../../Context/User/UserContext";
 
 const defaultValue = { username: "", role: "All", status: "All", gender: "All" };
@@ -27,11 +27,6 @@ export const useUserFilter = (tabValue:number) =>
         fetchUser(TableName[tabValue], defaultValue);
         setSearchUserData(defaultValue);
     }, [tabValue, TableName, fetchUser]);
-
-    useEffect(() =>
-    {
-        resetFilter()
-    },[tabValue, resetFilter])
 
     return { searchUserData, setSearchUserData, onChange, SearchUser, resetFilter };
 }

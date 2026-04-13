@@ -13,7 +13,7 @@ import { useModal } from "../../Context/ModalContext";
 
 const ChipBody:FC<ChipBodyInterface> = (chipBodyData) => 
 {
-    const {value, title, data} = chipBodyData;
+    const {value, definitionType, data} = chipBodyData;
     const {handleOpen} = useModal();
 
     const openCreateModal = (value: number) => 
@@ -37,10 +37,10 @@ const ChipBody:FC<ChipBodyInterface> = (chipBodyData) =>
              data.map((Data, index) => 
                 (
                     <Chip sx={{marginRight: '10px'}} key={index} label={`${value === 0 ? Data.genre : Data.language} (${Data.shortName})`} variant="outlined" 
-                        onClick={() => openEditModal(value, Data)} onDelete={() => handleDelete(title, Data)}/>
+                        onClick={() => openEditModal(value, Data)} onDelete={() => handleDelete(definitionType, Data)}/>
                 ))
             }
-            <Tooltip title={`Create ${title} Definition Data`}>
+            <Tooltip title={`Create ${definitionType} Data`}>
                 <IconButton onClick={() => openCreateModal(value)}>
                     <AddIcon/>
                 </IconButton>

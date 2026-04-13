@@ -39,7 +39,7 @@ interface UserDataTableInterface
 interface ChipBodyInterface
 {
     value:number;
-    title:string; 
+    definitionType:string; 
     data:any[]; 
 }
 

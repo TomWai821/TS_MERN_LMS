@@ -40,7 +40,7 @@ import { useUserContext } from "../../../../../Context/User/UserContext";
 const ActionTableCellForAdmin: FC<ActionTableCellInterface> = ({...tableCellData}) => 
 {
     const { handleOpen } = useModal();
-    const { fetchLoanBookWithFliterData} = useBookContext();
+    const { fetchLoanBookWithFliterData } = useBookContext();
     const { fetchUser } = useUserContext();
     const { BookRecordForUser, favouriteBook, unfavouriteBook } = useSelfBookRecordContext();
     const alertContext = useContext(AlertContext);
