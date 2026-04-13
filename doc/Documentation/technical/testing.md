@@ -271,7 +271,7 @@ if (!pm.environment.get("token")) {
 ```
 
 Reminder 
-    - If you run services locally (not via Docker), replace container hostnames with `localhost` and ensure `PORT` matches the backend port you started (e.g., 5000)
+    - If you run services locally (not via Docker), replace container hostnames with `localhost` and ensure `PORT` matches the backend port you started (e.g. 5000)
 
 #### Request to run
 1. Login

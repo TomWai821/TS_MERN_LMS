@@ -9,7 +9,7 @@
 <img src="../../Image/Functions/DefaultGoogleBookData.png" style="width:40%;"/><br>
 - The DEFAULT_BOOK_DATA constant serves as a standardised Data Template to enforce strict schema consistency across the metadata pipeline
 - By merging this baseline with raw API responses, the system implements a 'Graceful Degradation' strategy<br>
-  (This defensive mechanism effectively prevents Frontend Runtime Errors (e.g., 'Cannot read property of undefined') and maintains a predictable UI state, even when external metadata is incomplete or fragmented)<br>
+  (This defensive mechanism effectively prevents Frontend Runtime Errors (e.g. 'Cannot read property of undefined') and maintains a predictable UI state, even when external metadata is incomplete or fragmented)<br>
 
 **3. External API Orchestration and Fail-safe Logic**<br>
 <img src="../../Image/Functions/GoogleBookService.png" style="width:60%;"/><br>
@@ -43,7 +43,7 @@
 
 - **Technical Highlights**
     - **Defensive Destructuring**
-        - Utilises Nested Destructuring with Default Values (e.g., volumeInfo = {}) to prevent "Cannot destructure property of undefined" errors, providing immediate resilience against unexpected API response shapes
+        - Utilises Nested Destructuring with Default Values (e.g. volumeInfo = {}) to prevent "Cannot destructure property of undefined" errors, providing immediate resilience against unexpected API response shapes
       
     - **Immutability-Driven Merging**
         - Implements the Spread Operator (...DEFAULT_BOOK_DATA) to maintain immutability<br>
@@ -58,4 +58,4 @@
           (Ensure that currency codes and amounts are formatted as a unified string only when the item is explicitly marked for sale)
           
     - **Data Type Castings**
-        - Performs explicit transformations (e.g., .toString() and Array.join()) to ensure the final DTO consists of strictly defined primitive types, simplifying the rendering logic in the Frontend
+        - Performs explicit transformations (e.g. .toString() and Array.join()) to ensure the final DTO consists of strictly defined primitive types, simplifying the rendering logic in the Frontend

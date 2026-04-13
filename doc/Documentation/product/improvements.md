@@ -39,7 +39,7 @@
     - Engineered a dual-strategy storage layer that dynamically switches between Local FS and Amazon S3 via environment toggles
     - This decouples business logic from infrastructure<br>
       (Ensure a zero-dependency local setup while optimising for the Stateless architecture of AWS Lambda)<br>
-      (Ref: ./backend/src/service/image/*.ts)
+      (Ref: [image Directory](../../../backend/src/service/image/))
 
 
 #### Infrastructure and Security
@@ -67,7 +67,7 @@
 #### CI/CD
 1. **Automated Quality Gates** (GitHub Actions)
     - Automatically triggers Jest test suites and ESLint on every functional Push and Pull Request
-      (Implemented Path-based Filtering to bypass CI/CD triggers for non-documentation changes (e.g., Markdown files, Images), ensuring CI resources are focused only on code-related regressions)<br>
+      (Implemented Path-based Filtering to bypass CI/CD triggers for non-documentation changes (e.g. Markdown files, Images), ensuring CI resources are focused only on code-related regressions)<br>
   
 2. **Resource & Cost Optimisation** (FinOps)
     - Implemented Ignored Build Steps and API-driven triggers to minimise redundant builds<br>
@@ -79,7 +79,7 @@
   
 1. **Environment Parity & Containerssation** (Docker)
     - Engineered a multi-stage Dockerfile to encapsulate the entire application environment<br>
-      (Guaranteed 100% consistency between local development and cloud production (Railway/Vercel), eliminating "it works on my machine" deployment risks)
+      (Guaranteed 100% consistency between local development and cloud production (Railway/AWS), eliminating "it works on my machine" deployment risks)
 
 
 
@@ -88,7 +88,7 @@
 #### Frontend Side
 1. **System-wide Hook Migration**
     - Transition the remaining View components to the Custom Hook pattern to standardise state management and logic separation across the entire application<br>
-      (Ref: `./frontend/src/customhook.tsx`)
+      (Ref: [customhook Directory](../../../frontend/src/customhook))
     
 2. **Refactor Context API into two specialised hooks**
     - One for data state and another for CRUD operations to improve maintainability and decouple view logic
@@ -100,7 +100,7 @@
     - Support multiple contact (Publisher/Author) inputs via JSON strings to enhance efficiency over manual field entry
 
 5. **Unified API Transport Layer (Ajax Utils)**
-    - Centralised API communication into a generic transport layer (Ref: `./frontend/src/improvement/AjaxUtils`)<br>
+    - Centralised API communication into a generic transport layer (Ref: [AjaxUtils.ts](../../../frontend/src/improvement/AjaxUtils.ts))<br>
       (This standardises request/response formats and error-handling protocols, significantly decoupling business logic from the underlying fetch implementation)
 
 
@@ -112,13 +112,13 @@
     - Replace basic `setInterval` + `setTimeout` with **node-cron** or cloud-based schedulers for better reliability and error handling
     
 3. **Standardised Response Wrapper**
-    - Implement a unified response structure (e.g., `errorCode`, `errorMessage`, `totalCount`) to improve API usability (Ref: `./backend/src/improvement/`)
+    - Implement a unified response structure (e.g. `errorCode`, `errorMessage`, `totalCount`) to improve API usability (Ref: [Improvement.ts](../../../backend/src/improvement))
     
 4. **Generic CRUD Factory (OOP & Factory Pattern)**
-    - Implemented a Generic CRUD Factory to encapsulate redundant DB operations across collections (Ref: `./backend/src/improvement/CRUDFactory.ts`)
+    - Implemented a Generic CRUD Factory to encapsulate redundant DB operations across collections (Ref: [CRUDFactory.ts](../../../backend/src/improvement/CRUDFactory.ts))
 
 5. **ACID Transactions (Multi-collection Consistency)**
-    - Transitioning complex Write/Delete operations from **Promise.all** to **MongoDB Transactions** to ensure strict atomicity across related collections (e.g., cascading deletes) in production replica-set environments
+    - Transitioning complex Write/Delete operations from **Promise.all** to **MongoDB Transactions** to ensure strict atomicity across related collections (e.g. cascading deletes) in production replica-set environments
 
 
 #### Infrastructure and Security

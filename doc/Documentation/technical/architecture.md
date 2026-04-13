@@ -22,7 +22,7 @@
 
 | Layer            | Responsibility	                                                                 | Key Practice                                              |
 | ---------------- | --------------------------------------------------------------------------------| --------------------------------------------------------- |
-| Routing          | Resource-based dispatching (e.g., /books, /users)                               | Decoupled Modules using express.Router                    |
+| Routing          | Resource-based dispatching (e.g. /books, /users)                                | Decoupled Modules using express.Router                    |
 | Middleware       | Handles Auth (JWT), Validation, and Integrity checks                            | The Quality Gate for incoming data                        |
 | Controller       | Orchestrates request lifecycle and core CRUD operations                         | Action-oriented and delegated Query Building to Services  |
 | Service          | Core Algorithms (TF-IDF), External API (Google Books)	                         | Pure logic Isolation; strictly return-value driven        |
@@ -48,7 +48,7 @@
   - **Frontend**: Hosted on Vercel for optimised edge delivery and seamless React integration
   - **Backend**: Deployed on AWS Lambda via Amazon ECR (Docker Container Image), providing a scalable, serverless execution environment
   - **API Management**: Managed by Amazon API Gateway to handle REST API requests and CORS validation
-  - **Automation**: Amazon EventBridge Scheduler triggers periodic maintenance (e.g., DB cleanup or S3 sync) by invoking the Lambda backend with specific payloads
+  - **Automation**: Amazon EventBridge Scheduler triggers periodic maintenance (e.g. DB cleanup or S3 sync) by invoking the Lambda backend with specific payloads
   - **Storage**: Amazon S3 is utilised for persistent image storage and retrieval
   - **Database**: MongoDB Atlas (DBaaS) for managed security and global scaling
   - **Security**: Credentials are securely injected via Platform Secrets (Vercel/GitHub/AWS), ensuring zero-credential exposure in the source code
@@ -167,7 +167,7 @@ Other functions (grouped, not on the main synchronous path)
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | CI Pipeline (Quality Gate) | Automated Linting and Unit/Integration Testing on every mon-documentation Push/PR                           | .github/workflows/ci.yml,  .github/workflows/cd.yml          |
 | Infrastructure/Init        | Container orchestration and automated DB Schema initialisation / Seeding for environment parity             | docker-compose.yml/compose.yaml, backend/MongoDBSchema/*     |
-| Scheduled Jobs             | Background services for critical business logic (e.g., overdue detection and automated fine calculation)    | backend/detectRecord.ts                                      |
+| Scheduled Jobs             | Background services for critical business logic (e.g. overdue detection and automated fine calculation)     | backend/detectRecord.ts                                       |
 
 
 ### Database

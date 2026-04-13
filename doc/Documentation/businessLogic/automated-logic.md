@@ -11,7 +11,7 @@ These automated backend functions run silently in the background and are difficu
 
 - **Decoupled Task Management**
     - Implemented a Centralised Task Registry using a functional approach
-    - This Separation of Concerns ensures that adding new business rules (e.g., auto-notifications) requires zero modification to the core scheduling engine, enhancing system maintainability and extensibility
+    - This Separation of Concerns ensures that adding new business rules (e.g. auto-notifications) requires zero modification to the core scheduling engine, enhancing system maintainability and extensibility
 
 
 ### Task execution
@@ -38,7 +38,7 @@ To ensure consistent daily execution within a distributed cloud environment:
 
 - **Precision Scheduling Strategy**
     - **Initial Alignment**
-        - setTimeout calculates the exact delay until the next target time (e.g., Midnight UTC+8)<br>
+        - setTimeout calculates the exact delay until the next target time (e.g. Midnight UTC+8)<br>
           (Ensure the first run aligns perfectly with business hours)<br>
           
     - **Drift Prevention**
@@ -102,7 +102,7 @@ A core utility function specifically designed for **Loan Book Record Detection**
     - **Current Date**: `2025-12-25 08:15:00` → Normalised to `2025-12-25 00:00:00`
     - **Result**: The difference is exactly **1 day**, correctly triggering the first-day fine
 
-***2. Detect Expired Loan Book Records*** (Ref: backend/src/schema/book/bookloaned.ts, Line 159–196)<br>
+***2. Detect Expired Loan Book Records*** (Ref: [bookloaned.ts](../../../backend/src/schema/book/bookloaned.ts), Line 164–202)<br>
 <img src="../../Image/Functions/DetectExpiredLoanRecord.png" style="width:90%;"/><br>
 
 This background task automatically scans and identifies overdue books, initialising the fine process for delinquent accounts:
@@ -122,7 +122,7 @@ This background task automatically scans and identifies overdue books, initialis
     - Generates console logs for each successful modification, facilitating system monitoring and troubleshooting
 
 
-***3. Dynamic Fine Scaling & Adjustment*** (Ref: backend/src/schema/book/bookloaned.ts, Line 198–232)<br>
+***3. Dynamic Fine Scaling & Adjustment*** (Ref: [bookloaned.ts](../../../backend/src/schema/book/bookloaned.ts), Line 204–256)<br>
 <img src="../../Image/Functions/FinesAmountCalculation.png" style="width:90%;"/><br>
 
 A robust background service designed for recurring calculation and dynamic scaling of overdue fines for "Not Paid" loan records
@@ -153,7 +153,7 @@ A robust background service designed for recurring calculation and dynamic scali
         - Incorporates Math.max(0, ...) as a safety guard to prevent illogical negative-day calculations in edge-case data scenarios
 
 
-***4. Automatically Unsuspend User*** (Ref: backend/schema/user/suspendlist.ts, Line 99–137) <br>
+***4. Automatically Unsuspend User*** (Ref: [suspendlist.ts](../../../backend/src/schema/user/suspendlist.ts), Line 99–137) <br>
 <img src="../../Image/Functions/SuspendRecordDetection.png" style="width:90%;"/><br>
 This background task manages the automatic restoration of user accounts once their suspension period concludes
 

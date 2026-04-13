@@ -76,7 +76,7 @@ Demonstrating administrative transparency and data-driven intelligence (Login as
 3. Administrative Loan (Requires 2 Browsers)
     - (Librarian Browser): Navigate to Management > Book Management
     - (Librarian Browser): Select an OnShelf book and click Loan Book
-    - (Librarian Browser): Choose User Loaned, then input/scan the QR Code data (From `doc/DemonstrationMaterial/DemonStrationData.txt` in the repository) and confirm
+    - (Librarian Browser): Choose User Loaned, then input/scan the QR Code data (From [Demo Material](doc/DemonstrationMaterial/DemonStrationData.txt)) and confirm
         - **Observe**: The book status instantly changes to OnLoan
     - (User Browser): Switch to the User's browser window
     - (User Browser): Navigate to Records > Loan Book Record
@@ -406,6 +406,7 @@ This project focuses on high-standard engineering practices. Key highlights incl
     - The backend requires this demo data for proper functionality; if you run MongoDB locally instead of via Docker, import the JSON files in `./backend/MongoDBSchema` (e.g., via MongoDB Compass)
     - Changing `JWT_SECRET` will invalidate existing JWTs and require users to re-login
     - `STORAGE_TYPE` will affect the logic on image handling and it is require in the .env
+    - Modify build `target` and backend `NODE_ENV` to development before build the docker compose
 
 
     ### Using local environment
@@ -431,7 +432,7 @@ This project focuses on high-standard engineering practices. Key highlights incl
 - MongoDB default DB: test
     - If DB init scripts are used in Docker, they run only when the volume is created for the first time
     - To re-run init scripts, remove the volume and restart
-- Demo data location (if needed): 'doc\DemonstrationMaterial\DemonStrationData.txt'
+- [Demo Data](doc\DemonstrationMaterial\DemonStrationData.txt) (if needed)
 
 
 

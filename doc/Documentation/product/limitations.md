@@ -6,7 +6,7 @@
 
 ### Frontend
 - **Separation of Concerns:** Component views and controllers are currently coupled (Appropriate for demo scope; requires refactoring for production maintenance)
-- **Performance:** No production-grade optimisations (e.g., lazy loading, advanced caching)
+- **Performance:** No production-grade optimisations (e.g. component memo, advanced caching)
 
 ### Backend
 - **Testing:** Integration test coverage is constrained by project scope (Core authentication flows are validated)

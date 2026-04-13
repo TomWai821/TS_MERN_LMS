@@ -6,14 +6,14 @@
 **Term Frequency (TF) - Build User Interest Profile**
 - **Usage**
     - Extracts the User Interest Profile from borrowing history
-    - It identifies which keywords (e.g., "Mystery", "Python", "Space") are most significant based on their recurrence in the user's past loans
+    - It identifies which keywords (e.g. "Mystery", "Python", "Space") are most significant based on their recurrence in the user's past loans
 
 - **Formula**<br>
   <img src="../../Image/Formula/TF-formula.png" style="width:30%;"/><br>
 
 ****Inverse Document Frequency (IDF) - Feature Engineering****    
 - **Usage**
-    -  Automatically de-prioritises generic terms (e.g., "book", "edition") while highlighting distinctive attributes that define a book's unique character<br>
+    -  Automatically de-prioritises generic terms (e.g. "book", "edition") while highlighting distinctive attributes that define a book's unique character<br>
        (This ensures the system focuses on specific traits rather than common metadata)
     
 - **Formula**<br>
@@ -76,7 +76,7 @@
 
 - **Process**
     - Implementing a Metadata Normalisation layer (formatBookMetadata) to sanitise raw book objects<br>
-      (This involves resolving nested properties (e.g., genreDetails) and providing "Unknown" fallbacks for missing data to ensure consistent vectorisation)
+      (This involves resolving nested properties (e.g. genreDetails) and providing "Unknown" fallbacks for missing data to ensure consistent vectorisation)
       
 - **Logic (Feature Fusion)** 
     - Constructing a Synthetic Corpus for each book by concatenating key attributes: Book Name, Genre, Author, and Publisher
@@ -104,7 +104,7 @@ The core execution logic is designed to balance recommendation accuracy with sys
         - Automatically filters out books currently or previously loaned by the user to avoid redundant suggestions
   
     - **Random Jitter**
-        - For books with identical metadata (e.g., same author/series), a tiny decimal (Jitter) is applied to break ties (Ensure a dynamic and diverse ranking)
+        - For books with identical metadata (e.g. same author/series), a tiny decimal (Jitter) is applied to break ties (Ensure a dynamic and diverse ranking)
   
     - **Payload Delivery**
         - Ranks and returns the **top 8 most relevant results** to the client-side UI
