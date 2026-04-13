@@ -39,7 +39,7 @@
     - Engineered a dual-strategy storage layer that dynamically switches between Local FS and Amazon S3 via environment toggles
     - This decouples business logic from infrastructure<br>
       (Ensure a zero-dependency local setup while optimising for the Stateless architecture of AWS Lambda)<br>
-      (Ref: [image Directory](../../../backend/src/service/image/))
+      (Ref: [image service Directory](../../../backend/src/service/image/))
 
 
 #### Infrastructure and Security
