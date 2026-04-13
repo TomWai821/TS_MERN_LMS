@@ -7,6 +7,15 @@ RUN npm install
 COPY . .
 CMD ["npm", "test"]
 
+# For development
+FROM node:22.14-alpine3.20 AS development
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+RUN npm install -g nodemon ts-node
+COPY . .
+CMD ["npm", "run", "dev"]
+
 # For Build to compile TypeScript to JavaScript (Before Production)
 FROM node:22.14-alpine3.20 AS builder
 RUN apk update && apk upgrade --no-cache

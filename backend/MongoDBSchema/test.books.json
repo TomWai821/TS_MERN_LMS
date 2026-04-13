@@ -19,7 +19,7 @@
   "publisherID": {
     "$oid": "67e217b0b135608ea8ba432c"
   },
-  "status": "OnLoan",
+  "status": "OnShelf",
   "description": "Harry Potter and the Half-Blood Prince follows Harry’s sixth year at Hogwarts, where he delves deeper into Voldemort’s past with the help of Dumbledore. \r\nAs dark forces rise, Harry discovers a mysterious potions book belonging to the enigmatic \"Half-Blood Prince,\" which gives him an edge in class but also raises questions about its origins. Meanwhile, Draco Malfoy is assigned a secret mission by Voldemort, and Snape makes an unbreakable vow to protect him. \r\nThe novel explores themes of destiny, sacrifice, and the looming battle between good and evil, culminating in a tragic loss that changes Harry’s path forever",
   "publishDate": {
     "$date": "2005-07-16T00:00:00.000Z"
