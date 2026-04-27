@@ -182,14 +182,19 @@ After graduation, I refactored the entire system to align with industry-standard
     - Leveraged TypeScript across the full stack to enforce rigorous data structures and interface contracts
 
     - **Result**
-        - Significantly reduced runtime TypeErrors and improved developer productivity through IDE intelligent code completion
+        - Significantly reduced runtime TypeErrors
+        - Improved developer productivity through IDE intelligent code completion
   
-- Security Logic - **Multi-Party Authorisation (MPA) Framework**
-    - Engineered a synchronised JWT handshake protocol to enforce Multi-Factor Authorisation for high-risk loaning operations
+- Security Logic - **Dual‑Token Authorisation for High‑Risk Loan Operations**
+    - The loan workflow enforces dual‑token authorisation
+      (A loan request proceeds only when both the borrower and librarian JWTs are present and validated)
 
-    - **Impact**
-        - Ensures critical state transitions are only executed when cryptographically verified by both the Borrower and Librarian simultaneously
-        - Effectively mitigating unauthorised access and insider threats
+    - **Benefit**
+        - Prevents either party from performing high‑risk state changes alone
+          (Reduce the risk of accidental operations or abuse of privileges)
+          
+        - Significantly raising the cost of the attack
+          (Even if a single credential is compromised, an attacker still needs the other party’s authorisation to complete a loan)
   
 - State Orchestration - **Performance-Oriented Frontend Architecture**
     - Optimised React performance by centralising global state with Context API and encapsulated logic within Custom Hooks
