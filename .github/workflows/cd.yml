@@ -4,14 +4,11 @@ on:
   workflow_run:
     workflows: ["CI Pipeline"]
     types: [completed]
-    paths-ignore:
-      - 'README.md'
-      - 'doc/**'
-      
+
 jobs:
   deploy-backend:
-    needs: push-to-aws
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -64,17 +61,18 @@ jobs:
             --image-uri "$IMAGE" \
             --region $AWS_REGION
 
-
   deploy-frontend:
     runs-on: ubuntu-latest
-    needs: deploy-backend 
-    if: ${{ success() }}
+    needs: deploy-backend
+    if: ${{ needs.deploy-backend.result == 'success' }}
     steps:
       - name: Trigger Vercel Deploy
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
-         RESPONSE=$(curl -s -X POST -w "%{http_code}" "${{ secrets.VERCEL_DEPLOY_HOOK }}" -o response.json)
-          HTTP_CODE=$RESPONSE
-          RESPONSE_BODY=$(cat response.json)
+          # POST and capture HTTP code separately from body
+          HTTP_CODE=$(curl -s -o response.json -w "%{http_code}" -X POST "${VERCEL_DEPLOY_HOOK}")
+          RESPONSE_BODY=$(cat response.json || true)
 
           echo "Vercel HTTP Code: $HTTP_CODE"
           echo "Vercel Response: $RESPONSE_BODY"
@@ -82,8 +80,6 @@ jobs:
           if [ "$HTTP_CODE" -eq 201 ] || [ "$HTTP_CODE" -eq 200 ]; then
             echo "Vercel deployment triggered successfully!"
           else
-            echo "Error: Vercel API failed with constants $HTTP_CODE"
+            echo "Error: Vercel API failed with status $HTTP_CODE"
             exit 1
           fi
-        env:
-          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
