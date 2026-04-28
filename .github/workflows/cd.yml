@@ -72,7 +72,7 @@ jobs:
           LAMBDA_NAME: ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}
         run: |
           set -euo pipefail
-          # construct registry if not provided
+
           if [ -n "${{ secrets.ECR_REGISTRY }}" ]; then
             REGISTRY="${{ secrets.ECR_REGISTRY }}"
           else
@@ -91,7 +91,6 @@ jobs:
           echo "$RESPONSE_JSON" > lambda_response.json
           jq -r '{FunctionName, FunctionArn, CodeSha256, RevisionId, LastUpdateStatus, LastUpdateStatusReason, LastUpdateStatusReasonCode}' lambda_response.json || true
 
-          # poll for completion
           echo "Polling Lambda LastUpdateStatus..."
           MAX_RETRIES=20
           SLEEP_SECONDS=6
