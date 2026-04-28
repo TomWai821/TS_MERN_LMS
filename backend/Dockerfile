@@ -27,7 +27,7 @@ RUN npm run build
 RUN ls -R dist/server.js
 
 # For Production 
-FROM node:22.14-alpine3.20
+FROM node:22.14-alpine3.20 AS production
 RUN apk update && apk upgrade --no-cache
 WORKDIR /app
 
