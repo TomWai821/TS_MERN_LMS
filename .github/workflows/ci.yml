@@ -96,24 +96,6 @@ jobs:
           docker build -t $IMAGE_URI ./backend
           docker push $IMAGE_URI
 
-      - name: Debug AWS identity and registry
-        run: |
-          echo "Registry: ${{ steps.login-ecr.outputs.registry }}"
-          echo "IMAGE_TAG: ${{ github.sha }}"
-          echo "AWS_REGION: ${{ secrets.AWS_REGION }}"
-
-          echo "Caller identity:"
-          aws sts get-caller-identity --output json
-
-          echo "List Lambda functions in region:"
-          aws lambda list-functions --region ${{ secrets.AWS_REGION }} --output json
-
-          echo "Describe images in ECR:"
-          aws ecr describe-images --repository-name ts_mern_lms-backend --region ${{ secrets.AWS_REGION }} --output json
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-
-
       - name: Get image digest
         id: image-digest
         env:
@@ -151,6 +133,6 @@ jobs:
           IMAGE_WITH_DIGEST=${{ steps.login-ecr.outputs.registry }}/ts_mern_lms-backend@${{ steps.image-digest.outputs.digest }}
           echo "Updating Lambda with $IMAGE_WITH_DIGEST"
           aws lambda update-function-code \
-            --function-name my-backend-function \
+            --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} \
             --image-uri "$IMAGE_WITH_DIGEST" \
             --region ${{ secrets.AWS_REGION }}
